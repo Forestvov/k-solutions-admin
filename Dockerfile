@@ -1,16 +1,27 @@
-FROM uselagoon/node-20-builder as build-stage
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
 
-# production stage
-FROM nginx:stable-alpine as production-stage
-COPY --from=build-stage /app/dist /usr/share/nginx/html
-COPY --from=build-stage /app/dist /usr/share/nginx/html/admin
-RUN rm /etc/nginx/conf.d/default.conf
-RUN mkdir /opt/certs
-COPY default.conf /etc/nginx/conf.d/
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+####################################################
+# Install dependencies only when needed
+FROM node:19-alpine AS deps
+RUN #apk add --no-cache libc6-compat
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN #yarn install --frozen-lockfile
+RUN npm   install
+
+# Rebuild the source code only when needed
+FROM node:19-alpine AS builder
+
+WORKDIR /app
+
+COPY --from=deps /app/node_modules ./node_modules
+
+COPY . .
+
+RUN npm run  build
+
+EXPOSE 8081
+
+ENV PORT 8081
+
+CMD ["npm", "run","dev:host"]
+
