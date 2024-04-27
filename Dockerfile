@@ -1,6 +1,3 @@
-
-####################################################
-# Install dependencies only when needed
 FROM node:19-alpine AS deps
 RUN #apk add --no-cache libc6-compat
 WORKDIR /app
@@ -19,8 +16,8 @@ COPY . .
 
 RUN npm run  build
 
-EXPOSE 8081
+EXPOSE 5173
 
-ENV PORT 8081
+ENV PORT 5173
 
 CMD ["npm", "run","start"]
