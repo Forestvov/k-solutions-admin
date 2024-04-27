@@ -47,9 +47,8 @@ export const PRODUCT_SIZE_OPTIONS = [
 ];
 
 export const PRODUCT_STOCK_OPTIONS = [
-  { value: 'in stock', label: 'In stock' },
-  { value: 'low stock', label: 'Low stock' },
-  { value: 'out of stock', label: 'Out of stock' },
+  { value: 'in stock', label: 'Компании' },
+  { value: 'low stock', label: 'Франшизы' },
 ];
 
 export const PRODUCT_PUBLISH_OPTIONS = [

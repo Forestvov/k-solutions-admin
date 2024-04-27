@@ -22,7 +22,8 @@ export default function NotFoundView() {
 
       <m.div variants={varBounce().in}>
         <Typography sx={{ color: 'text.secondary' }}>
-          К сожалению, мы не смогли найти страницу, которую вы ищете. Возможно, вы ошиблись в URL-адресе?
+          К сожалению, мы не смогли найти страницу, которую вы ищете. Возможно, вы ошиблись в
+          URL-адресе?
         </Typography>
       </m.div>
 

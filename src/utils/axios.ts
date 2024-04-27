@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 
 import { HOST_API } from 'src/config-global';
 
@@ -13,41 +13,61 @@ axiosInstance.interceptors.response.use(
 
 export default axiosInstance;
 
-// ----------------------------------------------------------------------
+export const fetcher = async (args: string) => {
+  const [url, payload, method = 'get'] = Array.isArray(args) ? args : [args];
 
-export const fetcher = async (args: string | [string, AxiosRequestConfig]) => {
-  const [url, config] = Array.isArray(args) ? args : [args];
+  if (method.toLowerCase() === 'post') {
+    const res = await axiosInstance.post(url, payload);
+    return res.data;
+  }
 
-  const res = await axiosInstance.get(url, { ...config });
+  if(method.toLowerCase() === 'put') {
+    const res = await axiosInstance.put(url, payload);
+    return res.data;
+  }
 
+  const res = await axiosInstance.get(url);
   return res.data;
 };
 
-// ----------------------------------------------------------------------
-
 export const endpoints = {
-  chat: '/api/chat',
-  kanban: '/api/kanban',
-  calendar: '/api/calendar',
+  chat: '/chat',
+  kanban: '/kanban',
+  calendar: '/calendar',
   auth: {
-    me: '/api/auth/me',
-    login: '/api/auth/login',
-    register: '/api/auth/register',
+    me: '/account/me',
+    login: '/auth/authenticate',
+    register: '/auth/register',
+  },
+  company: {
+    root: '/company-invest',
+    detailList: '/company-invest/detail-type/list'
+  },
+  briefcase: {
+    page: '/briefcase/page',
+    list: '/briefcase/list',
+    add: '/briefcase',
+    update: '/briefcase/page',
+    details: '/briefcase',
   },
   mail: {
-    list: '/api/mail/list',
-    details: '/api/mail/details',
-    labels: '/api/mail/labels',
+    list: '/mail/list',
+    details: '/mail/details',
+    labels: '/briefcase',
   },
   post: {
-    list: '/api/post/list',
-    details: '/api/post/details',
-    latest: '/api/post/latest',
-    search: '/api/post/search',
+    list: '/post/list',
+    details: '/post/details',
+    latest: '/post/latest',
+    search: '/post/search',
   },
   product: {
-    list: '/api/product/list',
-    details: '/api/product/details',
-    search: '/api/product/search',
+    list: '/product/list',
+    details: '/product/details',
+    search: '/product/search',
   },
+  user: {
+    list: '/account/page',
+    update: '/account/update',
+  }
 };

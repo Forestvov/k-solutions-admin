@@ -11,9 +11,13 @@ import { LoadingScreen } from 'src/components/loading-screen';
 const IndexPage = lazy(() => import('src/pages/dashboard/one'));
 const PageTwo = lazy(() => import('src/pages/dashboard/two'));
 const PageThree = lazy(() => import('src/pages/dashboard/three'));
-const PageFour = lazy(() => import('src/pages/dashboard/four'));
-const PageFive = lazy(() => import('src/pages/dashboard/five'));
-const PageSix = lazy(() => import('src/pages/dashboard/six'));
+const PageCompanies = lazy(() => import('src/pages/dashboard/companies/list'));
+const PageCompaniesCreate = lazy(() => import('src/pages/dashboard/companies/new'));
+
+// USER
+const UserListPage = lazy(() => import('src/pages/dashboard/user/list'));
+// Transaction
+const TransactionListPage = lazy(() => import('src/pages/dashboard/transaction/list'));
 
 // ----------------------------------------------------------------------
 
@@ -34,11 +38,22 @@ export const dashboardRoutes = [
       { path: 'two', element: <PageTwo /> },
       { path: 'three', element: <PageThree /> },
       {
-        path: 'group',
+        path: 'companies',
         children: [
-          { element: <PageFour />, index: true },
-          { path: 'five', element: <PageFive /> },
-          { path: 'six', element: <PageSix /> },
+          { element: <PageCompanies />, index: true },
+          { path: 'create', element: <PageCompaniesCreate /> },
+        ],
+      },
+      {
+        path: 'user',
+        children: [
+          { path: 'list', element: <UserListPage />, index: true },
+        ],
+      },
+      {
+        path: 'transaction',
+        children: [
+          { path: 'list', element: <TransactionListPage />, index: true },
         ],
       },
     ],

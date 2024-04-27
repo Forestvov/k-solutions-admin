@@ -1,4 +1,5 @@
 import { format, getTime, formatDistanceToNow } from 'date-fns';
+import { ru } from 'date-fns/locale';
 
 // ----------------------------------------------------------------------
 
@@ -7,7 +8,11 @@ type InputValue = Date | string | number | null | undefined;
 export function fDate(date: InputValue, newFormat?: string) {
   const fm = newFormat || 'dd MMM yyyy';
 
-  return date ? format(new Date(date), fm) : '';
+  return date
+    ? format(new Date(date), fm, {
+        locale: ru,
+      })
+    : '';
 }
 
 export function fTime(date: InputValue, newFormat?: string) {

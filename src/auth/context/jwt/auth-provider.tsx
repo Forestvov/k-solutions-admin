@@ -73,7 +73,7 @@ const reducer = (state: AuthStateType, action: ActionsType) => {
 
 // ----------------------------------------------------------------------
 
-const STORAGE_KEY = 'accessToken';
+const STORAGE_KEY = 'acceptToken';
 
 type Props = {
   children: React.ReactNode;
@@ -84,21 +84,20 @@ export function AuthProvider({ children }: Props) {
 
   const initialize = useCallback(async () => {
     try {
-      const accessToken = sessionStorage.getItem(STORAGE_KEY);
+      const acceptToken = sessionStorage.getItem(STORAGE_KEY);
 
-      if (accessToken && isValidToken(accessToken)) {
-        setSession(accessToken);
+      if (acceptToken && isValidToken(acceptToken)) {
+        setSession(acceptToken);
 
         const res = await axios.get(endpoints.auth.me);
-
-        const { user } = res.data;
+        const user = res.data;
 
         dispatch({
           type: Types.INITIAL,
           payload: {
             user: {
               ...user,
-              accessToken,
+              acceptToken,
             },
           },
         });
@@ -133,17 +132,19 @@ export function AuthProvider({ children }: Props) {
     };
 
     const res = await axios.post(endpoints.auth.login, data);
+    const { acceptToken } = res.data;
 
-    const { accessToken, user } = res.data;
+    setSession(acceptToken);
 
-    setSession(accessToken);
+    const resUser = await axios.get(endpoints.auth.me);
+    const user = resUser.data;
 
     dispatch({
       type: Types.LOGIN,
       payload: {
         user: {
           ...user,
-          accessToken,
+          acceptToken,
         },
       },
     });
@@ -161,16 +162,16 @@ export function AuthProvider({ children }: Props) {
 
       const res = await axios.post(endpoints.auth.register, data);
 
-      const { accessToken, user } = res.data;
+      const { acceptToken, user } = res.data;
 
-      sessionStorage.setItem(STORAGE_KEY, accessToken);
+      sessionStorage.setItem(STORAGE_KEY, acceptToken);
 
       dispatch({
         type: Types.REGISTER,
         payload: {
           user: {
             ...user,
-            accessToken,
+            acceptToken,
           },
         },
       });

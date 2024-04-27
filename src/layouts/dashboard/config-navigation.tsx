@@ -65,13 +65,28 @@ export function useNavData() {
         subheader: 'Управление',
         items: [
           {
-            title: 'user',
-            path: paths.dashboard.group.root,
+            title: 'Пользователи',
+            path: paths.dashboard.user.list,
             icon: ICONS.user,
             children: [
-              { title: 'four', path: paths.dashboard.group.root },
-              { title: 'five', path: paths.dashboard.group.five },
-              { title: 'six', path: paths.dashboard.group.six },
+              { title: 'Cписок', path: paths.dashboard.user.list },
+            ],
+          },
+          {
+            title: 'Компании',
+            path: paths.dashboard.companies.root,
+            icon: ICONS.invoice,
+            children: [
+              { title: 'Список', path: paths.dashboard.companies.root },
+              { title: 'Создать новую', path: paths.dashboard.companies.create },
+            ],
+          },
+          {
+            title: 'Транзакции',
+            path: paths.dashboard.transaction.root,
+            icon: ICONS.order,
+            children: [
+              { title: 'Список', path: paths.dashboard.transaction.root },
             ],
           },
         ],
