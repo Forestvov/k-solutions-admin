@@ -7,21 +7,29 @@ import { IProductItem } from 'src/types/product';
 
 import { IPagination } from '../types/pagination';
 import { ExtendCompany, IDetailTypeList, ICompanyResponse } from '../types/company';
+import {toBase64} from "../utils/toBase64";
 
 // ----------------------------------------------------------------------
 
+interface IData extends ExtendCompany {
+  images: File[]
+}
 
-export const createCompany = async (data: ExtendCompany) => {
+const addCompanyFile = async (file: string, companyInvestId: number, fileType: string) => {
+  await axios.post(endpoints.company.addFile, {companyInvestId, file, fileType})
+}
+
+export const createCompany = async (data: IData) => {
   const formDataCompany = {
     companyName: data.briefcaseName,
     companyType: data.companyType,
     logo: data.logo,
     descriptions: data.descriptions,
     companyInvestDetailInputs: data.companyInvestDetailInputs,
-    lang: 'ru'
+    lang: 'ru',
   };
 
-const formDataBrief = {
+  const formDataBrief = {
     briefcaseName: data.briefcaseName,
     briefcaseStatus: 'In progress',
     amountFinish: data.amountFinish,
@@ -32,8 +40,8 @@ const formDataBrief = {
     finishDay: data.finishDay,
     pampInvestors: data.pampInvestors,
     pamAmount: data.pamAmount,
-    "lang":"ru"
-};
+    lang: 'ru',
+  };
 
 
   const resCompanyInvest = await axios.post(endpoints.company.root, formDataCompany, {
@@ -43,11 +51,18 @@ const formDataBrief = {
   });
 
   const { id } = resCompanyInvest.data;
-  const res = await axios.post(endpoints.briefcase.add, {...formDataBrief, companyInvestId: id});
+  await axios.post(endpoints.briefcase.add, { ...formDataBrief, companyInvestId: id });
 
-  console.log(res.data)
+  if( data.images.length ) {
+    const list = Promise.all(data.images.map(file => toBase64(file)))
+    list.then((data) => {
+      if(data.length) {
+        data.map((file) => addCompanyFile(file, id, 'png'))
+      }
+    })
+  }
+
 };
-
 
 // ----------------------------------------------------------------------
 
@@ -108,9 +123,13 @@ export function useGetCompanies({
 export function useGetCompaniesDetailList() {
   const URL = endpoints.company.detailList;
 
-  const { data, isLoading, error, isValidating } = useSWR<IDetailTypeList[]>([URL, {}, 'post'], fetcher, {
-    revalidateOnFocus: false,
-  });
+  const { data, isLoading, error, isValidating } = useSWR<IDetailTypeList[]>(
+    [URL, {}, 'post'],
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
+  );
 
   const memoizedValue = useMemo(
     () => ({

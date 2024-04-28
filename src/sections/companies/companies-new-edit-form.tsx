@@ -82,7 +82,6 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
   );
 
   const methods = useForm<FormState>({
-    // resolver: yupResolver(NewProductSchema),
     // @ts-ignore
     defaultValues,
   });
@@ -116,7 +115,7 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      if(methods.getValues('companyType') === 'Company') {
+      if (methods.getValues('companyType') === 'Company') {
         await compnayShema.validate(data, { abortEarly: false });
       } else {
         await franchiseShema.validate(data, { abortEarly: false });
@@ -131,7 +130,6 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
       reset();
       enqueueSnackbar(currentCompany ? 'Update success!' : 'Create success!');
       router.push(paths.dashboard.companies.root);
-      console.info('DATA', data);
     } catch (error) {
       console.error(error);
     }

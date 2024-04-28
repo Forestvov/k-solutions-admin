@@ -41,6 +41,7 @@ export const endpoints = {
   },
   company: {
     root: '/company-invest',
+    addFile: '/company-invest/file',
     detailList: '/company-invest/detail-type/list',
   },
   briefcase: {
