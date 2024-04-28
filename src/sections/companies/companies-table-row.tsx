@@ -10,6 +10,7 @@ import { fDate, fTimestamp } from 'src/utils/format-time';
 import { fPercent, fCurrency } from 'src/utils/format-number';
 
 import Label from 'src/components/label';
+import getLabel from './get-label';
 
 // ----------------------------------------------------------------------
 
@@ -26,17 +27,9 @@ export function RenderCellInvestors({ params }: ParamsProps) {
 }
 
 export function RenderCellСompanyType({ params }: ParamsProps) {
-  if (params.row.companytype === 'Company') {
-    return (
-      <Stack direction="row" alignItems="center" height="100%">
-        Компания
-      </Stack>
-    );
-  }
-
   return (
     <Stack direction="row" alignItems="center" height="100%">
-      Франшиза
+      {getLabel(params.row.companytype)}
     </Stack>
   );
 }

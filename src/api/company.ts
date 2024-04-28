@@ -7,6 +7,7 @@ import { IProductItem } from 'src/types/product';
 
 import { IPagination } from '../types/pagination';
 import { ExtendCompany, IDetailTypeList, ICompanyResponse } from '../types/company';
+import { TransactionType } from '../types/transaction';
 
 // ----------------------------------------------------------------------
 
@@ -45,16 +46,30 @@ export const createCompany = async (data: ExtendCompany) => {
 
 // ----------------------------------------------------------------------
 
-export function useGetCompanies(pagination: IPagination) {
+interface PropList extends IPagination {
+  companytype: string;
+  briefcaseStatus: string;
+}
+
+export function useGetCompanies({
+  companytype = '',
+  briefcaseStatus = '',
+  page,
+  pageSize,
+}: PropList) {
   const URL = endpoints.briefcase.page;
 
   const { data, isLoading, error, isValidating, mutate } = useSWR<ICompanyResponse>(
     [
       URL,
       {
-        page: pagination.page,
-        size: pagination.pageSize,
+        page,
+        size: pageSize,
         sortDir: 'ASC',
+        criteria: [
+          { key: 'companytype', value: companytype },
+          { key: 'briefcaseStatus', value: briefcaseStatus },
+        ],
       },
       'post',
     ],

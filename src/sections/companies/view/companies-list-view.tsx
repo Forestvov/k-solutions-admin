@@ -24,7 +24,6 @@ import { RouterLink } from 'src/routes/components';
 import { useBoolean } from 'src/hooks/use-boolean';
 
 import { useGetCompanies } from 'src/api/company';
-import { PRODUCT_STOCK_OPTIONS } from 'src/_mock';
 
 import Iconify from 'src/components/iconify';
 import { useSnackbar } from 'src/components/snackbar';
@@ -34,7 +33,7 @@ import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
 import { IProductTableFilters, IProductTableFilterValue } from 'src/types/product';
 
-import { ICompany } from '../../../types/company';
+import { ICompany, ICompanyTableFilters } from '../../../types/company';
 import { IPagination } from '../../../types/pagination';
 import CompaniesTableToolbar from '../companies-table-toolbar';
 import { useSettingsContext } from '../../../components/settings';
@@ -61,9 +60,9 @@ const PUBLISH_OPTIONS = [
   { value: 'draft', label: 'Займ погашен' },
 ];
 
-const defaultFilters: IProductTableFilters = {
-  publish: [],
-  stock: [],
+const defaultFilters: ICompanyTableFilters = {
+  briefcaseStatus: '',
+  companytype: '',
 };
 
 const HIDE_COLUMNS = {
@@ -86,12 +85,6 @@ export default function CompaniesListView() {
     pageSize: 6,
   });
 
-  const {
-    companies,
-    companiesLoading,
-    pageInfo: { hasNextPage, total },
-  } = useGetCompanies(paginationModel);
-
   const [tableData, setTableData] = useState<ICompany[]>([]);
 
   const [filters, setFilters] = useState(defaultFilters);
@@ -101,10 +94,18 @@ export default function CompaniesListView() {
   const [columnVisibilityModel, setColumnVisibilityModel] =
     useState<GridColumnVisibilityModel>(HIDE_COLUMNS);
 
+  const {
+    companies,
+    companiesLoading,
+    pageInfo: { hasNextPage, total },
+  } = useGetCompanies({
+    ...paginationModel,
+    companytype: filters.companytype,
+    briefcaseStatus: filters.briefcaseStatus,
+  });
+
   useEffect(() => {
-    if (companies.length) {
-      setTableData(companies);
-    }
+      setTableData(companies || []);
   }, [companies]);
 
   const dataFiltered = applyFilter({
@@ -208,7 +209,6 @@ export default function CompaniesListView() {
       headerName: 'Прогресс',
       width: 160,
       type: 'singleSelect',
-      valueOptions: PRODUCT_STOCK_OPTIONS,
       editable: false,
       renderCell: (params) => <RenderCellProgress params={params} />,
     },
@@ -371,8 +371,6 @@ export default function CompaniesListView() {
                     <CompaniesTableToolbar
                       filters={filters}
                       onFilters={handleFilters}
-                      stockOptions={PRODUCT_STOCK_OPTIONS}
-                      publishOptions={PUBLISH_OPTIONS}
                     />
 
                     <GridToolbarQuickFilter placeholder="Поиск" />
@@ -453,17 +451,7 @@ function applyFilter({
   filters,
 }: {
   inputData: ICompany[];
-  filters: IProductTableFilters;
+  filters: ICompanyTableFilters;
 }) {
-  const { stock, publish } = filters;
-
-  if (stock.length) {
-    inputData = inputData.filter((product) => stock.includes(product.briefcaseStatus));
-  }
-
-  if (publish.length) {
-    inputData = inputData.filter((product) => publish.includes(product.briefcaseName));
-  }
-
   return inputData;
 }

@@ -12,7 +12,7 @@ export interface ICompanyResponse {
   empty: boolean;
 }
 
-export type CompanyType = 'Company' | 'Franchise';
+export type CompanyType = 'Company' | 'Franchise' | '';
 
 export interface ICompany {
   id: number;
@@ -72,3 +72,8 @@ export interface IDetailTypeList {
   id: number;
   descriptions: string;
 }
+
+export type ICompanyTableFilters = {
+  companytype: CompanyType;
+  briefcaseStatus: string;
+};

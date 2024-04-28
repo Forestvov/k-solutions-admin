@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import {useState, useCallback, ChangeEvent} from 'react';
 
 import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
@@ -8,55 +8,39 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import { IProductTableFilters, IProductTableFilterValue } from 'src/types/product';
+import {CompanyType, ICompanyTableFilters} from "../../types/company";
+import getLabel from "./get-label";
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  filters: IProductTableFilters;
+  filters: ICompanyTableFilters;
   onFilters: (name: string, value: IProductTableFilterValue) => void;
-  //
-  stockOptions: {
-    value: string;
-    label: string;
-  }[];
-  publishOptions: {
-    value: string;
-    label: string;
-  }[];
 };
+
+const companyOptions: CompanyType[] = ['Franchise', 'Company']
+const publishOptions = ['published', 'ker']
 
 export default function CompaniesTableToolbar({
   filters,
   onFilters,
-  //
-  stockOptions,
-  publishOptions,
 }: Props) {
-  const [stock, setStock] = useState<string[]>(filters.stock);
+  const [publish, setPublish] = useState<string>(filters.briefcaseStatus);
 
-  const [publish, setPublish] = useState<string[]>(filters.publish);
+  const handleChangeCompany = useCallback(
+      (event: SelectChangeEvent<CompanyType>) => {
+        onFilters('companytype', event.target.value);
+      },
+      [onFilters]
+  );
 
-  const handleChangeStock = useCallback((event: SelectChangeEvent<string[]>) => {
+  const handleChangePublish = useCallback((event: SelectChangeEvent<string>) => {
     const {
       target: { value },
     } = event;
-    setStock(typeof value === 'string' ? value.split(',') : value);
+    setPublish(value);
   }, []);
 
-  const handleChangePublish = useCallback((event: SelectChangeEvent<string[]>) => {
-    const {
-      target: { value },
-    } = event;
-    setPublish(typeof value === 'string' ? value.split(',') : value);
-  }, []);
-
-  const handleCloseStock = useCallback(() => {
-    onFilters('stock', stock);
-  }, [onFilters, stock]);
-
-  const handleClosePublish = useCallback(() => {
-    onFilters('publish', publish);
-  }, [onFilters, publish]);
 
   return (
     <>
@@ -69,48 +53,46 @@ export default function CompaniesTableToolbar({
         <InputLabel>Тип</InputLabel>
 
         <Select
-          multiple
-          value={stock}
-          onChange={handleChangeStock}
-          input={<OutlinedInput label="Stock" />}
-          renderValue={(selected) => selected.map((value) => value).join(', ')}
-          onClose={handleCloseStock}
+          // @ts-ignore
+          value={filters.companytype}
+          onChange={handleChangeCompany}
+          input={<OutlinedInput label="Тип" />}
+          renderValue={(selected) => getLabel(selected)}
           sx={{ textTransform: 'capitalize' }}
         >
-          {stockOptions.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              <Checkbox disableRipple size="small" checked={stock.includes(option.value)} />
-              {option.label}
+          {companyOptions.map((option) => (
+            <MenuItem key={option} value={option}>
+              <Checkbox disableRipple size="small" checked={filters.companytype.includes(option)} />
+              {getLabel(option)}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
 
-      <FormControl
-        sx={{
-          flexShrink: 0,
-          width: { xs: 1, md: 200 },
-        }}
-      >
-        <InputLabel>Все</InputLabel>
+      {/*<FormControl*/}
+      {/*  sx={{*/}
+      {/*    flexShrink: 0,*/}
+      {/*    width: { xs: 1, md: 200 },*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  <InputLabel>Все</InputLabel>*/}
 
-        <Select
-          multiple
-          value={publish}
-          onChange={handleChangePublish}
-          input={<OutlinedInput label="Publish" />}
-          renderValue={(selected) => selected.map((value) => value).join(', ')}
-          onClose={handleClosePublish}
-          sx={{ textTransform: 'capitalize' }}
-        >
-          {publishOptions.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              <Checkbox disableRipple size="small" checked={publish.includes(option.value)} />
-              {option.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      {/*  <Select*/}
+      {/*    value={publish}*/}
+      {/*    onChange={handleChangePublish}*/}
+      {/*    input={<OutlinedInput label="Publish" />}*/}
+      {/*    renderValue={(selected) => selected}*/}
+      {/*    onClose={handleClosePublish}*/}
+      {/*    sx={{ textTransform: 'capitalize' }}*/}
+      {/*  >*/}
+      {/*    {publishOptions.map((option) => (*/}
+      {/*      <MenuItem key={option.value} value={option.value}>*/}
+      {/*        <Checkbox disableRipple size="small" checked={publish.includes(option.value)} />*/}
+      {/*        {option.label}*/}
+      {/*      </MenuItem>*/}
+      {/*    ))}*/}
+      {/*  </Select>*/}
+      {/*</FormControl>*/}
     </>
   );
 }

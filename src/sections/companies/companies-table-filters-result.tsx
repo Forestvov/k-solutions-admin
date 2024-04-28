@@ -8,76 +8,68 @@ import Stack, { StackProps } from '@mui/material/Stack';
 
 import Iconify from 'src/components/iconify';
 
-import { IProductTableFilters, IProductTableFilterValue } from 'src/types/product';
+import { IProductTableFilterValue } from 'src/types/product';
+
+import { ICompanyTableFilters } from '../../types/company';
+import getLabel from "./get-label";
 
 // ----------------------------------------------------------------------
 
 type Props = StackProps & {
-  filters: IProductTableFilters;
+  filters: ICompanyTableFilters;
   onFilters: (name: string, value: IProductTableFilterValue) => void;
-  //
   onResetFilters: VoidFunction;
-  //
   results: number;
 };
 
 export default function CompaniesTableFiltersResult({
   filters,
   onFilters,
-  //
   onResetFilters,
-  //
   results,
   ...other
 }: Props) {
-  const handleRemoveStock = useCallback(
-    (inputValue: string) => {
-      const newValue = filters.stock.filter((item) => item !== inputValue);
+  const handleRemoveCompanyType = useCallback(() => {
+    onFilters('companytype', '');
+  }, [onFilters]);
 
-      onFilters('stock', newValue);
-    },
-    [filters.stock, onFilters]
-  );
-
-  const handleRemovePublish = useCallback(
-    (inputValue: string) => {
-      const newValue = filters.publish.filter((item) => item !== inputValue);
-
-      onFilters('publish', newValue);
-    },
-    [filters.publish, onFilters]
-  );
+  // const handleRemovePublish = useCallback(
+  //   (inputValue: string) => {
+  //     const newValue = filters.publish.filter((item) => item !== inputValue);
+  //
+  //     onFilters('publish', newValue);
+  //   },
+  //   [filters.publish, onFilters]
+  // );
 
   return (
     <Stack spacing={1.5} {...other}>
       <Box sx={{ typography: 'body2' }}>
         <strong>{results}</strong>
         <Box component="span" sx={{ color: 'text.secondary', ml: 0.25 }}>
-          найдено
+            результатов найдено
         </Box>
       </Box>
 
       <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
-        {!!filters.stock.length && (
-          <Block label="Stock:">
-            {filters.stock.map((item) => (
-              <Chip key={item} label={item} size="small" onDelete={() => handleRemoveStock(item)} />
-            ))}
+        {!!filters.companytype.length && (
+          <Block label="Категория:">
+            <Chip key={filters.companytype} label={getLabel(filters.companytype)} size="small" onDelete={handleRemoveCompanyType} />
           </Block>
         )}
 
-        {!!filters.publish.length && (
-          <Block label="Publish:">
-            {filters.publish.map((item) => (
-              <Chip
-                key={item}
-                label={item}
-                size="small"
-                onDelete={() => handleRemovePublish(item)}
-              />
-            ))}
-          </Block>
-        )}
+        {/* {!!filters.publish.length && ( */}
+        {/*  <Block label="Publish:"> */}
+        {/*    {filters.publish.map((item) => ( */}
+        {/*      <Chip */}
+        {/*        key={item} */}
+        {/*        label={item} */}
+        {/*        size="small" */}
+        {/*        onDelete={() => handleRemovePublish(item)} */}
+        {/*      /> */}
+        {/*    ))} */}
+        {/*  </Block> */}
+        {/* )} */}
 
         <Button
           color="error"

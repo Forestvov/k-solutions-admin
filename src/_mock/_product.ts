@@ -46,10 +46,6 @@ export const PRODUCT_SIZE_OPTIONS = [
   { value: '13', label: '13' },
 ];
 
-export const PRODUCT_STOCK_OPTIONS = [
-  { value: 'in stock', label: 'Компании' },
-  { value: 'low stock', label: 'Франшизы' },
-];
 
 export const PRODUCT_PUBLISH_OPTIONS = [
   {
