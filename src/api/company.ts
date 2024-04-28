@@ -13,7 +13,7 @@ import { ExtendCompany, IDetailTypeList, ICompanyResponse } from '../types/compa
 
 export const createCompany = async (data: ExtendCompany) => {
   const formDataCompany = {
-    companyName: data.companyName,
+    companyName: data.briefcaseName,
     companyType: data.companyType,
     logo: data.logo,
     descriptions: data.descriptions,

@@ -1,3 +1,4 @@
+import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { useMemo, useEffect, useCallback } from 'react';
 
@@ -20,6 +21,9 @@ import { createCompany } from '../../api/company';
 import { ExtendCompany } from '../../types/company';
 import { CompaniesNewEditFormDate } from './companies-new-edit-form-date';
 import { CompaniesNewEditFormDetail } from './companies-new-edit-form-detail';
+import { errorCatcher } from './errorCatcher';
+import { paths } from '../../routes/paths';
+import { useRouter } from '../../routes/hooks';
 
 // ----------------------------------------------------------------------
 
@@ -34,29 +38,21 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  // const NewProductSchema = Yup.object().shape({
-  //   companyType: Yup.string().required('Name is required'),
-  //   briefcaseName: Yup.string().required('Name is required'),
-  //   briefcaseStatus: Yup.string().required('Name is required'),
-  //   amountFinish: Yup.string().required('Name is required'),
-  //   amountMin: Yup.string().required('Name is required'),
-  //   ranges: Yup.string().required('Name is required'),
-  //   percents: Yup.string().required('Name is required'),
-  //   images: Yup.string().required('Name is required'),
-  //   logo: Yup.string().required('Name is required'),
-  //   finishDay: Yup.string().required('Name is required'),
-  //   pampInvestors: Yup.string().required('Name is required'),
-  //   pamAmount: Yup.string().required('Name is required'),
-  //
-  //   companyInvestDetailInputs: Yup.lazy(() =>
-  //     Yup.array().of(
-  //       Yup.object({
-  //         title: Yup.string(),
-  //         descriptions: Yup.string(),
-  //       })
-  //     )
-  //   ),
-  // });
+  const compnayShema = Yup.object().shape({
+    briefcaseName: Yup.string().required('Введите имя компании'),
+    descriptions: Yup.string().required('Введите описание'),
+    amountFinish: Yup.number().required('Введите цель сбора'),
+    amountMin: Yup.number().required('Введите минимальную сумму'),
+    percents: Yup.number().required('Введите ставку'),
+    finishDay: Yup.string().required('Введите дату'),
+    ranges: Yup.number().required('Введите срок'),
+  });
+
+  const franchiseShema = Yup.object().shape({
+    briefcaseName: Yup.string().required('Name is required'),
+    descriptions: Yup.string().required('Name is required'),
+    percents: Yup.number().required('Name is required'),
+  });
 
   const defaultValues = useMemo(
     () => ({
@@ -101,10 +97,11 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
 
   const values = watch();
 
-  console.log(values);
+  const router = useRouter();
 
   useEffect(() => {
     if (currentCompany) {
+      // @ts-ignore
       reset(defaultValues);
     }
   }, [currentCompany, defaultValues, reset]);
@@ -119,10 +116,21 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
+      if(methods.getValues('companyType') === 'Company') {
+        await compnayShema.validate(data, { abortEarly: false });
+      } else {
+        await franchiseShema.validate(data, { abortEarly: false });
+      }
+    } catch (error) {
+      errorCatcher(error, methods.setError);
+      return;
+    }
+
+    try {
       await createCompany(data);
-      // reset();
+      reset();
       enqueueSnackbar(currentCompany ? 'Update success!' : 'Create success!');
-      // router.push(paths.dashboard.companies.root);
+      router.push(paths.dashboard.companies.root);
       console.info('DATA', data);
     } catch (error) {
       console.error(error);
@@ -200,20 +208,21 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
 
             {values.companyType === 'Company' && (
               <>
-                  <RHFTextField
-                      name="amountFinish"
-                      label="Цель сбора ($) *"
-                      placeholder="0"
-                      type="number"
-                      InputLabelProps={{ shrink: true }}
-                  />
-                  <RHFTextField
-                      name="amountMin"
-                      label="Минимальная сумма ($) *"
-                      placeholder="0"
-                      type="number"
-                      InputLabelProps={{ shrink: true }}
-                  /></>
+                <RHFTextField
+                  name="amountFinish"
+                  label="Цель сбора ($) *"
+                  placeholder="0"
+                  type="number"
+                  InputLabelProps={{ shrink: true }}
+                />
+                <RHFTextField
+                  name="amountMin"
+                  label="Минимальная сумма ($) *"
+                  placeholder="0"
+                  type="number"
+                  InputLabelProps={{ shrink: true }}
+                />
+              </>
             )}
 
             <RHFTextField
