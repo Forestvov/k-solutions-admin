@@ -44,6 +44,7 @@ export default function TransactionQuickEditForm({
   const NewTransactionSchema = Yup.object().shape({
     transactionId: Yup.number(),
     transactionType: Yup.string(),
+    oldAmount: Yup.number(),
     transactionStatus: Yup.string().required('Заполните поле'),
     amount: Yup.number().required('Заполните поле'),
   });
@@ -57,6 +58,7 @@ export default function TransactionQuickEditForm({
     methods.setValue('transactionId', currentTransaction?.transactionId || 99999999);
     methods.setValue('transactionType', currentTransaction?.transactionType || '');
     methods.setValue('transactionStatus', currentTransaction?.transactionStatus || '');
+    methods.setValue('oldAmount', currentTransaction?.amount || 0);
     methods.setValue('amount', currentTransaction?.amount || 0);
   }, [currentTransaction, methods]);
 
@@ -68,7 +70,7 @@ export default function TransactionQuickEditForm({
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      if (currentTransaction?.accountId) {
+      if (currentTransaction?.transactionId) {
         await updateTransaction(data);
         updateTable();
         reset();

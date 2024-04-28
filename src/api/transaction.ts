@@ -78,10 +78,14 @@ export const updateTransaction = async (data: { [p: string]: any }) => {
 
   if (data.transactionType === 'In') {
     // @ts-ignore
-    formDataTransaction.amountIn = data.amount;
-  } else {
+    formDataTransaction.amountIn = data.oldAmount;
     // @ts-ignore
     formDataTransaction.amountOut = data.amount;
+  } else {
+    // @ts-ignore
+    formDataTransaction.amountIn = data.amount;
+    // @ts-ignore
+    formDataTransaction.amountOut = data.oldAmount;
   }
 
   await axios.put(endpoints.transaction.update, formDataTransaction, {
@@ -90,12 +94,3 @@ export const updateTransaction = async (data: { [p: string]: any }) => {
     },
   });
 };
-
-// ----------------------------------------------------------------------
-// {
-//     "transactionId":"2",
-//     "amountIn":"10",
-//     "amountOut":"1000",
-//     "transactionType":"In",
-//     "transactionStatus":"Success"
-// }

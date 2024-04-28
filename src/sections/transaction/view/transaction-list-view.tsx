@@ -30,11 +30,7 @@ import TransactionTableRow from '../transaction-table-row';
 import { useGetTransactionList } from '../../../api/transaction';
 import TransactionTableToolbar from '../transaction-table-toolbar';
 import TransactionTableFiltersResult from '../transaction-table-filters-result';
-import {
-  ITransaction,
-  ITransactionTableFilters,
-  ITransactionTableFilterValue,
-} from '../../../types/transaction';
+import { ITransaction, ITransactionTableFilters } from 'src/types/transaction';
 
 // ----------------------------------------------------------------------
 
@@ -101,9 +97,9 @@ export default function TransactionListView() {
   const notFound = (!dataFiltered.length && canReset) || !dataFiltered.length;
 
   const handleFilters = useCallback(
-    (name: string, value: ITransactionTableFilterValue) => {
+    (name: string, value: string) => {
       table.onResetPage();
-      setFilters((prevState) => ({
+      setFilters((prevState: ITransactionTableFilters) => ({
         ...prevState,
         [name]: value,
       }));
