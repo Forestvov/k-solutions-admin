@@ -38,7 +38,7 @@ pipeline {
             stage('Run docker container') {
                  steps {
                      script {
-                        sh("docker run -td -p 8081:80 --name f-ksolutions-admin  f-ksolutions-admin ")
+                        sh("docker run -td -p 8081:8081 --name f-ksolutions-admin  f-ksolutions-admin ")
                      }
                   }
              }
