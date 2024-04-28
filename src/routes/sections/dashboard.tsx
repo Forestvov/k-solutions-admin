@@ -8,22 +8,22 @@ import { LoadingScreen } from 'src/components/loading-screen';
 
 // ----------------------------------------------------------------------
 
-const IndexPage = lazy(() => import('src/pages/dashboard/one'));
-const PageTwo = lazy(() => import('src/pages/dashboard/two'));
-const PageThree = lazy(() => import('src/pages/dashboard/three'));
-const PageCompanies = lazy(() => import('src/pages/dashboard/companies/list'));
-const PageCompaniesCreate = lazy(() => import('src/pages/dashboard/companies/new'));
+const IndexPage = lazy(() => import('src/pages/admin/one'));
+const PageTwo = lazy(() => import('src/pages/admin/two'));
+const PageThree = lazy(() => import('src/pages/admin/three'));
+const PageCompanies = lazy(() => import('src/pages/admin/companies/list'));
+const PageCompaniesCreate = lazy(() => import('src/pages/admin/companies/new'));
 
 // USER
-const UserListPage = lazy(() => import('src/pages/dashboard/user/list'));
+const UserListPage = lazy(() => import('src/pages/admin/user/list'));
 // Transaction
-const TransactionListPage = lazy(() => import('src/pages/dashboard/transaction/list'));
+const TransactionListPage = lazy(() => import('src/pages/admin/transaction/list'));
 
 // ----------------------------------------------------------------------
 
 export const dashboardRoutes = [
   {
-    path: 'dashboard',
+    path: 'admin',
     element: (
       <AuthGuard>
         <DashboardLayout>
