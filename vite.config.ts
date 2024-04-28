@@ -37,11 +37,6 @@ export default defineConfig({
     port: 8081,
   },
   build: {
-    rollupOptions: {
-      output: {
-        chunkFileNames: 'admin/assets/js/[name]-[hash].js',
-        entryFileNames: 'admin/assets/js/[name]-[hash].js',
-      },
-    },
+    outDir: 'dist/admin'
   },
 });
