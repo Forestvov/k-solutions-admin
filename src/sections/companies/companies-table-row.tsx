@@ -108,7 +108,7 @@ export function RenderCellProduct({ params }: ParamsProps) {
     <Stack direction="row" alignItems="center" sx={{ py: 2, width: 1 }}>
       <Avatar
         alt={params.row.briefcaseName}
-        src={params.row.image}
+        src={params.row.logo}
         variant="rounded"
         sx={{ width: 64, height: 64, mr: 2 }}
       />

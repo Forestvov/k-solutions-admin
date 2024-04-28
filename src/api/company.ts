@@ -1,48 +1,53 @@
 import useSWR from 'swr';
 import { useMemo } from 'react';
 
-import { fetcher, endpoints } from 'src/utils/axios';
+import axios, { fetcher, endpoints } from 'src/utils/axios';
 
 import { IProductItem } from 'src/types/product';
 
 import { IPagination } from '../types/pagination';
 import { ExtendCompany, IDetailTypeList, ICompanyResponse } from '../types/company';
-import { TransactionType } from '../types/transaction';
 
 // ----------------------------------------------------------------------
 
+
 export const createCompany = async (data: ExtendCompany) => {
-  const formData = new FormData();
+  const formDataCompany = {
+    companyName: data.companyName,
+    companyType: data.companyType,
+    logo: data.logo,
+    descriptions: data.descriptions,
+    companyInvestDetailInputs: data.companyInvestDetailInputs,
+    lang: 'ru'
+  };
 
-  // const formDataCompany = {
-  //   companyName: data.companyName,
-  //   companyType: data.companyType,
-  //   logo: data.logo,
-  //   descriptions: data.descriptions,
-  //   companyInvestDetailInputs: data.companyInvestDetailInputs,
-  // };
-
-  if (data.companyType === 'Company') {
-    formData.append('amountFinish', data.amountFinish.toString());
-    formData.append('finishDay', data.finishDay.toString());
-    formData.append('ranges', data.ranges.toString());
-  }
-
-  // const resCompanyInvest = await axios.post(endpoints.company.root, formDataCompany, {
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  // });
-
-  // const { id } = resCompanyInvest.data;
-
-  // for (var pair of formData.entries()) {
-  //     console.log(pair[0]+ '  ----  ' + pair[1]);
-  // }
-
-  // const res = await axios.post(endpoints.auth.login, data);
-  // const { acceptToken } = res.data;
+const formDataBrief = {
+    briefcaseName: data.briefcaseName,
+    briefcaseStatus: 'In progress',
+    amountFinish: data.amountFinish,
+    amountMin: data.amountMin,
+    ranges: data.ranges,
+    percents: data.percents,
+    image: data.image,
+    finishDay: data.finishDay,
+    pampInvestors: data.pampInvestors,
+    pamAmount: data.pamAmount,
+    "lang":"ru"
 };
+
+
+  const resCompanyInvest = await axios.post(endpoints.company.root, formDataCompany, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const { id } = resCompanyInvest.data;
+  const res = await axios.post(endpoints.briefcase.add, {...formDataBrief, companyInvestId: id});
+
+  console.log(res.data)
+};
+
 
 // ----------------------------------------------------------------------
 
@@ -103,7 +108,7 @@ export function useGetCompanies({
 export function useGetCompaniesDetailList() {
   const URL = endpoints.company.detailList;
 
-  const { data, isLoading, error, isValidating } = useSWR<IDetailTypeList[]>([URL], fetcher, {
+  const { data, isLoading, error, isValidating } = useSWR<IDetailTypeList[]>([URL, {}, 'post'], fetcher, {
     revalidateOnFocus: false,
   });
 

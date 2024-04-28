@@ -23,7 +23,7 @@ import { CompaniesNewEditFormDetail } from './companies-new-edit-form-detail';
 
 // ----------------------------------------------------------------------
 
-type Prop = { currentCompany: ExtendCompany };
+type Prop = { currentCompany?: ExtendCompany };
 
 interface FormState extends ExtendCompany {
   images: File[];
@@ -85,8 +85,7 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
     [currentCompany]
   );
 
-
-    const methods = useForm<FormState>({
+  const methods = useForm<FormState>({
     // resolver: yupResolver(NewProductSchema),
     // @ts-ignore
     defaultValues,
@@ -106,7 +105,7 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
 
   useEffect(() => {
     if (currentCompany) {
-      // reset(defaultValues);
+      reset(defaultValues);
     }
   }, [currentCompany, defaultValues, reset]);
 
@@ -200,13 +199,21 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
             <RHFTextField name="descriptions" label="Краткое описание *" multiline rows={4} />
 
             {values.companyType === 'Company' && (
-              <RHFTextField
-                name="amountFinish"
-                label="Цель сбора ($) *"
-                placeholder="0"
-                type="number"
-                InputLabelProps={{ shrink: true }}
-              />
+              <>
+                  <RHFTextField
+                      name="amountFinish"
+                      label="Цель сбора ($) *"
+                      placeholder="0"
+                      type="number"
+                      InputLabelProps={{ shrink: true }}
+                  />
+                  <RHFTextField
+                      name="amountMin"
+                      label="Минимальная сумма ($) *"
+                      placeholder="0"
+                      type="number"
+                      InputLabelProps={{ shrink: true }}
+                  /></>
             )}
 
             <RHFTextField
