@@ -80,9 +80,7 @@ export default function UserListView() {
   };
 
   useEffect(() => {
-    if (users.length) {
-      setTableData(users);
-    }
+      setTableData(users || []);
   }, [users]);
 
   const dataFiltered = applyFilter({
