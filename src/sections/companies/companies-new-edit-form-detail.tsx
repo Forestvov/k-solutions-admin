@@ -9,7 +9,7 @@ import { useGetCompaniesDetailList } from '../../api/company';
 import { RHFTextField, RHFAutocomplete } from '../../components/hook-form';
 
 export const CompaniesNewEditFormDetail = () => {
-  const { control, setValue, getValues } = useFormContext();
+  const { control, setValue } = useFormContext();
 
   const { detailList, detailLoading } = useGetCompaniesDetailList();
 
@@ -54,10 +54,7 @@ export const CompaniesNewEditFormDetail = () => {
                     // @ts-ignore
                     e.target.value
                   );
-                  setValue(
-                      `companyInvestDetailInputs[${index}].companyInvestDetailTypeId`,
-                      ''
-                  );
+                  setValue(`companyInvestDetailInputs[${index}].companyInvestDetailTypeId`, '');
                 } else {
                   setValue(
                     `companyInvestDetailInputs[${index}].companyInvestDetailTypeId`,
@@ -66,10 +63,7 @@ export const CompaniesNewEditFormDetail = () => {
                 }
               }}
               renderOption={(props, option) => (
-                <li
-                  {...props}
-                  key={option}
-                >
+                <li {...props} key={option}>
                   {option}
                 </li>
               )}

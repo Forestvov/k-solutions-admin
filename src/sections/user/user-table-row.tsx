@@ -1,4 +1,3 @@
-import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
@@ -13,9 +12,9 @@ import Iconify from 'src/components/iconify';
 
 import { IUser } from 'src/types/user';
 
-import UserQuickEditForm from './user-quick-edit-form';
 import { fDate } from '../../utils/format-time';
 import { fNumber } from '../../utils/format-number';
+import UserQuickEditForm from './user-quick-edit-form';
 
 // ----------------------------------------------------------------------
 
@@ -26,16 +25,15 @@ type Props = {
   updateTable: VoidFunction;
 };
 
-
 const USER_STATUS: Record<string, string> = {
-  'Disable': 'Заблокирован',
-  'Enable': 'Доступен',
-  'Canceled': 'Отменен',
-  'Verified': 'Верефицирован',
-  'Process': 'В обработке',
+  Disable: 'Заблокирован',
+  Enable: 'Доступен',
+  Canceled: 'Отменен',
+  Verified: 'Верефицирован',
+  Process: 'В обработке',
   'Not verified email': 'Почта не подтверждена',
   'Not verified YC': 'Нет запроса на верификацию',
-}
+};
 
 export default function UserTableRow({ row, selected, onSelectRow, updateTable }: Props) {
   const { fio, numberPhone, balance, status, email, registeredDate, userName } = row;

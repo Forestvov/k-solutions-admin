@@ -1,7 +1,5 @@
-import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
-import { useMemo, useState, useEffect, useCallback } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useMemo, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -12,69 +10,65 @@ import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-import { useRouter } from 'src/routes/hooks';
-
 import { useResponsive } from 'src/hooks/use-responsive';
 
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, { RHFSelect, RHFUpload, RHFTextField } from 'src/components/hook-form';
 
-import { ExtendCompany, ICompany, ICompanyExtend } from '../../types/company';
-import { createCompany, useGetCompaniesDetailList } from '../../api/company';
+import { toBase64 } from '../../utils/toBase64';
+import { createCompany } from '../../api/company';
+import { ExtendCompany } from '../../types/company';
 import { CompaniesNewEditFormDate } from './companies-new-edit-form-date';
 import { CompaniesNewEditFormDetail } from './companies-new-edit-form-detail';
-import {toBase64} from "../../utils/toBase64";
 
 // ----------------------------------------------------------------------
 
-type Prop = { currentCompany: ExtendCompany }
+type Prop = { currentCompany: ExtendCompany };
 
 interface FormState extends ExtendCompany {
-    images: File[]
+  images: File[];
 }
 
 export default function CompaniesNewEditForm({ currentCompany }: Prop) {
-  const router = useRouter();
-
   const mdUp = useResponsive('up', 'md');
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const NewProductSchema = Yup.object().shape({
-    companyType: Yup.string().required('Name is required'),
-    briefcaseName: Yup.string().required('Name is required'),
-    briefcaseStatus: Yup.string().required('Name is required'),
-    amountFinish: Yup.string().required('Name is required'),
-    amountMin: Yup.string().required('Name is required'),
-    ranges: Yup.string().required('Name is required'),
-    percents: Yup.string().required('Name is required'),
-    images: Yup.string().required('Name is required'),
-    logo: Yup.string().required('Name is required'),
-    finishDay: Yup.string().required('Name is required'),
-    pampInvestors: Yup.string().required('Name is required'),
-    pamAmount: Yup.string().required('Name is required'),
-
-    companyInvestDetailInputs: Yup.lazy(() =>
-      Yup.array().of(
-        Yup.object({
-          title: Yup.string(),
-          descriptions: Yup.string(),
-        })
-      )
-    ),
-  });
+  // const NewProductSchema = Yup.object().shape({
+  //   companyType: Yup.string().required('Name is required'),
+  //   briefcaseName: Yup.string().required('Name is required'),
+  //   briefcaseStatus: Yup.string().required('Name is required'),
+  //   amountFinish: Yup.string().required('Name is required'),
+  //   amountMin: Yup.string().required('Name is required'),
+  //   ranges: Yup.string().required('Name is required'),
+  //   percents: Yup.string().required('Name is required'),
+  //   images: Yup.string().required('Name is required'),
+  //   logo: Yup.string().required('Name is required'),
+  //   finishDay: Yup.string().required('Name is required'),
+  //   pampInvestors: Yup.string().required('Name is required'),
+  //   pamAmount: Yup.string().required('Name is required'),
+  //
+  //   companyInvestDetailInputs: Yup.lazy(() =>
+  //     Yup.array().of(
+  //       Yup.object({
+  //         title: Yup.string(),
+  //         descriptions: Yup.string(),
+  //       })
+  //     )
+  //   ),
+  // });
 
   const defaultValues = useMemo(
     () => ({
       companyType: currentCompany?.briefcaseName || 'Company',
       briefcaseName: currentCompany?.briefcaseName || '',
-       descriptions: currentCompany?.descriptions || '',
+      descriptions: currentCompany?.descriptions || '',
       briefcaseStatus: currentCompany?.briefcaseStatus || '',
       amountFinish: currentCompany?.amountFinish || '',
       amountMin: currentCompany?.amountMin || '',
       ranges: currentCompany?.ranges || '',
       percents: currentCompany?.percents || '',
-        images: [],
+      images: [],
       logo: currentCompany?.logo || '',
       finishDay: currentCompany?.finishDay || '',
       pampInvestors: currentCompany?.pampInvestors || '',
@@ -91,8 +85,10 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
     [currentCompany]
   );
 
-  const methods = useForm<FormState>({
+
+    const methods = useForm<FormState>({
     // resolver: yupResolver(NewProductSchema),
+    // @ts-ignore
     defaultValues,
   });
 
@@ -110,17 +106,17 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
 
   useEffect(() => {
     if (currentCompany) {
-      reset(defaultValues);
+      // reset(defaultValues);
     }
   }, [currentCompany, defaultValues, reset]);
 
-    useEffect(() => {
-        if(values.companyType === 'Franchise') {
-            setValue('amountFinish', '')
-            setValue('finishDay', '')
-            setValue('ranges', 0)
-        }
-    }, [values.companyType, setValue]);
+  useEffect(() => {
+    if (values.companyType === 'Franchise') {
+      setValue('amountFinish', '');
+      setValue('finishDay', '');
+      setValue('ranges', 0);
+    }
+  }, [values.companyType, setValue]);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -149,13 +145,13 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
     [setValue, values.images]
   );
 
-  const handleDropSingleFile =  useCallback(
-    async (acceptedFiles: File[]) =>  {
-        const file = await toBase64(acceptedFiles[0]);
+  const handleDropSingleFile = useCallback(
+    async (acceptedFiles: File[]) => {
+      const file = await toBase64(acceptedFiles[0]);
 
-        if (file) {
-            setValue('logo', file, { shouldValidate: true });
-        }
+      if (file) {
+        setValue('logo', file, { shouldValidate: true });
+      }
     },
     [setValue]
   );

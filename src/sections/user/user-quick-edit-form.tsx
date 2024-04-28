@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -43,10 +43,8 @@ const USER_STATUS = [
   { value: 'Disable', label: 'Заблокирован' },
 ];
 
-
 export default function UserQuickEditForm({ currentUser, open, onClose, updateTable }: Props) {
   const { enqueueSnackbar } = useSnackbar();
-
 
   const NewUserSchema = Yup.object().shape({
     status: Yup.string().required('Заполните поле'),
@@ -59,8 +57,8 @@ export default function UserQuickEditForm({ currentUser, open, onClose, updateTa
   });
 
   useEffect(() => {
-    methods.setValue('status', currentUser?.status || '')
-    methods.setValue('role', currentUser?.role || '')
+    methods.setValue('status', currentUser?.status || '');
+    methods.setValue('role', currentUser?.role || '');
   }, [currentUser, methods]);
 
   const {
@@ -76,7 +74,7 @@ export default function UserQuickEditForm({ currentUser, open, onClose, updateTa
           ...data,
           accountId: currentUser.accountId,
         });
-        updateTable()
+        updateTable();
         reset();
         onClose();
         enqueueSnackbar('Update success!');
@@ -92,8 +90,8 @@ export default function UserQuickEditForm({ currentUser, open, onClose, updateTa
       maxWidth={false}
       open={open}
       onClose={() => {
-        onClose()
-        reset()
+        onClose();
+        reset();
       }}
       PaperProps={{
         sx: { maxWidth: 720 },
@@ -140,10 +138,13 @@ export default function UserQuickEditForm({ currentUser, open, onClose, updateTa
         </DialogContent>
 
         <DialogActions>
-          <Button variant="outlined" onClick={() => {
-            onClose()
-            reset()
-          }}>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              onClose();
+              reset();
+            }}
+          >
             Закрыть
           </Button>
 

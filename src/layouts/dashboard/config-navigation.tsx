@@ -68,9 +68,7 @@ export function useNavData() {
             title: 'Пользователи',
             path: paths.dashboard.user.list,
             icon: ICONS.user,
-            children: [
-              { title: 'Cписок', path: paths.dashboard.user.list },
-            ],
+            children: [{ title: 'Cписок', path: paths.dashboard.user.list }],
           },
           {
             title: 'Компании',
@@ -85,9 +83,7 @@ export function useNavData() {
             title: 'Транзакции',
             path: paths.dashboard.transaction.root,
             icon: ICONS.order,
-            children: [
-              { title: 'Список', path: paths.dashboard.transaction.root },
-            ],
+            children: [{ title: 'Список', path: paths.dashboard.transaction.root }],
           },
         ],
       },

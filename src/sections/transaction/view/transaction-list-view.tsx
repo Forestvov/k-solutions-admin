@@ -26,12 +26,15 @@ import {
   TablePaginationCustom,
 } from 'src/components/table';
 
-import { IUser, UserRoleType, IUserTableFilters, IUserTableFilterValue } from 'src/types/user';
-
 import TransactionTableRow from '../transaction-table-row';
-import { useGetUserList } from '../../../api/user';
+import { useGetTransactionList } from '../../../api/transaction';
 import TransactionTableToolbar from '../transaction-table-toolbar';
 import TransactionTableFiltersResult from '../transaction-table-filters-result';
+import {
+  ITransaction,
+  ITransactionTableFilters,
+  ITransactionTableFilterValue,
+} from '../../../types/transaction';
 
 // ----------------------------------------------------------------------
 
@@ -39,15 +42,18 @@ const TABLE_HEAD = [
   { id: 'fio', label: 'Фио', width: 180 },
   { id: 'username', label: 'Логин', width: 180 },
   { id: 'mail', label: 'Mail', width: 190 },
-  { id: 'numberPhone', label: 'Номер телефона', width: 220 },
-  { id: 'date', label: 'Дата регистрации', width: 180 },
-  { id: 'balance', label: 'Общий баланс', width: 100 },
+  { id: 'numberPhone', label: 'Тип транзакции', width: 220 },
+  { id: 'date', label: 'Платежная система', width: 180 },
+  { id: 'date', label: 'Дата транзакции', width: 180 },
+  { id: 'balance', label: 'Сумма', width: 100 },
   { id: 'status', label: 'Статус', width: 100 },
   { id: '', width: 88 },
 ];
 
-const defaultFilters: IUserTableFilters = {
-  role: '',
+const defaultFilters: ITransactionTableFilters = {
+  transactionStatus: '',
+  transactionType: '',
+  typePay: '',
   email: '',
 };
 
@@ -60,19 +66,20 @@ export default function TransactionListView() {
 
   const confirm = useBoolean();
 
-  const [tableData, setTableData] = useState<IUser[]>([]);
+  const [tableData, setTableData] = useState<ITransaction[]>([]);
 
   const [filters, setFilters] = useState(defaultFilters);
 
   const {
-    users,
+    transactions,
     pageInfo: { totalPages, currentPage, totalElements },
     mutate,
-  } = useGetUserList({
+  } = useGetTransactionList({
     page: table.page,
     pageSize: table.rowsPerPage,
-    role: filters.role as UserRoleType,
-    email: filters.email as string,
+    transactionStatus: filters.transactionStatus,
+    transactionType: filters.transactionType,
+    typePay: filters.typePay,
   });
 
   const updateTable = () => {
@@ -80,10 +87,8 @@ export default function TransactionListView() {
   };
 
   useEffect(() => {
-    if (users.length) {
-      setTableData(users);
-    }
-  }, [users]);
+    setTableData(transactions || []);
+  }, [transactions]);
 
   const dataFiltered = applyFilter({
     inputData: tableData,
@@ -96,7 +101,7 @@ export default function TransactionListView() {
   const notFound = (!dataFiltered.length && canReset) || !dataFiltered.length;
 
   const handleFilters = useCallback(
-    (name: string, value: IUserTableFilterValue) => {
+    (name: string, value: ITransactionTableFilterValue) => {
       table.onResetPage();
       setFilters((prevState) => ({
         ...prevState,
@@ -114,21 +119,14 @@ export default function TransactionListView() {
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <CustomBreadcrumbs
         heading="Cписок"
-        links={[
-          { name: 'Главная', href: paths.dashboard.root },
-          { name: 'Список' },
-        ]}
+        links={[{ name: 'Главная', href: paths.dashboard.root }, { name: 'Список' }]}
         sx={{
           mb: { xs: 3, md: 5 },
         }}
       />
 
       <Card>
-        <TransactionTableToolbar
-          filters={filters}
-          onFilters={handleFilters}
-          roleOptions={['User', 'Admin']}
-        />
+        <TransactionTableToolbar filters={filters} onFilters={handleFilters} />
 
         {canReset && (
           <TransactionTableFiltersResult
@@ -212,11 +210,11 @@ function applyFilter({
   comparator,
   filters,
 }: {
-  inputData: IUser[];
+  inputData: ITransaction[];
   comparator: (a: any, b: any) => number;
-  filters: IUserTableFilters;
+  filters: ITransactionTableFilters;
 }) {
-  const { email } = filters;
+  const { email = '' } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
@@ -230,7 +228,8 @@ function applyFilter({
 
   if (email) {
     inputData = inputData.filter(
-      (user) => user.email.toLowerCase().indexOf(email.toLowerCase()) !== -1
+      // @ts-ignore
+      (transaction) => transaction.email.toLowerCase().indexOf(email.toLowerCase()) !== -1
     );
   }
 

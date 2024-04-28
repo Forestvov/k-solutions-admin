@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import { useMemo } from 'react';
 
-import axios, { fetcher, endpoints } from 'src/utils/axios';
+import { fetcher, endpoints } from 'src/utils/axios';
 
 import { IProductItem } from 'src/types/product';
 
@@ -13,13 +13,13 @@ import { ExtendCompany, IDetailTypeList, ICompanyResponse } from '../types/compa
 export const createCompany = async (data: ExtendCompany) => {
   const formData = new FormData();
 
-  const formDataCompany = {
-    companyName: data.companyName,
-    companyType: data.companyType,
-    logo: data.logo,
-    descriptions: data.descriptions,
-    companyInvestDetailInputs: data.companyInvestDetailInputs,
-  };
+  // const formDataCompany = {
+  //   companyName: data.companyName,
+  //   companyType: data.companyType,
+  //   logo: data.logo,
+  //   descriptions: data.descriptions,
+  //   companyInvestDetailInputs: data.companyInvestDetailInputs,
+  // };
 
   if (data.companyType === 'Company') {
     formData.append('amountFinish', data.amountFinish.toString());
@@ -27,13 +27,13 @@ export const createCompany = async (data: ExtendCompany) => {
     formData.append('ranges', data.ranges.toString());
   }
 
-  const resCompanyInvest = await axios.post(endpoints.company.root, formDataCompany, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  // const resCompanyInvest = await axios.post(endpoints.company.root, formDataCompany, {
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  // });
 
-  const { id } = resCompanyInvest.data;
+  // const { id } = resCompanyInvest.data;
 
   // for (var pair of formData.entries()) {
   //     console.log(pair[0]+ '  ----  ' + pair[1]);

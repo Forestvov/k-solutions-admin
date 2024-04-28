@@ -3,30 +3,24 @@ import { useMemo } from 'react';
 
 import { IPagination } from '../types/pagination';
 import axios, { fetcher, endpoints } from '../utils/axios';
-import { UserRoleType, IUserResponse } from '../types/user';
+import { TransactionType, IResponseTransaction } from '../types/transaction';
 
 interface PropList extends IPagination {
-  role: UserRoleType;
-  email: string;
+  transactionStatus: string;
+  typePay: string;
+  transactionType: TransactionType;
 }
 
-export const getUserList = async ({ role = '', email = '', page, pageSize }: PropList) =>{
+export function useGetTransactionList({
+  transactionStatus = '',
+  typePay = '',
+  transactionType,
+  page,
+  pageSize,
+}: PropList) {
+  const URL = endpoints.transaction.list;
 
-  const data = {role, email, page, size: pageSize}
-
-  const res = await axios.put(endpoints.user.list, data, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  return res.data
-}
-
-export function useGetUserList({ role = '', email = '', page, pageSize }: PropList) {
-  const URL = endpoints.user.list;
-
-  const { data, isLoading, error, isValidating, mutate } = useSWR<IUserResponse>(
+  const { data, isLoading, error, isValidating, mutate } = useSWR<IResponseTransaction>(
     [
       URL,
       {
@@ -34,38 +28,39 @@ export function useGetUserList({ role = '', email = '', page, pageSize }: PropLi
         size: pageSize,
         sortDir: 'ASC',
         criteria: [
-          { key: 'role', value: role },
-          { key: 'email', value: email },
+          { key: 'transactionStatus', value: transactionStatus },
+          { key: 'typePay', value: typePay },
+          { key: 'transactionType', value: transactionType },
         ],
       },
-      'put',
+      'post',
     ],
     fetcher
   );
 
   const memoizedValue = useMemo(
     () => ({
-      users: data?.content || [],
+      transactions: data?.content || [],
       pageInfo: {
         currentPage: data?.number || 0,
         totalPages: data?.totalPages || 0,
         totalElements: data?.totalElements || 0,
       },
-      usersLoading: isLoading,
-      usersError: error,
-      usersValidating: isValidating,
-      usersEmpty: !isLoading && !data?.content.length,
-      mutate
+      transactionsLoading: isLoading,
+      transactionsError: error,
+      transactionsValidating: isValidating,
+      transactionsEmpty: !isLoading && !data?.content.length,
+      mutate,
     }),
     [
       data?.content,
-      data?.last,
       data?.number,
       data?.totalElements,
       data?.totalPages,
       error,
       isLoading,
       isValidating,
+      mutate,
     ]
   );
 
@@ -74,20 +69,22 @@ export function useGetUserList({ role = '', email = '', page, pageSize }: PropLi
 
 // ----------------------------------------------------------------------
 
-interface updateUserProp {
-  accountId: number;
-  status: string;
-  role: string;
-}
-
-export const updateUser = async (data: { [p: string]: any; accountId: number }) => {
-  const formDataCompany = {
-    accountId: data.accountId,
-    status: data.status,
-    role: data.role,
+export const updateTransaction = async (data: { [p: string]: any }) => {
+  const formDataTransaction = {
+    transactionId: data.transactionId,
+    transactionType: data.transactionType,
+    transactionStatus: data.transactionStatus,
   };
 
-  await axios.put(endpoints.user.update, formDataCompany, {
+  if (data.transactionType === 'In') {
+    // @ts-ignore
+    formDataTransaction.amountIn = data.amount;
+  } else {
+    // @ts-ignore
+    formDataTransaction.amountOut = data.amount;
+  }
+
+  await axios.put(endpoints.transaction.update, formDataTransaction, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -95,3 +92,10 @@ export const updateUser = async (data: { [p: string]: any; accountId: number }) 
 };
 
 // ----------------------------------------------------------------------
+// {
+//     "transactionId":"2",
+//     "amountIn":"10",
+//     "amountOut":"1000",
+//     "transactionType":"In",
+//     "transactionStatus":"Success"
+// }

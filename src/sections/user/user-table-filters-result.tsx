@@ -28,12 +28,9 @@ export default function UserTableFiltersResult({
   results,
   ...other
 }: Props) {
-  const handleRemoveRole = useCallback(
-    () => {
-      onFilters('role', '');
-    },
-    [onFilters]
-  );
+  const handleRemoveRole = useCallback(() => {
+    onFilters('role', '');
+  }, [onFilters]);
 
   if (!filters.role.length) {
     return null;
@@ -51,7 +48,12 @@ export default function UserTableFiltersResult({
       <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
         {!!filters.role.length && (
           <Block label="Role:">
-              <Chip key={filters.role} label={filters.role} size="small" onDelete={handleRemoveRole} />
+            <Chip
+              key={filters.role}
+              label={filters.role}
+              size="small"
+              onDelete={handleRemoveRole}
+            />
           </Block>
         )}
 

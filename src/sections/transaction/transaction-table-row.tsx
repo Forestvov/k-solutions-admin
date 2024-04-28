@@ -1,4 +1,3 @@
-import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
@@ -11,34 +10,38 @@ import { useBoolean } from 'src/hooks/use-boolean';
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
-import { IUser } from 'src/types/user';
-
-import TransactionQuickEditForm from './transaction-quick-edit-form';
 import { fDate } from '../../utils/format-time';
 import { fNumber } from '../../utils/format-number';
+import { ITransaction } from '../../types/transaction';
+import TransactionQuickEditForm from './transaction-quick-edit-form';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   selected: boolean;
-  row: IUser;
+  row: ITransaction;
   onSelectRow: VoidFunction;
   updateTable: VoidFunction;
 };
 
-
-const USER_STATUS: Record<string, string> = {
-  'Disable': 'Заблокирован',
-  'Enable': 'Доступен',
-  'Canceled': 'Отменен',
-  'Verified': 'Верефицирован',
-  'Process': 'В обработке',
-  'Not verified email': 'Почта не подтверждена',
-  'Not verified YC': 'Нет запроса на верификацию',
-}
+const TRANSACTION_STATUS: Record<string, string> = {
+  Canceled: 'Отклонена',
+  Success: 'Одобренна',
+  Process: 'В обработке',
+};
 
 export default function TransactionTableRow({ row, selected, onSelectRow, updateTable }: Props) {
-  const { fio, numberPhone, balance, status, email, registeredDate, userName } = row;
+  const {
+    fio,
+    accountTypeName,
+    amount,
+    transactionStatus,
+    email,
+    typePay,
+    transactionDate,
+    username,
+    transactionType,
+  } = row;
 
   const quickEdit = useBoolean();
 
@@ -53,33 +56,34 @@ export default function TransactionTableRow({ row, selected, onSelectRow, update
           <ListItemText
             primary={fio ?? 'не указно'}
             primaryTypographyProps={{ typography: 'body2' }}
+            secondary={accountTypeName === 'Investor' ? 'Инвестор' : 'Компания'}
           />
         </TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{userName}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{username}</TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{email}</TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{numberPhone}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>
+          {transactionType === 'In' ? 'Пополнение' : 'Вывод'}
+        </TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(registeredDate)}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{typePay}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(transactionDate)}</TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>$ {balance ? fNumber(balance) : '0'}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>$ {amount ? fNumber(amount) : '0'}</TableCell>
 
         <TableCell>
           <Label
             variant="soft"
             color={
-              (status === 'Verified' && 'success') ||
-              (status === 'Process' && 'warning') ||
-              (status === 'Canceled' && 'error') ||
-              (status === 'Disable' && 'error') ||
-              (status === 'Not verified YC' && 'info') ||
-              (status === 'Not verified email' && 'info') ||
+              (transactionStatus === 'Success' && 'success') ||
+              (transactionStatus === 'Process' && 'info') ||
+              (transactionStatus === 'Canceled' && 'error') ||
               'default'
             }
           >
-            {USER_STATUS[status]}
+            {TRANSACTION_STATUS[transactionStatus]}
           </Label>
         </TableCell>
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
@@ -92,7 +96,7 @@ export default function TransactionTableRow({ row, selected, onSelectRow, update
       </TableRow>
 
       <TransactionQuickEditForm
-        currentUser={row}
+        currentTransaction={row}
         open={quickEdit.value}
         updateTable={updateTable}
         onClose={quickEdit.onFalse}

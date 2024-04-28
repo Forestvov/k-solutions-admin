@@ -33,19 +33,19 @@ export interface ICompany {
 }
 
 export interface ICompanyExtend {
-  companyName: string
-  companyType: CompanyType
-  logo: string
-  descriptions: string
+  companyName: string;
+  companyType: CompanyType;
+  logo: string;
+  descriptions: string;
   companyInvestDetailInputs: {
-    id: string
-    companyInvestDetailTypeId: string
-    companyInvestDetailTypeDescriptions: string
-    descriptions: string
-  }[]
+    id: string;
+    companyInvestDetailTypeId: string;
+    companyInvestDetailTypeDescriptions: string;
+    descriptions: string;
+  }[];
 }
 
-export interface ExtendCompany extends ICompany, ICompanyExtend{}
+export interface ExtendCompany extends ICompany, ICompanyExtend {}
 
 export interface Pageable {
   pageNumber: number;
@@ -69,6 +69,6 @@ export interface Sort2 {
 }
 
 export interface IDetailTypeList {
-  id: number
-  descriptions: string
+  id: number;
+  descriptions: string;
 }

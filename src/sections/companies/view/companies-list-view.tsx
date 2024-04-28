@@ -37,6 +37,7 @@ import { IProductTableFilters, IProductTableFilterValue } from 'src/types/produc
 import { ICompany } from '../../../types/company';
 import { IPagination } from '../../../types/pagination';
 import CompaniesTableToolbar from '../companies-table-toolbar';
+import { useSettingsContext } from '../../../components/settings';
 import CompaniesTableFiltersResult from '../companies-table-filters-result';
 import {
   RenderCellPrice,
@@ -49,7 +50,6 @@ import {
   RenderCellInvestors,
   RenderCellСompanyType,
 } from '../companies-table-row';
-import {useSettingsContext} from "../../../components/settings";
 
 // ----------------------------------------------------------------------
 
@@ -163,7 +163,7 @@ export default function CompaniesListView() {
       field: 'briefcaseName',
       headerName: 'Название компании',
       flex: 1,
-      minWidth: 360,
+      minWidth: 200,
       hideable: false,
       editable: false,
       renderCell: (params) => <RenderCellProduct params={params} />,
@@ -185,21 +185,21 @@ export default function CompaniesListView() {
     {
       field: 'ranges',
       headerName: 'Срок займа',
-      width: 140,
+      width: 150,
       editable: false,
       renderCell: (params) => <RenderCellRanges params={params} />,
     },
     {
       field: 'amountFinish',
       headerName: 'Цель сбора',
-      width: 140,
+      width: 150,
       editable: false,
       renderCell: (params) => <RenderCellPrice params={params} />,
     },
     {
       field: 'pamAmount',
       headerName: 'Собрано',
-      width: 140,
+      width: 150,
       editable: false,
       renderCell: (params) => <RenderCellPrice params={params} />,
     },
@@ -215,21 +215,21 @@ export default function CompaniesListView() {
     {
       field: 'percents',
       headerName: 'Ставка, % ',
-      width: 140,
+      width: 150,
       editable: false,
       renderCell: (params) => <RenderCellDecent params={params} />,
     },
     {
       field: 'amountMin',
       headerName: 'Минимальная сумма',
-      width: 140,
+      width: 190,
       editable: false,
       renderCell: (params) => <RenderCellPrice params={params} />,
     },
     {
       field: 'pampInvestors',
       headerName: 'Кол-во инвесторов',
-      width: 140,
+      width: 180,
       editable: false,
       renderCell: (params) => <RenderCellInvestors params={params} />,
     },
@@ -239,7 +239,7 @@ export default function CompaniesListView() {
       filterable: false,
       editable: false,
       hideable: false,
-      width: 160,
+      width: 172,
       renderCell: (params) => <RenderCellСompanyType params={params} />,
     },
     {
@@ -247,6 +247,7 @@ export default function CompaniesListView() {
       headerName: 'Статус',
       type: 'singleSelect',
       editable: false,
+      width: 150,
       valueOptions: PUBLISH_OPTIONS,
       renderCell: (params) => <RenderCellPublish params={params} />,
     },
@@ -298,7 +299,8 @@ export default function CompaniesListView() {
 
   return (
     <>
-      <Container maxWidth={settings.themeStretch ? false : 'xl'}
+      <Container
+        maxWidth={settings.themeStretch ? false : 'xl'}
         sx={{
           flexGrow: 1,
           display: 'flex',

@@ -10,19 +10,6 @@ interface PropList extends IPagination {
   email: string;
 }
 
-export const getUserList = async ({ role = '', email = '', page, pageSize }: PropList) =>{
-
-    const data = {role, email, page, size: pageSize}
-
-    const res = await axios.put(endpoints.user.list, data, {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
-
-    return res.data
-}
-
 export function useGetUserList({ role = '', email = '', page, pageSize }: PropList) {
   const URL = endpoints.user.list;
 
@@ -55,17 +42,17 @@ export function useGetUserList({ role = '', email = '', page, pageSize }: PropLi
       usersError: error,
       usersValidating: isValidating,
       usersEmpty: !isLoading && !data?.content.length,
-        mutate
+      mutate,
     }),
     [
       data?.content,
-      data?.last,
       data?.number,
       data?.totalElements,
       data?.totalPages,
       error,
       isLoading,
       isValidating,
+      mutate,
     ]
   );
 
@@ -73,12 +60,6 @@ export function useGetUserList({ role = '', email = '', page, pageSize }: PropLi
 }
 
 // ----------------------------------------------------------------------
-
-interface updateUserProp {
-  accountId: number;
-  status: string;
-  role: string;
-}
 
 export const updateUser = async (data: { [p: string]: any; accountId: number }) => {
   const formDataCompany = {

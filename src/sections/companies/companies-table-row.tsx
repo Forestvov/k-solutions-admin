@@ -1,4 +1,4 @@
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       import Link from '@mui/material/Link';
+import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import { GridCellParams } from '@mui/x-data-grid';
@@ -90,7 +90,11 @@ export function RenderCellCreatedAt({ params }: ParamsProps) {
 
 export function RenderCellProgress({ params }: ParamsProps) {
   return (
-    <Stack sx={{ typography: 'caption', color: 'text.secondary' }} height="100%" justifyContent="center">
+    <Stack
+      sx={{ typography: 'caption', color: 'text.secondary' }}
+      height="100%"
+      justifyContent="center"
+    >
       <LinearProgress
         value={(params.row.pamAmount / params.row.amountFinish) * 100}
         variant="determinate"

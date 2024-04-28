@@ -21,7 +21,7 @@ export const fetcher = async (args: string) => {
     return res.data;
   }
 
-  if(method.toLowerCase() === 'put') {
+  if (method.toLowerCase() === 'put') {
     const res = await axiosInstance.put(url, payload);
     return res.data;
   }
@@ -41,7 +41,7 @@ export const endpoints = {
   },
   company: {
     root: '/company-invest',
-    detailList: '/company-invest/detail-type/list'
+    detailList: '/company-invest/detail-type/list',
   },
   briefcase: {
     page: '/briefcase/page',
@@ -69,5 +69,9 @@ export const endpoints = {
   user: {
     list: '/account/page',
     update: '/account/update',
-  }
+  },
+  transaction: {
+    list: '/transaction/history',
+    update: '/transaction',
+  },
 };

@@ -33,6 +33,6 @@ export const paths = {
     },
     user: {
       list: `${ROOTS.DASHBOARD}/user/list`,
-    }
+    },
   },
 };

@@ -8,17 +8,26 @@ import Stack, { StackProps } from '@mui/material/Stack';
 
 import Iconify from 'src/components/iconify';
 
-import { IUserTableFilters, IUserTableFilterValue } from 'src/types/user';
+import { ITransactionTableFilters, ITransactionTableFilterValue } from '../../types/transaction';
 
 // ----------------------------------------------------------------------
 
 type Props = StackProps & {
-  filters: IUserTableFilters;
-  onFilters: (name: string, value: IUserTableFilterValue) => void;
-  //
+  filters: ITransactionTableFilters;
+  onFilters: (name: string, value: ITransactionTableFilterValue) => void;
   onResetFilters: VoidFunction;
-  //
   results: number;
+};
+
+const status: Record<string, string> = {
+  Canceled: 'Отклонена',
+  Success: 'Одобренна',
+  Process: 'В обработке',
+};
+const methodPay: Record<string, string> = {
+  Visa: 'Visa',
+  Token: 'Token',
+  p2p: 'p2p',
 };
 
 export default function TransactionTableFiltersResult({
@@ -28,14 +37,23 @@ export default function TransactionTableFiltersResult({
   results,
   ...other
 }: Props) {
-  const handleRemoveRole = useCallback(
-    () => {
-      onFilters('role', '');
-    },
-    [onFilters]
-  );
+  const handleRemoveTransaction = useCallback(() => {
+    onFilters('transactionType', '');
+  }, [onFilters]);
 
-  if (!filters.role.length) {
+  const handleRemoveStatus = useCallback(() => {
+    onFilters('transactionStatus', '');
+  }, [onFilters]);
+
+  const handleRemoveTypePay = useCallback(() => {
+    onFilters('typePay', '');
+  }, [onFilters]);
+
+  if (
+    !filters.transactionType.length &&
+    !filters.transactionStatus.length &&
+    !filters.typePay.length
+  ) {
     return null;
   }
 
@@ -44,14 +62,41 @@ export default function TransactionTableFiltersResult({
       <Box sx={{ typography: 'body2' }}>
         <strong>{results}</strong>
         <Box component="span" sx={{ color: 'text.secondary', ml: 0.25 }}>
-          найдено:
+          результатов найдено
         </Box>
       </Box>
 
       <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
-        {!!filters.role.length && (
-          <Block label="Role:">
-              <Chip key={filters.role} label={filters.role} size="small" onDelete={handleRemoveRole} />
+        {!!filters.transactionType.length && (
+          <Block label="Тип транзакции:">
+            <Chip
+              key={filters.transactionType}
+              label={filters.transactionType === 'In' ? 'Пополнение' : 'Вывод'}
+              size="small"
+              onDelete={handleRemoveTransaction}
+            />
+          </Block>
+        )}
+
+        {!!filters.transactionStatus.length && (
+          <Block label="Статус:">
+            <Chip
+              key={filters.transactionStatus}
+              label={status[filters.transactionStatus]}
+              size="small"
+              onDelete={handleRemoveStatus}
+            />
+          </Block>
+        )}
+
+        {!!filters.typePay.length && (
+          <Block label="Статус:">
+            <Chip
+              key={filters.typePay}
+              label={methodPay[filters.typePay]}
+              size="small"
+              onDelete={handleRemoveTypePay}
+            />
           </Block>
         )}
 

@@ -46,15 +46,11 @@ export const dashboardRoutes = [
       },
       {
         path: 'user',
-        children: [
-          { path: 'list', element: <UserListPage />, index: true },
-        ],
+        children: [{ path: 'list', element: <UserListPage />, index: true }],
       },
       {
         path: 'transaction',
-        children: [
-          { path: 'list', element: <TransactionListPage />, index: true },
-        ],
+        children: [{ path: 'list', element: <TransactionListPage />, index: true }],
       },
     ],
   },

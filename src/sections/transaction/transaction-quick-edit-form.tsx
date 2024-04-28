@@ -1,10 +1,9 @@
 import * as Yup from 'yup';
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Box from '@mui/material/Box';
-import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import MenuItem from '@mui/material/MenuItem';
@@ -14,10 +13,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, { RHFSelect } from 'src/components/hook-form';
+import FormProvider, { RHFSelect, RHFTextField } from 'src/components/hook-form';
 
-import { IUser } from '../../types/user';
-import { updateUser } from '../../api/user';
+import { ITransaction } from '../../types/transaction';
+import { updateTransaction } from '../../api/transaction';
 
 // ----------------------------------------------------------------------
 
@@ -25,43 +24,41 @@ type Props = {
   open: boolean;
   onClose: VoidFunction;
   updateTable: VoidFunction;
-  currentUser?: IUser;
+  currentTransaction?: ITransaction;
 };
 
-const USER_ROLE = [
-  { value: 'User', label: 'Пользователь' },
-  { value: 'Admin', label: 'Администратор' },
-];
-
-const USER_STATUS = [
-  { value: 'Not verified YC', label: 'Нет запроса на верификацию' },
-  { value: 'Not verified email', label: 'Почта не подтверждена' },
+const STATUS = [
+  { value: 'Canceled', label: 'Отклонена' },
+  { value: 'Success', label: 'Одобренна' },
   { value: 'Process', label: 'В обработке' },
-  { value: 'Verified', label: 'Верефицирован' },
-  { value: 'Canceled', label: 'Отменен' },
-  { value: 'Enable', label: 'Доступен' },
-  { value: 'Disable', label: 'Заблокирован' },
 ];
 
-
-export default function TransactionQuickEditForm({ currentUser, open, onClose, updateTable }: Props) {
+export default function TransactionQuickEditForm({
+  currentTransaction,
+  open,
+  onClose,
+  updateTable,
+}: Props) {
   const { enqueueSnackbar } = useSnackbar();
 
-
-  const NewUserSchema = Yup.object().shape({
-    status: Yup.string().required('Заполните поле'),
-    role: Yup.string().required('Заполните поле'),
+  const NewTransactionSchema = Yup.object().shape({
+    transactionId: Yup.number(),
+    transactionType: Yup.string(),
+    transactionStatus: Yup.string().required('Заполните поле'),
+    amount: Yup.number().required('Заполните поле'),
   });
 
   const methods = useForm({
     // @ts-ignore
-    resolver: yupResolver(NewUserSchema),
+    resolver: yupResolver(NewTransactionSchema),
   });
 
   useEffect(() => {
-    methods.setValue('status', currentUser?.status || '')
-    methods.setValue('role', currentUser?.role || '')
-  }, [currentUser, methods]);
+    methods.setValue('transactionId', currentTransaction?.transactionId || 99999999);
+    methods.setValue('transactionType', currentTransaction?.transactionType || '');
+    methods.setValue('transactionStatus', currentTransaction?.transactionStatus || '');
+    methods.setValue('amount', currentTransaction?.amount || 0);
+  }, [currentTransaction, methods]);
 
   const {
     reset,
@@ -71,12 +68,9 @@ export default function TransactionQuickEditForm({ currentUser, open, onClose, u
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      if (currentUser?.accountId) {
-        await updateUser({
-          ...data,
-          accountId: currentUser.accountId,
-        });
-        updateTable()
+      if (currentTransaction?.accountId) {
+        await updateTransaction(data);
+        updateTable();
         reset();
         onClose();
         enqueueSnackbar('Update success!');
@@ -92,8 +86,8 @@ export default function TransactionQuickEditForm({ currentUser, open, onClose, u
       maxWidth={false}
       open={open}
       onClose={() => {
-        onClose()
-        reset()
+        onClose();
+        reset();
       }}
       PaperProps={{
         sx: { maxWidth: 720 },
@@ -103,13 +97,7 @@ export default function TransactionQuickEditForm({ currentUser, open, onClose, u
         <DialogTitle>Обновить данные</DialogTitle>
 
         <DialogContent>
-          {currentUser?.status !== 'Verified' ? (
-            <Alert variant="outlined" severity="info" sx={{ mb: 3 }}>
-              Аккаунт ожидает подтверждения
-            </Alert>
-          ) : (
-            <Box padding={1} />
-          )}
+          <Box padding={1} />
 
           <Box
             rowGap={3}
@@ -120,30 +108,26 @@ export default function TransactionQuickEditForm({ currentUser, open, onClose, u
               sm: 'repeat(2, 1fr)',
             }}
           >
-            <RHFSelect name="status" label="Статус">
-              {USER_STATUS.map((status) => (
-                <MenuItem key={status.value} value={status.value}>
-                  {status.label}
-                </MenuItem>
-              ))}
-            </RHFSelect>
-            <RHFSelect name="role" label="Роль">
-              {USER_ROLE.map((status) => (
+            <RHFSelect name="transactionStatus" label="Статус">
+              {STATUS.map((status) => (
                 <MenuItem key={status.value} value={status.value}>
                   {status.label}
                 </MenuItem>
               ))}
             </RHFSelect>
 
-            <Box sx={{ display: { xs: 'none', sm: 'block' } }} />
+            <RHFTextField name="amount" label="Сумма" />
           </Box>
         </DialogContent>
 
         <DialogActions>
-          <Button variant="outlined" onClick={() => {
-            onClose()
-            reset()
-          }}>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              onClose();
+              reset();
+            }}
+          >
             Закрыть
           </Button>
 
