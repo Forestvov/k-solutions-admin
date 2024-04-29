@@ -146,12 +146,10 @@ export function useGetCompaniesDetailList() {
 
 // ----------------------------------------------------------------------
 
-interface ResponseBrief extends Omit<ICompany, 'id' | 'companytype'> {}
-
 export function useGetCompany(id: string) {
   const URL = `${endpoints.briefcase.details}/${id}`;
 
-  const { data, isLoading, error, isValidating } = useSWR<ResponseBrief>(
+  const { data, isLoading, error, isValidating } = useSWR<ExtendCompany>(
     [
       URL,
       {},

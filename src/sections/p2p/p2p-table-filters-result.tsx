@@ -1,20 +1,17 @@
-import { useCallback } from 'react';
-
 import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Stack, { StackProps } from '@mui/material/Stack';
 
 import Iconify from 'src/components/iconify';
 
-import { IUserTableFilters, IUserTableFilterValue } from 'src/types/user';
+import { ITransactionTableFilters } from 'src/types/transaction';
 
 // ----------------------------------------------------------------------
 
 type Props = StackProps & {
-  filters: IUserTableFilters;
-  onFilters: (name: string, value: IUserTableFilterValue) => void;
+  filters: ITransactionTableFilters;
+  onFilters: (name: string, value: string) => void;
   //
   onResetFilters: VoidFunction;
   //
@@ -28,13 +25,10 @@ export default function P2pTableFiltersResult({
   results,
   ...other
 }: Props) {
-  const handleRemoveRole = useCallback(() => {
-    onFilters('role', '');
-  }, [onFilters]);
+  // const handleRemoveRole = useCallback(() => {
+  //   onFilters('role', '');
+  // }, [onFilters]);
 
-  if (!filters.role.length) {
-    return null;
-  }
 
   return (
     <Stack spacing={1.5} {...other}>
@@ -46,16 +40,16 @@ export default function P2pTableFiltersResult({
       </Box>
 
       <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
-        {!!filters.role.length && (
-          <Block label="Role:">
-            <Chip
-              key={filters.role}
-              label={filters.role}
-              size="small"
-              onDelete={handleRemoveRole}
-            />
-          </Block>
-        )}
+        {/* {!!filters.role.length && ( */}
+        {/*  <Block label="Role:"> */}
+        {/*    <Chip */}
+        {/*      key={filters.role} */}
+        {/*      label={filters.role} */}
+        {/*      size="small" */}
+        {/*      onDelete={handleRemoveRole} */}
+        {/*    /> */}
+        {/*  </Block> */}
+        {/* )} */}
 
         <Button
           color="error"

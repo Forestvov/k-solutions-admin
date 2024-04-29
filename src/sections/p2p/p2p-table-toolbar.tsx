@@ -12,16 +12,16 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import Iconify from 'src/components/iconify';
 
-import { IUserTableFilters, IUserTableFilterValue } from 'src/types/user';
+import {ITransactionTableFilters} from "src/types/transaction";
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  filters: IUserTableFilters;
-  onFilters: (name: string, value: IUserTableFilterValue) => void;
+  filters: ITransactionTableFilters;
+  onFilters: (name: string, value: string) => void;
 };
 
-const roleOptions = [];
+const roleOptions: string[] = [''];
 
 export default function P2pTableToolbar({ filters, onFilters }: Props) {
   const handleFilterSearch = useCallback(
@@ -32,7 +32,7 @@ export default function P2pTableToolbar({ filters, onFilters }: Props) {
   );
 
   const handleFilterRole = useCallback(
-    (event: SelectChangeEvent<string[]>) => {
+    (event: SelectChangeEvent<string>) => {
       onFilters('role', event.target.value);
     },
     [onFilters]
@@ -74,7 +74,7 @@ export default function P2pTableToolbar({ filters, onFilters }: Props) {
         >
           {roleOptions.map((option) => (
             <MenuItem key={option} value={option}>
-              <Checkbox disableRipple size="small" checked={filters.role.includes(option)} />
+              <Checkbox disableRipple size="small" checked={filters.transactionStatus.includes(option)} />
               {option}
             </MenuItem>
           ))}

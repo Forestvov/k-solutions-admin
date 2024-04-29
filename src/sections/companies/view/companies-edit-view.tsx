@@ -2,11 +2,12 @@ import Container from '@mui/material/Container';
 
 import { paths } from 'src/routes/paths';
 
+import { useGetCompany } from 'src/api/company';
+
+import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import { useGetCompany } from '../../../api/company';
 import CompaniesNewEditForm from '../companies-new-edit-form';
-import { useSettingsContext } from '../../../components/settings';
 
 // ----------------------------------------------------------------------
 
@@ -19,9 +20,7 @@ export default function ProductEditView({ id }: Props) {
 
   const { brief } = useGetCompany(id);
 
-  console.log(brief);
-
-  return (
+    return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
       <CustomBreadcrumbs
         heading="Компании"
@@ -40,8 +39,7 @@ export default function ProductEditView({ id }: Props) {
           mb: { xs: 3, md: 5 },
         }}
       />
-
-      <CompaniesNewEditForm currentCompany={brief} />
+        <CompaniesNewEditForm currentCompany={brief} />
     </Container>
   );
 }

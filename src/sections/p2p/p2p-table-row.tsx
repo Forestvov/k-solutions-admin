@@ -3,13 +3,12 @@ import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
 import ListItemText from '@mui/material/ListItemText';
 
-import { useBoolean } from 'src/hooks/use-boolean';
+import { fDate } from 'src/utils/format-time';
+import { fNumber } from 'src/utils/format-number';
 
 import Label from 'src/components/label';
 
-import { fDate } from '../../utils/format-time';
-import { fNumber } from '../../utils/format-number';
-import { ITransaction } from '../../types/transaction';
+import { ITransaction } from 'src/types/transaction';
 
 // ----------------------------------------------------------------------
 
@@ -32,15 +31,11 @@ export default function P2pTableRow({ row, selected, onSelectRow, updateTable }:
     transactionDate,
     username,
     amount,
-    amountIn,
-    status,
     email,
-    registeredDate,
-    userName,
-    transactionStatus,
+    transactionStatus
   } = row;
 
-  const quickEdit = useBoolean();
+    console.log(updateTable)
 
   return (
     <TableRow hover selected={selected}>
@@ -60,11 +55,13 @@ export default function P2pTableRow({ row, selected, onSelectRow, updateTable }:
       <TableCell sx={{ whiteSpace: 'nowrap' }}>{email}</TableCell>
 
       <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(transactionDate)}</TableCell>
+      <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(transactionDate)}</TableCell>
 
-      <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(registeredDate)}</TableCell>
+      {/* <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(registeredDate)}</TableCell> */}
 
       <TableCell sx={{ whiteSpace: 'nowrap' }}>$ {amount ? fNumber(amount) : '0'}</TableCell>
-      <TableCell sx={{ whiteSpace: 'nowrap' }}>$ {amountIn ? fNumber(amountIn) : '0'}</TableCell>
+      <TableCell sx={{ whiteSpace: 'nowrap' }}>$ {amount ? fNumber(amount) : '0'}</TableCell>
+      {/* <TableCell sx={{ whiteSpace: 'nowrap' }}>$ {amountIn ? fNumber(amountIn) : '0'}</TableCell> */}
       <TableCell sx={{ whiteSpace: 'nowrap' }}>1</TableCell>
       <TableCell sx={{ whiteSpace: 'nowrap' }}>1</TableCell>
 
