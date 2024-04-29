@@ -29,7 +29,7 @@ export interface ICompany {
   createdDate: string;
   pampInvestors: number;
   pamAmount: number;
-  companytype: CompanyType;
+  companyType: CompanyType;
 }
 
 export interface ICompanyExtend {
@@ -37,6 +37,7 @@ export interface ICompanyExtend {
   companyType: CompanyType;
   logo: string;
   descriptions: string;
+  companyInvestDetailDtoList: any;
   companyInvestDetailInputs: {
     id: string;
     companyInvestDetailTypeId: string;
@@ -74,6 +75,6 @@ export interface IDetailTypeList {
 }
 
 export type ICompanyTableFilters = {
-  companytype: CompanyType;
+  companyType: CompanyType;
   briefcaseStatus: string;
 };

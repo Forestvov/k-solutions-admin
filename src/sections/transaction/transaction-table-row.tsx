@@ -33,6 +33,7 @@ const TRANSACTION_STATUS: Record<string, string> = {
 export default function TransactionTableRow({ row, selected, onSelectRow, updateTable }: Props) {
   const {
     fio,
+    transactionLinkType,
     accountTypeName,
     amount,
     transactionStatus,
@@ -68,7 +69,7 @@ export default function TransactionTableRow({ row, selected, onSelectRow, update
           {transactionType === 'In' ? 'Пополнение' : 'Вывод'}
         </TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{typePay}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{transactionLinkType}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(transactionDate)}</TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>$ {amount ? fNumber(amount) : '0'}</TableCell>

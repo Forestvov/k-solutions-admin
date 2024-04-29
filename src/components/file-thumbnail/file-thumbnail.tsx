@@ -29,6 +29,21 @@ export default function FileThumbnail({
 
   const format = fileFormat(path || preview);
 
+  if (format.includes(';base64')) {
+    return (
+      <Box
+        component="img"
+        src={format}
+        sx={{
+          width: 32,
+          height: 32,
+          flexShrink: 0,
+          ...sx,
+        }}
+      />
+    );
+  }
+
   const renderContent =
     format === 'image' && imageView ? (
       <Box

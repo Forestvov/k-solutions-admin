@@ -30,7 +30,7 @@ export function RenderCellInvestors({ params }: ParamsProps) {
 export function RenderCellСompanyType({ params }: ParamsProps) {
   return (
     <Stack direction="row" alignItems="center" height="100%">
-      {getLabel(params.row.companytype)}
+      {getLabel(params.row.companyType)}
     </Stack>
   );
 }
@@ -89,17 +89,21 @@ export function RenderCellProgress({ params }: ParamsProps) {
       height="100%"
       justifyContent="center"
     >
-      <LinearProgress
-        value={(params.row.pamAmount / params.row.amountFinish) * 100}
-        variant="determinate"
-        color={
-          (params.row.inventoryType === 'out of stock' && 'error') ||
-          (params.row.inventoryType === 'low stock' && 'warning') ||
-          'success'
-        }
-        sx={{ mb: 1, height: 6, width: 80 }}
-      />
-      {fPercent((params.row.pamAmount / params.row.amountFinish) * 100)}
+      {params.row.companyType === 'Company' && (
+        <>
+          <LinearProgress
+            value={(params.row.pamAmount / params.row.amountFinish) * 100}
+            variant="determinate"
+            color={
+              (params.row.inventoryType === 'out of stock' && 'error') ||
+              (params.row.inventoryType === 'low stock' && 'warning') ||
+              'success'
+            }
+            sx={{ mb: 1, height: 6, width: 80 }}
+          />
+          {fPercent((params.row.pamAmount / params.row.amountFinish) * 100)}
+        </>
+      )}
     </Stack>
   );
 }

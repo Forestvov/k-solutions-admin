@@ -42,7 +42,9 @@ export const endpoints = {
   company: {
     root: '/company-invest',
     addFile: '/company-invest/file',
+    deleteFile: '/company-invest/file',
     detailList: '/company-invest/detail-type/list',
+    files: '/company-invest/file/list',
   },
   briefcase: {
     page: '/briefcase/page',

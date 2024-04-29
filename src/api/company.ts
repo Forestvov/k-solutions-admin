@@ -7,7 +7,7 @@ import { IProductItem } from 'src/types/product';
 
 import { toBase64 } from '../utils/toBase64';
 import { IPagination } from '../types/pagination';
-import { ICompany, ExtendCompany, IDetailTypeList, ICompanyResponse } from '../types/company';
+import { ExtendCompany, IDetailTypeList, ICompanyResponse } from '../types/company';
 
 // ----------------------------------------------------------------------
 
@@ -17,6 +17,15 @@ interface IData extends ExtendCompany {
 
 const addCompanyFile = async (file: string, companyInvestId: number, fileType: string) => {
   await axios.post(endpoints.company.addFile, { companyInvestId, file, fileType });
+};
+
+export const addEditCompanyFile = async (file: File, companyInvestId: number) => {
+  const fileFormat = await toBase64(file);
+  await addCompanyFile(fileFormat, companyInvestId, 'png');
+};
+
+export const deleteCompanyFile = async (dataId: string) => {
+  await axios.delete(`${endpoints.company.deleteFile}/${dataId}`);
 };
 
 export const createCompany = async (data: IData) => {
@@ -65,13 +74,63 @@ export const createCompany = async (data: IData) => {
 
 // ----------------------------------------------------------------------
 
+export const updateCompany = async (data: IData, briefcaseId: number, companyId: number) => {
+  const formDataCompany = {
+    id: companyId,
+    companyName: data.briefcaseName,
+    companyType: data.companyType,
+    logo: data.logo,
+    descriptions: data.descriptions,
+    companyInvestDetailInputs: data.companyInvestDetailInputs,
+    lang: 'ru',
+  };
+
+  const formDataBrief = {
+    briefcaseId,
+    briefcaseName: data.briefcaseName,
+    briefcaseStatus: 'In progress',
+    amountFinish: data.amountFinish,
+    amountMin: data.amountMin,
+    ranges: data.ranges,
+    percents: data.percents,
+    image: data.image,
+    finishDay: data.finishDay,
+    pampInvestors: data.pampInvestors,
+    pamAmount: data.pamAmount,
+    lang: 'ru',
+  };
+
+  await axios.put(endpoints.company.root, formDataCompany, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  await axios.put(endpoints.briefcase.details, { ...formDataBrief });
+
+  // const { id } = resCompanyInvest.data;
+  // await axios.post(endpoints.briefcase.add, { ...formDataBrief, companyInvestId: id });
+  //
+  // if (data.images.length) {
+  //     const list = Promise.all(data.images.map((file) => toBase64(file)));
+  //     // eslint-disable-next-line @typescript-eslint/no-shadow
+  //     list.then((data) => {
+  //         if (data.length) {
+  //             data.map((file) => addCompanyFile(file, id, 'png'));
+  //         }
+  //     });
+  // }
+};
+
+// ----------------------------------------------------------------------
+
 interface PropList extends IPagination {
-  companytype: string;
+  companyType: string;
   briefcaseStatus: string;
 }
 
 export function useGetCompanies({
-  companytype = '',
+  companyType = '',
   briefcaseStatus = '',
   page,
   pageSize,
@@ -86,7 +145,7 @@ export function useGetCompanies({
         size: pageSize,
         sortDir: 'ASC',
         criteria: [
-          { key: 'companytype', value: companytype },
+          { key: 'companyType', value: companyType },
           { key: 'briefcaseStatus', value: briefcaseStatus },
         ],
       },
@@ -146,7 +205,7 @@ export function useGetCompaniesDetailList() {
 
 // ----------------------------------------------------------------------
 
-export function useGetCompany(id: string) {
+export function useGetBrief(id: string) {
   const URL = `${endpoints.briefcase.details}/${id}`;
 
   const { data, isLoading, error, isValidating } = useSWR<ExtendCompany>(
@@ -170,6 +229,75 @@ export function useGetCompany(id: string) {
       briefLoading: isLoading,
       briefError: error,
       briefValidating: isValidating,
+    }),
+    [data, error, isLoading, isValidating]
+  );
+
+  return memoizedValue;
+}
+
+// ----------------------------------------------------------------------
+
+export function useGetCompany(id: string) {
+  const URL = `${endpoints.company.root}/${id}`;
+
+  const { data, isLoading, error, isValidating } = useSWR<ExtendCompany>(
+    [
+      URL,
+      {},
+      'get',
+      {
+        lang: 'ru',
+      },
+    ],
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
+  );
+
+  const memoizedValue = useMemo(
+    () => ({
+      company: data,
+      companyLoading: isLoading,
+      companyError: error,
+      companyValidating: isValidating,
+    }),
+    [data, error, isLoading, isValidating]
+  );
+
+  return memoizedValue;
+}
+// ----------------------------------------------------------------------
+
+export function useGetFiles(id: string) {
+  const URL = `${endpoints.company.files}/${id}`;
+
+  const { data, isLoading, error, isValidating } = useSWR<File[]>(
+    [
+      URL,
+      {},
+      'get',
+      {
+        lang: 'ru',
+      },
+    ],
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
+  );
+
+  const memoizedValue = useMemo(
+    () => ({
+      files: data?.map((dataFile) =>
+        Object.assign(dataFile, {
+          preview: dataFile.file,
+        })
+      ),
+      filesLoading: isLoading,
+      filesError: error,
+      filesValidating: isValidating,
     }),
     [data, error, isLoading, isValidating]
   );

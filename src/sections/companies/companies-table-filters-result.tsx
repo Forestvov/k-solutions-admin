@@ -28,7 +28,7 @@ export default function CompaniesTableFiltersResult({
   ...other
 }: Props) {
   const handleRemoveCompanyType = useCallback(() => {
-    onFilters('companytype', '');
+    onFilters('companyType', '');
   }, [onFilters]);
 
   // const handleRemovePublish = useCallback(
@@ -50,11 +50,11 @@ export default function CompaniesTableFiltersResult({
       </Box>
 
       <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
-        {!!filters.companytype.length && (
+        {!!filters.companyType.length && (
           <Block label="Категория:">
             <Chip
-              key={filters.companytype}
-              label={getLabel(filters.companytype)}
+              key={filters.companyType}
+              label={getLabel(filters.companyType)}
               size="small"
               onDelete={handleRemoveCompanyType}
             />

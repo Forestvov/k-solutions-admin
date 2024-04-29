@@ -2,7 +2,6 @@ import { useDropzone } from 'react-dropzone';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import { alpha } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -94,30 +93,9 @@ export default function Upload({
   );
 
   const renderMultiPreview = hasFiles && (
-    <>
-      <Box sx={{ my: 3 }}>
-        <MultiFilePreview files={files} thumbnail={thumbnail} onRemove={onRemove} />
-      </Box>
-
-      <Stack direction="row" justifyContent="flex-end" spacing={1.5}>
-        {onRemoveAll && (
-          <Button color="inherit" variant="outlined" size="small" onClick={onRemoveAll}>
-            Remove All
-          </Button>
-        )}
-
-        {onUpload && (
-          <Button
-            size="small"
-            variant="contained"
-            onClick={onUpload}
-            startIcon={<Iconify icon="eva:cloud-upload-fill" />}
-          >
-            Upload
-          </Button>
-        )}
-      </Stack>
-    </>
+    <Box sx={{ my: 3 }}>
+      <MultiFilePreview files={files} thumbnail={thumbnail} onRemove={onRemove} />
+    </Box>
   );
 
   return (

@@ -19,6 +19,7 @@ export interface ITransaction {
   accountId: number;
   transactionType: string;
   transactionStatus: string;
+  transactionLinkType: string;
   transactionDate: string;
   accountTypeName: AccountTypeName;
   email: string;

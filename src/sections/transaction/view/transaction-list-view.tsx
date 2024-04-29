@@ -40,10 +40,10 @@ const TABLE_HEAD = [
   { id: 'username', label: 'Логин', width: 180 },
   { id: 'mail', label: 'Mail', width: 190 },
   { id: 'numberPhone', label: 'Тип транзакции', width: 220 },
-  { id: 'date', label: 'Платежная система', width: 180 },
+  { id: 'transactionLinkType', label: 'Платежная система', width: 180 },
   { id: 'date', label: 'Дата транзакции', width: 180 },
   { id: 'balance', label: 'Сумма', width: 100 },
-  { id: 'status', label: 'Статус', width: 100 },
+  { id: 'transactionStatus', label: 'Статус', width: 100 },
   { id: '', width: 88 },
 ];
 

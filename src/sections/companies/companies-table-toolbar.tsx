@@ -25,7 +25,7 @@ export default function CompaniesTableToolbar({ filters, onFilters }: Props) {
 
   const handleChangeCompany = useCallback(
     (event: SelectChangeEvent<CompanyType>) => {
-      onFilters('companytype', event.target.value);
+      onFilters('companyType', event.target.value);
     },
     [onFilters]
   );
@@ -49,7 +49,7 @@ export default function CompaniesTableToolbar({ filters, onFilters }: Props) {
 
         <Select
           // @ts-ignore
-          value={filters.companytype}
+          value={filters.companyType}
           onChange={handleChangeCompany}
           input={<OutlinedInput label="Тип" />}
           renderValue={(selected) => getLabel(selected)}
@@ -57,7 +57,7 @@ export default function CompaniesTableToolbar({ filters, onFilters }: Props) {
         >
           {companyOptions.map((option) => (
             <MenuItem key={option} value={option}>
-              <Checkbox disableRipple size="small" checked={filters.companytype.includes(option)} />
+              <Checkbox disableRipple size="small" checked={filters.companyType.includes(option)} />
               {getLabel(option)}
             </MenuItem>
           ))}

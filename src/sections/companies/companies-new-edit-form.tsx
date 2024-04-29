@@ -20,18 +20,23 @@ import { paths } from '../../routes/paths';
 import { errorCatcher } from './errorCatcher';
 import { useRouter } from '../../routes/hooks';
 import { toBase64 } from '../../utils/toBase64';
-import { createCompany } from '../../api/company';
 import { ExtendCompany } from '../../types/company';
 import { CompaniesNewEditFormDate } from './companies-new-edit-form-date';
 import { CompaniesNewEditFormDetail } from './companies-new-edit-form-detail';
+import {
+  createCompany,
+  updateCompany,
+  deleteCompanyFile,
+  addEditCompanyFile,
+} from '../../api/company';
 
 // ----------------------------------------------------------------------
 
-type Prop = { currentCompany?: ExtendCompany };
-
 interface FormState extends ExtendCompany {
-  images: File[];
+  images: any;
 }
+
+type Prop = { currentCompany?: ExtendCompany };
 
 export default function CompaniesNewEditForm({ currentCompany }: Prop) {
   const mdUp = useResponsive('up', 'md');
@@ -56,7 +61,7 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
 
   const defaultValues = useMemo(
     () => ({
-      companyType: currentCompany?.briefcaseName || 'Company',
+      companyType: currentCompany?.companyType || 'Company',
       briefcaseName: currentCompany?.briefcaseName || '',
       descriptions: currentCompany?.descriptions || '',
       briefcaseStatus: currentCompany?.briefcaseStatus || '',
@@ -64,12 +69,13 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
       amountMin: currentCompany?.amountMin || '',
       ranges: currentCompany?.ranges || '',
       percents: currentCompany?.percents || '',
-      images: [],
+      // @ts-ignore
+      images: currentCompany?.images || [],
       logo: currentCompany?.logo || '',
-      finishDay: currentCompany?.finishDay || '',
+      finishDay: currentCompany?.finishDay ? new Date(currentCompany.finishDay) : '',
       pampInvestors: currentCompany?.pampInvestors || '',
       pamAmount: currentCompany?.pamAmount || '',
-      companyInvestDetailInputs: currentCompany?.companyInvestDetailInputs || [
+      companyInvestDetailInputs: currentCompany?.companyInvestDetailDtoList || [
         {
           id: '',
           companyInvestDetailTypeId: '',
@@ -126,7 +132,11 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
     }
 
     try {
-      await createCompany(data);
+      if (currentCompany) {
+        await updateCompany(data, currentCompany.briefcaseId, currentCompany.companyInvestId);
+      } else {
+        await createCompany(data);
+      }
       reset();
       enqueueSnackbar(currentCompany ? 'Update success!' : 'Create success!');
       router.push(paths.dashboard.companies.root);
@@ -136,7 +146,11 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
   });
 
   const handleDrop = useCallback(
-    (acceptedFiles: File[]) => {
+    async (acceptedFiles: File[]) => {
+      if (currentCompany) {
+        acceptedFiles.map((file) => addEditCompanyFile(file, currentCompany.companyInvestId));
+      }
+
       const files = values.images || [];
 
       const newFiles = acceptedFiles.map((file) =>
@@ -145,9 +159,9 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
         })
       );
 
-      setValue('images', [...files, ...newFiles], { shouldValidate: true });
+      await setValue('images', [...files, ...newFiles], { shouldValidate: true });
     },
-    [setValue, values.images]
+    [currentCompany, setValue, values.images]
   );
 
   const handleDropSingleFile = useCallback(
@@ -162,16 +176,21 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
   );
 
   const handleRemoveFile = useCallback(
-    (inputFile: File | string) => {
-      const filtered = values.images && values.images?.filter((file) => file !== inputFile);
-      setValue('images', filtered);
+    async (inputFile: File | string) => {
+      if (currentCompany) {
+        // @ts-ignore
+        const filtered = values.images?.filter((file) => file.id !== inputFile.id);
+        // @ts-ignore
+        await deleteCompanyFile(inputFile.id);
+        await setValue('images', filtered);
+      } else {
+        // @ts-ignore
+        const filtered = values.images && values.images?.filter((file) => file !== inputFile);
+        setValue('images', filtered);
+      }
     },
-    [setValue, values.images]
+    [currentCompany, setValue, values.images]
   );
-
-  const handleRemoveAllFiles = useCallback(() => {
-    setValue('images', []);
-  }, [setValue]);
 
   const renderDetails = (
     <>
@@ -369,7 +388,6 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
               maxSize={3145728}
               onDrop={handleDrop}
               onRemove={handleRemoveFile}
-              onRemoveAll={handleRemoveAllFiles}
               onUpload={() => console.info('ON UPLOAD')}
             />
           </Stack>

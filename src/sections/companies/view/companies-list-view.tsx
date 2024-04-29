@@ -29,12 +29,13 @@ import Iconify from 'src/components/iconify';
 import { useSnackbar } from 'src/components/snackbar';
 import EmptyContent from 'src/components/empty-content';
 import { ConfirmDialog } from 'src/components/custom-dialog';
+import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import { IPagination } from '../../../types/pagination';
+import { IPagination } from 'src/types/pagination';
+import { ICompany, ICompanyTableFilters } from 'src/types/company';
+
 import CompaniesTableToolbar from '../companies-table-toolbar';
-import { useSettingsContext } from '../../../components/settings';
-import { ICompany, ICompanyTableFilters } from '../../../types/company';
 import CompaniesTableFiltersResult from '../companies-table-filters-result';
 import {
   RenderCellPrice,
@@ -60,7 +61,7 @@ const PUBLISH_OPTIONS = [
 
 const defaultFilters: ICompanyTableFilters = {
   briefcaseStatus: '',
-  companytype: '',
+  companyType: '',
 };
 
 const HIDE_COLUMNS = {
@@ -98,7 +99,7 @@ export default function CompaniesListView() {
     pageInfo: { hasNextPage, total },
   } = useGetCompanies({
     ...paginationModel,
-    companytype: filters.companytype,
+    companyType: filters.companyType,
     briefcaseStatus: filters.briefcaseStatus,
   });
 
@@ -133,8 +134,8 @@ export default function CompaniesListView() {
   }, [enqueueSnackbar, selectedRowIds, tableData]);
 
   const handleEditRow = useCallback(
-    (id: string) => {
-      router.push(paths.dashboard.companies.edit(id));
+    (id: string, companyId: string) => {
+      router.push(`${paths.dashboard.companies.edit(id)}?companyId=${companyId}`);
     },
     [router]
   );
@@ -247,7 +248,7 @@ export default function CompaniesListView() {
           showInMenu
           icon={<Iconify icon="solar:pen-bold" />}
           label="Edit"
-          onClick={() => handleEditRow(params.row.id)}
+          onClick={() => handleEditRow(params.row.id, params.row.companyInvestId)}
         />,
       ],
     },

@@ -12,7 +12,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import Iconify from 'src/components/iconify';
 
-import {ITransactionTableFilters} from "src/types/transaction";
+import { ITransactionTableFilters } from 'src/types/transaction';
 
 // ----------------------------------------------------------------------
 
@@ -74,7 +74,11 @@ export default function P2pTableToolbar({ filters, onFilters }: Props) {
         >
           {roleOptions.map((option) => (
             <MenuItem key={option} value={option}>
-              <Checkbox disableRipple size="small" checked={filters.transactionStatus.includes(option)} />
+              <Checkbox
+                disableRipple
+                size="small"
+                checked={filters.transactionStatus.includes(option)}
+              />
               {option}
             </MenuItem>
           ))}

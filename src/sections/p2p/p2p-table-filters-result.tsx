@@ -29,7 +29,6 @@ export default function P2pTableFiltersResult({
   //   onFilters('role', '');
   // }, [onFilters]);
 
-
   return (
     <Stack spacing={1.5} {...other}>
       <Box sx={{ typography: 'body2' }}>

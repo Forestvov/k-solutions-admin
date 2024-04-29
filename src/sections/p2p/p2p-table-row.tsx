@@ -26,16 +26,9 @@ const USER_STATUS: Record<string, string> = {
 };
 
 export default function P2pTableRow({ row, selected, onSelectRow, updateTable }: Props) {
-  const {
-    fio,
-    transactionDate,
-    username,
-    amount,
-    email,
-    transactionStatus
-  } = row;
+  const { fio, transactionDate, username, amount, email, transactionStatus } = row;
 
-    console.log(updateTable)
+  console.log(updateTable);
 
   return (
     <TableRow hover selected={selected}>
