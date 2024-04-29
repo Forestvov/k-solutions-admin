@@ -1,4 +1,4 @@
-import { useState, useCallback, ChangeEvent } from 'react';
+import { useState, useCallback } from 'react';
 
 import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
@@ -7,8 +7,8 @@ import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-import { CompanyType, ICompanyTableFilters } from '../../types/company';
 import getLabel from './get-label';
+import { CompanyType, ICompanyTableFilters } from '../../types/company';
 
 // ----------------------------------------------------------------------
 
@@ -64,30 +64,30 @@ export default function CompaniesTableToolbar({ filters, onFilters }: Props) {
         </Select>
       </FormControl>
 
-      {/*<FormControl*/}
-      {/*  sx={{*/}
-      {/*    flexShrink: 0,*/}
-      {/*    width: { xs: 1, md: 200 },*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  <InputLabel>Все</InputLabel>*/}
+      {/* <FormControl */}
+      {/*  sx={{ */}
+      {/*    flexShrink: 0, */}
+      {/*    width: { xs: 1, md: 200 }, */}
+      {/*  }} */}
+      {/* > */}
+      {/*  <InputLabel>Все</InputLabel> */}
 
-      {/*  <Select*/}
-      {/*    value={publish}*/}
-      {/*    onChange={handleChangePublish}*/}
-      {/*    input={<OutlinedInput label="Publish" />}*/}
-      {/*    renderValue={(selected) => selected}*/}
-      {/*    onClose={handleClosePublish}*/}
-      {/*    sx={{ textTransform: 'capitalize' }}*/}
-      {/*  >*/}
-      {/*    {publishOptions.map((option) => (*/}
-      {/*      <MenuItem key={option.value} value={option.value}>*/}
-      {/*        <Checkbox disableRipple size="small" checked={publish.includes(option.value)} />*/}
-      {/*        {option.label}*/}
-      {/*      </MenuItem>*/}
-      {/*    ))}*/}
-      {/*  </Select>*/}
-      {/*</FormControl>*/}
+      {/*  <Select */}
+      {/*    value={publish} */}
+      {/*    onChange={handleChangePublish} */}
+      {/*    input={<OutlinedInput label="Publish" />} */}
+      {/*    renderValue={(selected) => selected} */}
+      {/*    onClose={handleClosePublish} */}
+      {/*    sx={{ textTransform: 'capitalize' }} */}
+      {/*  > */}
+      {/*    {publishOptions.map((option) => ( */}
+      {/*      <MenuItem key={option.value} value={option.value}> */}
+      {/*        <Checkbox disableRipple size="small" checked={publish.includes(option.value)} /> */}
+      {/*        {option.label} */}
+      {/*      </MenuItem> */}
+      {/*    ))} */}
+      {/*  </Select> */}
+      {/* </FormControl> */}
     </>
   );
 }

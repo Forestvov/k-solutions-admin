@@ -31,12 +31,10 @@ import EmptyContent from 'src/components/empty-content';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import { IProductTableFilterValue } from 'src/types/product';
-
-import { ICompany, ICompanyTableFilters } from '../../../types/company';
 import { IPagination } from '../../../types/pagination';
 import CompaniesTableToolbar from '../companies-table-toolbar';
 import { useSettingsContext } from '../../../components/settings';
+import { ICompany, ICompanyTableFilters } from '../../../types/company';
 import CompaniesTableFiltersResult from '../companies-table-filters-result';
 import {
   RenderCellPrice,
@@ -105,7 +103,7 @@ export default function CompaniesListView() {
   });
 
   useEffect(() => {
-      setTableData(companies || []);
+    setTableData(companies || []);
   }, [companies]);
 
   const dataFiltered = applyFilter({
@@ -336,10 +334,7 @@ export default function CompaniesListView() {
               toolbar: () => (
                 <>
                   <GridToolbarContainer>
-                    <CompaniesTableToolbar
-                      filters={filters}
-                      onFilters={handleFilters}
-                    />
+                    <CompaniesTableToolbar filters={filters} onFilters={handleFilters} />
 
                     <GridToolbarQuickFilter placeholder="Поиск" />
 

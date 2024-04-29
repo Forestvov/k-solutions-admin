@@ -8,7 +8,7 @@ import Stack, { StackProps } from '@mui/material/Stack';
 
 import Iconify from 'src/components/iconify';
 
-import { ITransactionTableFilters, ITransactionTableFilterValue } from '../../types/transaction';
+import { ITransactionTableFilters } from '../../types/transaction';
 
 // ----------------------------------------------------------------------
 

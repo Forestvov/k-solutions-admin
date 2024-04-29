@@ -4,8 +4,8 @@ import { paths } from 'src/routes/paths';
 
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
+import CompaniesNewEditForm from '../companies-new-edit-form';
 import { useSettingsContext } from '../../../components/settings';
-import CompaniesNewEditForm from "../companies-new-edit-form";
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ export default function ProductCreateView() {
         }}
       />
 
-       <CompaniesNewEditForm />
+      <CompaniesNewEditForm />
     </Container>
   );
 }

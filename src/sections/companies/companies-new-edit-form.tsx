@@ -16,14 +16,14 @@ import { useResponsive } from 'src/hooks/use-responsive';
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, { RHFSelect, RHFUpload, RHFTextField } from 'src/components/hook-form';
 
+import { paths } from '../../routes/paths';
+import { errorCatcher } from './errorCatcher';
+import { useRouter } from '../../routes/hooks';
 import { toBase64 } from '../../utils/toBase64';
 import { createCompany } from '../../api/company';
 import { ExtendCompany } from '../../types/company';
 import { CompaniesNewEditFormDate } from './companies-new-edit-form-date';
 import { CompaniesNewEditFormDetail } from './companies-new-edit-form-detail';
-import { errorCatcher } from './errorCatcher';
-import { paths } from '../../routes/paths';
-import { useRouter } from '../../routes/hooks';
 
 // ----------------------------------------------------------------------
 

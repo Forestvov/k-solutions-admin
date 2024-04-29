@@ -12,11 +12,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import Iconify from 'src/components/iconify';
 
-import {
-  TransactionType,
-  ITransactionTableFilters,
-  ITransactionTableFilterValue,
-} from '../../types/transaction';
+import { TransactionType, ITransactionTableFilters } from '../../types/transaction';
 
 // ----------------------------------------------------------------------
 

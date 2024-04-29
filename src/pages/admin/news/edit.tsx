@@ -1,7 +1,7 @@
 import { useParams } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 
-import { CompanyEdit } from 'src/sections/companies/view';
+import NewsEditView from 'src/sections/news/view/news-edit-view';
 
 // ----------------------------------------------------------------------
 
@@ -13,10 +13,10 @@ export default function Page() {
   return (
     <>
       <Helmet>
-        <title>Компании</title>
+        <title>Новость</title>
       </Helmet>
 
-      <CompanyEdit id={`${id}`} />
+      <NewsEditView id={`${id}`} />
     </>
   );
 }

@@ -7,7 +7,7 @@ import { IProductItem } from 'src/types/product';
 
 import { toBase64 } from '../utils/toBase64';
 import { IPagination } from '../types/pagination';
-import {ExtendCompany, IDetailTypeList, ICompanyResponse, ICompany} from '../types/company';
+import { ICompany, ExtendCompany, IDetailTypeList, ICompanyResponse } from '../types/company';
 
 // ----------------------------------------------------------------------
 
@@ -54,6 +54,7 @@ export const createCompany = async (data: IData) => {
 
   if (data.images.length) {
     const list = Promise.all(data.images.map((file) => toBase64(file)));
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     list.then((data) => {
       if (data.length) {
         data.map((file) => addCompanyFile(file, id, 'png'));
@@ -145,7 +146,7 @@ export function useGetCompaniesDetailList() {
 
 // ----------------------------------------------------------------------
 
-interface ResponseBrief extends Omit<ICompany, 'id' | 'companytype'>{}
+interface ResponseBrief extends Omit<ICompany, 'id' | 'companytype'> {}
 
 export function useGetCompany(id: string) {
   const URL = `${endpoints.briefcase.details}/${id}`;

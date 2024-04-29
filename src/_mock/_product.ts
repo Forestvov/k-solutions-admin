@@ -46,7 +46,6 @@ export const PRODUCT_SIZE_OPTIONS = [
   { value: '13', label: '13' },
 ];
 
-
 export const PRODUCT_PUBLISH_OPTIONS = [
   {
     value: 'published',

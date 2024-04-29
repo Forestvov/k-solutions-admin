@@ -17,16 +17,16 @@ export const fetcher = async (args: string) => {
   const [url, payload, method = 'get', headers = {}] = Array.isArray(args) ? args : [args];
 
   if (method.toLowerCase() === 'post') {
-    const res = await axiosInstance.post(url, payload, {headers});
+    const res = await axiosInstance.post(url, payload, { headers });
     return res.data;
   }
 
   if (method.toLowerCase() === 'put') {
-    const res = await axiosInstance.put(url, payload, {headers});
+    const res = await axiosInstance.put(url, payload, { headers });
     return res.data;
   }
 
-  const res = await axiosInstance.get(url, {headers});
+  const res = await axiosInstance.get(url, { headers });
   return res.data;
 };
 
@@ -74,5 +74,10 @@ export const endpoints = {
   transaction: {
     list: '/transaction/history',
     update: '/transaction',
+  },
+  news: {
+    list: '/news/page',
+    page: '/news',
+    update: '/news',
   },
 };

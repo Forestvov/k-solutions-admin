@@ -4,9 +4,9 @@ import { paths } from 'src/routes/paths';
 
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
+import { useGetCompany } from '../../../api/company';
+import CompaniesNewEditForm from '../companies-new-edit-form';
 import { useSettingsContext } from '../../../components/settings';
-import CompaniesNewEditForm from "../companies-new-edit-form";
-import {useGetCompany} from "../../../api/company";
 
 // ----------------------------------------------------------------------
 
@@ -14,13 +14,12 @@ type Props = {
   id: string;
 };
 
-
 export default function ProductEditView({ id }: Props) {
   const settings = useSettingsContext();
 
-  const {brief} = useGetCompany(id)
+  const { brief } = useGetCompany(id);
 
-  console.log(brief)
+  console.log(brief);
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
@@ -42,7 +41,7 @@ export default function ProductEditView({ id }: Props) {
         }}
       />
 
-       <CompaniesNewEditForm currentCompany={brief}/>
+      <CompaniesNewEditForm currentCompany={brief} />
     </Container>
   );
 }

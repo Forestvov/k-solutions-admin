@@ -10,6 +10,7 @@ import { fDate, fTimestamp } from 'src/utils/format-time';
 import { fPercent, fCurrency } from 'src/utils/format-number';
 
 import Label from 'src/components/label';
+
 import getLabel from './get-label';
 
 // ----------------------------------------------------------------------

@@ -43,7 +43,7 @@ const ICONS = {
 
 // ----------------------------------------------------------------------
 
-export function   useNavData() {
+export function useNavData() {
   const data = useMemo(
     () => [
       // ----------------------------------------------------------------------
@@ -90,6 +90,15 @@ export function   useNavData() {
             path: paths.dashboard.p2p.list,
             icon: ICONS.order,
             children: [{ title: 'Список', path: paths.dashboard.p2p.list }],
+          },
+          {
+            title: 'События',
+            path: paths.dashboard.news.root,
+            icon: ICONS.blog,
+            children: [
+              { title: 'Список', path: paths.dashboard.news.root },
+              { title: 'Создать новую', path: paths.dashboard.news.create },
+            ],
           },
         ],
       },
