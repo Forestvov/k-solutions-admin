@@ -31,7 +31,7 @@ import EmptyContent from 'src/components/empty-content';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import { IProductTableFilters, IProductTableFilterValue } from 'src/types/product';
+import { IProductTableFilterValue } from 'src/types/product';
 
 import { ICompany, ICompanyTableFilters } from '../../../types/company';
 import { IPagination } from '../../../types/pagination';
@@ -115,7 +115,7 @@ export default function CompaniesListView() {
 
   const canReset = !isEqual(defaultFilters, filters);
 
-  const handleFilters = useCallback((name: string, value: IProductTableFilterValue) => {
+  const handleFilters = useCallback((name: string, value: string) => {
     setFilters((prevState) => ({
       ...prevState,
       [name]: value,
@@ -125,17 +125,6 @@ export default function CompaniesListView() {
   const handleResetFilters = useCallback(() => {
     setFilters(defaultFilters);
   }, []);
-
-  const handleDeleteRow = useCallback(
-    (id: number) => {
-      const deleteRow = tableData.filter((row) => row.briefcaseId !== id);
-
-      enqueueSnackbar('Delete success!');
-
-      setTableData(deleteRow);
-    },
-    [enqueueSnackbar, tableData]
-  );
 
   const handleDeleteRows = useCallback(() => {
     const deleteRows = tableData.filter((row) => !selectedRowIds.includes(row.briefcaseId));
@@ -148,13 +137,6 @@ export default function CompaniesListView() {
   const handleEditRow = useCallback(
     (id: string) => {
       router.push(paths.dashboard.companies.edit(id));
-    },
-    [router]
-  );
-
-  const handleViewRow = useCallback(
-    (id: string) => {
-      router.push(paths.dashboard.companies.details(id));
     },
     [router]
   );
@@ -258,30 +240,16 @@ export default function CompaniesListView() {
       align: 'right',
       headerAlign: 'right',
       width: 80,
+      editable: false,
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
       getActions: (params) => [
         <GridActionsCellItem
           showInMenu
-          icon={<Iconify icon="solar:eye-bold" />}
-          label="View"
-          onClick={() => handleViewRow(params.row.id)}
-        />,
-        <GridActionsCellItem
-          showInMenu
           icon={<Iconify icon="solar:pen-bold" />}
           label="Edit"
           onClick={() => handleEditRow(params.row.id)}
-        />,
-        <GridActionsCellItem
-          showInMenu
-          icon={<Iconify icon="solar:trash-bin-trash-bold" />}
-          label="Delete"
-          onClick={() => {
-            handleDeleteRow(params.row.id);
-          }}
-          sx={{ color: 'error.main' }}
         />,
       ],
     },

@@ -5,19 +5,19 @@ import axios, { fetcher, endpoints } from 'src/utils/axios';
 
 import { IProductItem } from 'src/types/product';
 
+import { toBase64 } from '../utils/toBase64';
 import { IPagination } from '../types/pagination';
-import { ExtendCompany, IDetailTypeList, ICompanyResponse } from '../types/company';
-import {toBase64} from "../utils/toBase64";
+import {ExtendCompany, IDetailTypeList, ICompanyResponse, ICompany} from '../types/company';
 
 // ----------------------------------------------------------------------
 
 interface IData extends ExtendCompany {
-  images: File[]
+  images: File[];
 }
 
 const addCompanyFile = async (file: string, companyInvestId: number, fileType: string) => {
-  await axios.post(endpoints.company.addFile, {companyInvestId, file, fileType})
-}
+  await axios.post(endpoints.company.addFile, { companyInvestId, file, fileType });
+};
 
 export const createCompany = async (data: IData) => {
   const formDataCompany = {
@@ -43,7 +43,6 @@ export const createCompany = async (data: IData) => {
     lang: 'ru',
   };
 
-
   const resCompanyInvest = await axios.post(endpoints.company.root, formDataCompany, {
     headers: {
       'Content-Type': 'application/json',
@@ -53,15 +52,14 @@ export const createCompany = async (data: IData) => {
   const { id } = resCompanyInvest.data;
   await axios.post(endpoints.briefcase.add, { ...formDataBrief, companyInvestId: id });
 
-  if( data.images.length ) {
-    const list = Promise.all(data.images.map(file => toBase64(file)))
+  if (data.images.length) {
+    const list = Promise.all(data.images.map((file) => toBase64(file)));
     list.then((data) => {
-      if(data.length) {
-        data.map((file) => addCompanyFile(file, id, 'png'))
+      if (data.length) {
+        data.map((file) => addCompanyFile(file, id, 'png'));
       }
-    })
+    });
   }
-
 };
 
 // ----------------------------------------------------------------------
@@ -147,19 +145,34 @@ export function useGetCompaniesDetailList() {
 
 // ----------------------------------------------------------------------
 
-export function useGetProduct(productId: string) {
-  const URL = productId ? [endpoints.product.details, { params: { productId } }] : '';
+interface ResponseBrief extends Omit<ICompany, 'id' | 'companytype'>{}
 
-  const { data, isLoading, error, isValidating } = useSWR(URL, fetcher);
+export function useGetCompany(id: string) {
+  const URL = `${endpoints.briefcase.details}/${id}`;
+
+  const { data, isLoading, error, isValidating } = useSWR<ResponseBrief>(
+    [
+      URL,
+      {},
+      'get',
+      {
+        lang: 'ru',
+      },
+    ],
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
+  );
 
   const memoizedValue = useMemo(
     () => ({
-      product: data?.product as IProductItem,
-      productLoading: isLoading,
-      productError: error,
-      productValidating: isValidating,
+      brief: data,
+      briefLoading: isLoading,
+      briefError: error,
+      briefValidating: isValidating,
     }),
-    [data?.product, error, isLoading, isValidating]
+    [data, error, isLoading, isValidating]
   );
 
   return memoizedValue;

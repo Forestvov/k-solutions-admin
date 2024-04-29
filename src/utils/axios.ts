@@ -14,19 +14,19 @@ axiosInstance.interceptors.response.use(
 export default axiosInstance;
 
 export const fetcher = async (args: string) => {
-  const [url, payload, method = 'get'] = Array.isArray(args) ? args : [args];
+  const [url, payload, method = 'get', headers = {}] = Array.isArray(args) ? args : [args];
 
   if (method.toLowerCase() === 'post') {
-    const res = await axiosInstance.post(url, payload);
+    const res = await axiosInstance.post(url, payload, {headers});
     return res.data;
   }
 
   if (method.toLowerCase() === 'put') {
-    const res = await axiosInstance.put(url, payload);
+    const res = await axiosInstance.put(url, payload, {headers});
     return res.data;
   }
 
-  const res = await axiosInstance.get(url);
+  const res = await axiosInstance.get(url, {headers});
   return res.data;
 };
 

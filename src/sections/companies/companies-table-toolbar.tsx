@@ -1,4 +1,4 @@
-import {useState, useCallback, ChangeEvent} from 'react';
+import { useState, useCallback, ChangeEvent } from 'react';
 
 import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
@@ -7,31 +7,27 @@ import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-import { IProductTableFilters, IProductTableFilterValue } from 'src/types/product';
-import {CompanyType, ICompanyTableFilters} from "../../types/company";
-import getLabel from "./get-label";
+import { CompanyType, ICompanyTableFilters } from '../../types/company';
+import getLabel from './get-label';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   filters: ICompanyTableFilters;
-  onFilters: (name: string, value: IProductTableFilterValue) => void;
+  onFilters: (name: string, value: string) => void;
 };
 
-const companyOptions: CompanyType[] = ['Franchise', 'Company']
-const publishOptions = ['published', 'ker']
+const companyOptions: CompanyType[] = ['Franchise', 'Company'];
+const publishOptions = ['published', 'ker'];
 
-export default function CompaniesTableToolbar({
-  filters,
-  onFilters,
-}: Props) {
+export default function CompaniesTableToolbar({ filters, onFilters }: Props) {
   const [publish, setPublish] = useState<string>(filters.briefcaseStatus);
 
   const handleChangeCompany = useCallback(
-      (event: SelectChangeEvent<CompanyType>) => {
-        onFilters('companytype', event.target.value);
-      },
-      [onFilters]
+    (event: SelectChangeEvent<CompanyType>) => {
+      onFilters('companytype', event.target.value);
+    },
+    [onFilters]
   );
 
   const handleChangePublish = useCallback((event: SelectChangeEvent<string>) => {
@@ -40,7 +36,6 @@ export default function CompaniesTableToolbar({
     } = event;
     setPublish(value);
   }, []);
-
 
   return (
     <>

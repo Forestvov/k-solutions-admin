@@ -13,6 +13,10 @@ const PageTwo = lazy(() => import('src/pages/admin/two'));
 const PageThree = lazy(() => import('src/pages/admin/three'));
 const PageCompanies = lazy(() => import('src/pages/admin/companies/list'));
 const PageCompaniesCreate = lazy(() => import('src/pages/admin/companies/new'));
+const PageCompaniesEdit = lazy(() => import('src/pages/admin/companies/edit'));
+
+// p2p
+const P2pListPage = lazy(() => import('src/pages/admin/p2p/list'));
 
 // USER
 const UserListPage = lazy(() => import('src/pages/admin/user/list'));
@@ -42,6 +46,7 @@ export const dashboardRoutes = [
         children: [
           { element: <PageCompanies />, index: true },
           { path: 'create', element: <PageCompaniesCreate /> },
+          { path: ':id/edit', element: <PageCompaniesEdit /> },
         ],
       },
       {
@@ -51,6 +56,10 @@ export const dashboardRoutes = [
       {
         path: 'transaction',
         children: [{ path: 'list', element: <TransactionListPage />, index: true }],
+      },
+      {
+        path: 'p2p',
+        children: [{ path: 'list', element: <P2pListPage />, index: true }],
       },
     ],
   },

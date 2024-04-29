@@ -8,66 +8,54 @@ import Stack, { StackProps } from '@mui/material/Stack';
 
 import Iconify from 'src/components/iconify';
 
-import getLabel from "./get-label";
-import { ICompanyTableFilters } from '../../types/company';
+import { IUserTableFilters, IUserTableFilterValue } from 'src/types/user';
 
 // ----------------------------------------------------------------------
 
 type Props = StackProps & {
-  filters: ICompanyTableFilters;
-  onFilters: (name: string, value: string) => void;
+  filters: IUserTableFilters;
+  onFilters: (name: string, value: IUserTableFilterValue) => void;
+  //
   onResetFilters: VoidFunction;
+  //
   results: number;
 };
 
-export default function CompaniesTableFiltersResult({
+export default function P2pTableFiltersResult({
   filters,
   onFilters,
   onResetFilters,
   results,
   ...other
 }: Props) {
-  const handleRemoveCompanyType = useCallback(() => {
-    onFilters('companytype', '');
+  const handleRemoveRole = useCallback(() => {
+    onFilters('role', '');
   }, [onFilters]);
 
-  // const handleRemovePublish = useCallback(
-  //   (inputValue: string) => {
-  //     const newValue = filters.publish.filter((item) => item !== inputValue);
-  //
-  //     onFilters('publish', newValue);
-  //   },
-  //   [filters.publish, onFilters]
-  // );
+  if (!filters.role.length) {
+    return null;
+  }
 
   return (
     <Stack spacing={1.5} {...other}>
       <Box sx={{ typography: 'body2' }}>
         <strong>{results}</strong>
         <Box component="span" sx={{ color: 'text.secondary', ml: 0.25 }}>
-            результатов найдено
+          найдено:
         </Box>
       </Box>
 
       <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
-        {!!filters.companytype.length && (
-          <Block label="Категория:">
-            <Chip key={filters.companytype} label={getLabel(filters.companytype)} size="small" onDelete={handleRemoveCompanyType} />
+        {!!filters.role.length && (
+          <Block label="Role:">
+            <Chip
+              key={filters.role}
+              label={filters.role}
+              size="small"
+              onDelete={handleRemoveRole}
+            />
           </Block>
         )}
-
-        {/* {!!filters.publish.length && ( */}
-        {/*  <Block label="Publish:"> */}
-        {/*    {filters.publish.map((item) => ( */}
-        {/*      <Chip */}
-        {/*        key={item} */}
-        {/*        label={item} */}
-        {/*        size="small" */}
-        {/*        onDelete={() => handleRemovePublish(item)} */}
-        {/*      /> */}
-        {/*    ))} */}
-        {/*  </Block> */}
-        {/* )} */}
 
         <Button
           color="error"

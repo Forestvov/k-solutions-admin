@@ -22,7 +22,7 @@ import {
 
 type Props = {
   filters: ITransactionTableFilters;
-  onFilters: (name: string, value: ITransactionTableFilterValue) => void;
+  onFilters: (name: string, value: string) => void;
 };
 
 const transactionTypeOptions = ['In', 'Out'];

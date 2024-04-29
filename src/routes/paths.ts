@@ -25,11 +25,13 @@ export const paths = {
     companies: {
       root: `${ROOTS.DASHBOARD}/companies`,
       create: `${ROOTS.DASHBOARD}/companies/create`,
-      details: (id: string) => `${ROOTS.DASHBOARD}/companies/${id}`,
       edit: (id: string) => `${ROOTS.DASHBOARD}/companies/${id}/edit`,
     },
     transaction: {
       root: `${ROOTS.DASHBOARD}/transaction/list`,
+    },
+    p2p: {
+      list: `${ROOTS.DASHBOARD}/p2p/list`,
     },
     user: {
       list: `${ROOTS.DASHBOARD}/user/list`,

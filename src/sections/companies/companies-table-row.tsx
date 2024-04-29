@@ -120,7 +120,7 @@ export function RenderCellProduct({ params }: ParamsProps) {
             noWrap
             color="inherit"
             variant="subtitle2"
-            onClick={params.row.onViewRow}
+            onClick={params.row.briefcaseId}
             sx={{ cursor: 'pointer' }}
           >
             {params.row.briefcaseName}

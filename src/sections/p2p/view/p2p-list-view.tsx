@@ -27,21 +27,24 @@ import {
 } from 'src/components/table';
 
 import { ITransaction, ITransactionTableFilters } from 'src/types/transaction';
-import TransactionTableRow from '../transaction-table-row';
+
+import TransactionTableRow from '../p2p-table-row';
+import TransactionTableToolbar from '../p2p-table-toolbar';
 import { useGetTransactionList } from '../../../api/transaction';
-import TransactionTableToolbar from '../transaction-table-toolbar';
-import TransactionTableFiltersResult from '../transaction-table-filters-result';
+import TransactionTableFiltersResult from '../p2p-table-filters-result';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
   { id: 'fio', label: 'Фио', width: 180 },
-  { id: 'username', label: 'Логин', width: 180 },
-  { id: 'mail', label: 'Mail', width: 190 },
-  { id: 'numberPhone', label: 'Тип транзакции', width: 220 },
-  { id: 'date', label: 'Платежная система', width: 180 },
-  { id: 'date', label: 'Дата транзакции', width: 180 },
-  { id: 'balance', label: 'Сумма', width: 100 },
+  { id: 'username', label: 'Логин', width: 160 },
+  { id: 'mail', label: 'Mail', width: 150 },
+  { id: 'mail', label: 'Дата заявки оредра', width: 180 },
+  { id: 'numberPhone', label: 'Банк', width: 150 },
+  { id: 'date', label: 'Сумма отправки ₽', width: 180 },
+  { id: 'date1', label: 'Сумма получения USDT', width: 180 },
+  { id: 'balance', label: 'Время для выдачи реквизитов', width: 80 },
+  { id: 'status1', label: 'Время для оплаты', width: 100 },
   { id: 'status', label: 'Статус', width: 100 },
   { id: '', width: 88 },
 ];
@@ -76,6 +79,7 @@ export default function TransactionListView() {
     transactionStatus: filters.transactionStatus,
     transactionType: filters.transactionType,
     typePay: filters.typePay,
+    // typePay: 'p2pp2p',
   });
 
   const updateTable = () => {
@@ -202,10 +206,10 @@ export default function TransactionListView() {
 // ----------------------------------------------------------------------
 
 function applyFilter({
-  inputData,
-  comparator,
-  filters,
-}: {
+                       inputData,
+                       comparator,
+                       filters,
+                     }: {
   inputData: ITransaction[];
   comparator: (a: any, b: any) => number;
   filters: ITransactionTableFilters;

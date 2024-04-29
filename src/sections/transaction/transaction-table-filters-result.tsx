@@ -14,7 +14,7 @@ import { ITransactionTableFilters, ITransactionTableFilterValue } from '../../ty
 
 type Props = StackProps & {
   filters: ITransactionTableFilters;
-  onFilters: (name: string, value: ITransactionTableFilterValue) => void;
+  onFilters: (name: string, value: string) => void;
   onResetFilters: VoidFunction;
   results: number;
 };
