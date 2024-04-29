@@ -12,6 +12,7 @@ import { fPercent, fCurrency } from 'src/utils/format-number';
 import Label from 'src/components/label';
 
 import getLabel from './get-label';
+import getLabelStatus from './get-label-status';
 
 // ----------------------------------------------------------------------
 
@@ -61,11 +62,22 @@ export function RenderCellRanges({ params }: ParamsProps) {
 }
 
 export function RenderCellPublish({ params }: ParamsProps) {
+  const status = params.row.briefcaseStatus;
   return (
     <Stack direction="row" alignItems="center" height="100%">
-      <Label variant="soft" color={(params.row.publish === 'published' && 'info') || 'default'}>
-        {params.row.briefcaseStatus}
-      </Label>
+      {status && (
+        <Label
+          variant="soft"
+          color={
+            (status === 'Loan payed' && 'success') ||
+            (status === 'In progress' && 'warning') ||
+            (status === 'Collection completed' && 'info') ||
+            'default'
+          }
+        >
+          {getLabelStatus(status)}
+        </Label>
+      )}
     </Stack>
   );
 }

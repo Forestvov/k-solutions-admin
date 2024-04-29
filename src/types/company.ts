@@ -13,12 +13,13 @@ export interface ICompanyResponse {
 }
 
 export type CompanyType = 'Company' | 'Franchise' | '';
+export type StatusType = 'In progress' | 'Collection completed' | 'Loan payed' | ''
 
 export interface ICompany {
   id: number;
   briefcaseId: number;
   briefcaseName: string;
-  briefcaseStatus: string;
+  briefcaseStatus: StatusType;
   amountFinish: string | number;
   amountMin: number;
   ranges: number;
@@ -76,5 +77,5 @@ export interface IDetailTypeList {
 
 export type ICompanyTableFilters = {
   companyType: CompanyType;
-  briefcaseStatus: string;
+  briefcaseStatus: StatusType;
 };

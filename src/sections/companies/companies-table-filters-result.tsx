@@ -9,6 +9,7 @@ import Stack, { StackProps } from '@mui/material/Stack';
 import Iconify from 'src/components/iconify';
 
 import getLabel from './get-label';
+import getLabelStatus from './get-label-status';
 import { ICompanyTableFilters } from '../../types/company';
 
 // ----------------------------------------------------------------------
@@ -31,14 +32,9 @@ export default function CompaniesTableFiltersResult({
     onFilters('companyType', '');
   }, [onFilters]);
 
-  // const handleRemovePublish = useCallback(
-  //   (inputValue: string) => {
-  //     const newValue = filters.publish.filter((item) => item !== inputValue);
-  //
-  //     onFilters('publish', newValue);
-  //   },
-  //   [filters.publish, onFilters]
-  // );
+  const handleRemoveCompanyStatus = useCallback(() => {
+    onFilters('briefcaseStatus', '');
+  }, [onFilters]);
 
   return (
     <Stack spacing={1.5} {...other}>
@@ -61,18 +57,16 @@ export default function CompaniesTableFiltersResult({
           </Block>
         )}
 
-        {/* {!!filters.publish.length && ( */}
-        {/*  <Block label="Publish:"> */}
-        {/*    {filters.publish.map((item) => ( */}
-        {/*      <Chip */}
-        {/*        key={item} */}
-        {/*        label={item} */}
-        {/*        size="small" */}
-        {/*        onDelete={() => handleRemovePublish(item)} */}
-        {/*      /> */}
-        {/*    ))} */}
-        {/*  </Block> */}
-        {/* )} */}
+        {!!filters.briefcaseStatus.length && (
+          <Block label="Статус:">
+            <Chip
+              key={filters.briefcaseStatus}
+              label={getLabelStatus(filters.briefcaseStatus)}
+              size="small"
+              onDelete={handleRemoveCompanyStatus}
+            />
+          </Block>
+        )}
 
         <Button
           color="error"

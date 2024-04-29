@@ -337,8 +337,6 @@ export default function CompaniesListView() {
                   <GridToolbarContainer>
                     <CompaniesTableToolbar filters={filters} onFilters={handleFilters} />
 
-                    <GridToolbarQuickFilter placeholder="Поиск" />
-
                     <Stack
                       spacing={1}
                       flexGrow={1}
@@ -373,11 +371,6 @@ export default function CompaniesListView() {
               noRowsOverlay: () => <EmptyContent title="Пусто" />,
               noResultsOverlay: () => <EmptyContent title="Не найдено" />,
             }}
-            // slotProps={{
-            //   columnsPanel: {
-            //     getTogglableColumns,
-            //   },
-            // }}
           />
         </Card>
       </Container>

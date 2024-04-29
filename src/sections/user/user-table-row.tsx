@@ -36,7 +36,7 @@ const USER_STATUS: Record<string, string> = {
 };
 
 export default function UserTableRow({ row, selected, onSelectRow, updateTable }: Props) {
-  const { fio, numberPhone, balance, status, email, registeredDate, userName } = row;
+  const { fio, numberPhone, balance, status, email, registeredDate, userName, role } = row;
 
   const quickEdit = useBoolean();
 
@@ -50,6 +50,7 @@ export default function UserTableRow({ row, selected, onSelectRow, updateTable }
         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
           <ListItemText
             primary={fio ?? 'не указно'}
+            secondary={role === 'Admin' ? 'Администратор' : 'Пользователь'}
             primaryTypographyProps={{ typography: 'body2' }}
           />
         </TableCell>
