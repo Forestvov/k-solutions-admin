@@ -288,10 +288,11 @@ export function useGetFiles(id: string) {
     }
   );
 
-  const memoizedValue = useMemo(
+    const memoizedValue = useMemo(
     () => ({
       files: data?.map((dataFile) =>
         Object.assign(dataFile, {
+        // @ts-ignore
           preview: dataFile.file,
         })
       ),

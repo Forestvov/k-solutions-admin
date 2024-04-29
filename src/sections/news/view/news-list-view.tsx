@@ -23,15 +23,13 @@ const defaultFilters: NewsFilter = {
 };
 
 const NewsListView = () => {
-  const { enqueueSnackbar } = useSnackbar();
-
   const settings = useSettingsContext();
 
   const [filters, setFilters] = useState(defaultFilters);
 
-  const [paginationModel, setPaginationModel] = useState<IPagination>({
+  const [paginationModel] = useState<IPagination>({
     page: 0,
-    pageSize: 30,
+    pageSize: 60,
   });
 
   const handleFilters = useCallback((name: string, value: string) => {
@@ -45,8 +43,6 @@ const NewsListView = () => {
     ...paginationModel,
     lang: filters.lang,
   });
-
-  console.log(news);
 
   return (
     <Container

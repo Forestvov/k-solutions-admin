@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 
 import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
@@ -18,10 +18,10 @@ type Props = {
 };
 
 const companyOptions: CompanyType[] = ['Franchise', 'Company'];
-const publishOptions = ['published', 'ker'];
+// const publishOptions = ['published', 'ker'];
 
 export default function CompaniesTableToolbar({ filters, onFilters }: Props) {
-  const [publish, setPublish] = useState<string>(filters.briefcaseStatus);
+  // const [publish, setPublish] = useState<string>(filters.briefcaseStatus);
 
   const handleChangeCompany = useCallback(
     (event: SelectChangeEvent<CompanyType>) => {
@@ -30,12 +30,12 @@ export default function CompaniesTableToolbar({ filters, onFilters }: Props) {
     [onFilters]
   );
 
-  const handleChangePublish = useCallback((event: SelectChangeEvent<string>) => {
-    const {
-      target: { value },
-    } = event;
-    setPublish(value);
-  }, []);
+  // const handleChangePublish = useCallback((event: SelectChangeEvent<string>) => {
+  //   const {
+  //     target: { value },
+  //   } = event;
+  //   setPublish(value);
+  // }, []);
 
   return (
     <>
