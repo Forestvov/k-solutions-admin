@@ -206,10 +206,10 @@ export default function TransactionListView() {
 // ----------------------------------------------------------------------
 
 function applyFilter({
-                       inputData,
-                       comparator,
-                       filters,
-                     }: {
+  inputData,
+  comparator,
+  filters,
+}: {
   inputData: ITransaction[];
   comparator: (a: any, b: any) => number;
   filters: ITransactionTableFilters;

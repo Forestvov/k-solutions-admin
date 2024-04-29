@@ -21,7 +21,7 @@ type Props = {
   onFilters: (name: string, value: IUserTableFilterValue) => void;
 };
 
-const roleOptions = []
+const roleOptions = [];
 
 export default function P2pTableToolbar({ filters, onFilters }: Props) {
   const handleFilterSearch = useCallback(

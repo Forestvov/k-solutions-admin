@@ -8,7 +8,7 @@ import Stack, { StackProps } from '@mui/material/Stack';
 
 import Iconify from 'src/components/iconify';
 
-import getLabel from "./get-label";
+import getLabel from './get-label';
 import { ICompanyTableFilters } from '../../types/company';
 
 // ----------------------------------------------------------------------
@@ -45,14 +45,19 @@ export default function CompaniesTableFiltersResult({
       <Box sx={{ typography: 'body2' }}>
         <strong>{results}</strong>
         <Box component="span" sx={{ color: 'text.secondary', ml: 0.25 }}>
-            результатов найдено
+          результатов найдено
         </Box>
       </Box>
 
       <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
         {!!filters.companytype.length && (
           <Block label="Категория:">
-            <Chip key={filters.companytype} label={getLabel(filters.companytype)} size="small" onDelete={handleRemoveCompanyType} />
+            <Chip
+              key={filters.companytype}
+              label={getLabel(filters.companytype)}
+              size="small"
+              onDelete={handleRemoveCompanyType}
+            />
           </Block>
         )}
 
