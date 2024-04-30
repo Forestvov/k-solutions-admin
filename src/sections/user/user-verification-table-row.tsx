@@ -1,3 +1,4 @@
+import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
@@ -12,10 +13,6 @@ import Iconify from 'src/components/iconify';
 
 import { IUser } from 'src/types/user';
 
-import { fDate } from '../../utils/format-time';
-import { fNumber } from '../../utils/format-number';
-import UserQuickEditForm from './user-quick-edit-form';
-import Box from '@mui/material/Box';
 import UserPhotoForm from './user-photo-form';
 import UserVerificationQuickEditForm from "./user-verification-quick-edit-form";
 
