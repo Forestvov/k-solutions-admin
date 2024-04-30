@@ -59,14 +59,68 @@ export function useGetUserList({ role = '', email = '', page, pageSize }: PropLi
   return memoizedValue;
 }
 
-// ----------------------------------------------------------------------
+// --------------------------------------
+
+interface VerificationPropList extends IPagination {
+  email: string;
+}
+
+export function useGetVerificationUserList({ page, pageSize, email = '' }: VerificationPropList) {
+  const URL = endpoints.user.list;
+
+  const { data, isLoading, error, isValidating, mutate } = useSWR<IUserResponse>(
+    [
+      URL,
+      {
+        page,
+        size: pageSize,
+        sortDir: 'ASC',
+        criteria: [
+          { key: 'email', value: email },
+          { key: 'status', value: 'Process' },
+        ],
+      },
+      'put',
+    ],
+    fetcher
+  );
+
+  const memoizedValue = useMemo(
+    () => ({
+      users: data?.content || [],
+      pageInfo: {
+        currentPage: data?.number || 0,
+        totalPages: data?.totalPages || 0,
+        totalElements: data?.totalElements || 0,
+      },
+      usersLoading: isLoading,
+      usersError: error,
+      usersValidating: isValidating,
+      usersEmpty: !isLoading && !data?.content.length,
+      mutate,
+    }),
+    [
+      data?.content,
+      data?.number,
+      data?.totalElements,
+      data?.totalPages,
+      error,
+      isLoading,
+      isValidating,
+      mutate,
+    ]
+  );
+
+  return memoizedValue;
+}
 
 export const updateUser = async (data: { [p: string]: any; accountId: number }) => {
   const formDataCompany = {
     accountId: data.accountId,
     status: data.status,
-    role: data.role,
+    role: data.role || 'User',
   };
+
 
   await axios.put(endpoints.user.update, formDataCompany, {
     headers: {

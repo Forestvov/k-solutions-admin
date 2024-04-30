@@ -72,6 +72,7 @@ export const endpoints = {
   user: {
     list: '/account/page',
     update: '/account/update',
+    file: '/account/verification/file',
   },
   transaction: {
     list: '/transaction/history',

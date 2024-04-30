@@ -28,6 +28,7 @@ export interface IUser {
   balance: string;
   role: UserRoleType;
   status: string;
+  files: number[]
 }
 
 export interface Pageable {

@@ -35,7 +35,8 @@ export const paths = {
       edit: (id: string) => `${ROOTS.DASHBOARD}/p2p/${id}/edit`,
     },
     user: {
-      list: `${ROOTS.DASHBOARD}/user/list`,
+      list: `${ROOTS.DASHBOARD}/user`,
+      verification: `${ROOTS.DASHBOARD}/user/verification`,
     },
     news: {
       root: `${ROOTS.DASHBOARD}/news`,
