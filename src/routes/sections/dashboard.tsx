@@ -25,8 +25,12 @@ const NewsEditPage = lazy(() => import('src/pages/admin/news/edit'));
 
 // USER
 const UserListPage = lazy(() => import('src/pages/admin/user/list'));
+
 // Transaction
 const TransactionListPage = lazy(() => import('src/pages/admin/transaction/list'));
+
+// Settings
+const SettingsPage = lazy(() => import('src/pages/admin/settings/root'));
 
 // ----------------------------------------------------------------------
 
@@ -72,6 +76,12 @@ export const dashboardRoutes = [
           { element: <NewsListPage />, index: true },
           { path: 'create', element: <NewsCreatePage /> },
           { path: ':id/edit', element: <NewsEditPage /> },
+        ],
+      },
+      {
+        path: 'settings',
+        children: [
+          { element: <SettingsPage />, index: true, path: 'list' },
         ],
       },
     ],

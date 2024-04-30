@@ -76,6 +76,8 @@ export const endpoints = {
   transaction: {
     list: '/transaction/history',
     update: '/transaction',
+    tokens: 'transaction/get-token-list',
+    save: 'transaction/save-system-token-list'
   },
   news: {
     list: '/news/page',

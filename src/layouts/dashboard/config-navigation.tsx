@@ -100,6 +100,14 @@ export function useNavData() {
               { title: 'Создать новую', path: paths.dashboard.news.create },
             ],
           },
+          {
+            title: 'Настройка системы',
+            path: paths.dashboard.settings.root,
+            icon: ICONS.analytics,
+            children: [
+              { title: 'Конфигурация', path: paths.dashboard.settings.root },
+            ],
+          },
         ],
       },
     ],
