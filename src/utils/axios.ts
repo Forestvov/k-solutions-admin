@@ -75,13 +75,21 @@ export const endpoints = {
   },
   transaction: {
     list: '/transaction/history',
+    page: '/transaction',
     update: '/transaction',
     tokens: 'transaction/get-token-list',
     save: 'transaction/save-system-token-list',
+    p2pCount: 'transaction/get-count-statuses-transaction/p2p',
+    add_requisites: 'transaction/add-requisites',
   },
   news: {
     list: '/news/page',
     page: '/news',
     update: '/news',
+  },
+  settings: {
+    wait_requisites: '/setting/code/p2p.time.wait_requisites',
+    time_accept: '/setting/code/p2p.time.accept',
+    time_process: '/setting/code/p2p.time.process',
   },
 };

@@ -26,34 +26,41 @@ import {
   TablePaginationCustom,
 } from 'src/components/table';
 
-import { ITransaction, ITransactionTableFilters } from 'src/types/transaction';
+import { ITransaction, IP2PTableFilters } from 'src/types/transaction';
 
+import P2PTableTabs from '../p2p-table-tabs';
 import TransactionTableRow from '../p2p-table-row';
 import TransactionTableToolbar from '../p2p-table-toolbar';
-import { useGetTransactionList } from '../../../api/transaction';
+import { useGetTransactionP2pList } from '../../../api/transaction';
 import TransactionTableFiltersResult from '../p2p-table-filters-result';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
   { id: 'fio', label: 'Фио', width: 180 },
-  { id: 'username', label: 'Логин', width: 160 },
-  { id: 'mail', label: 'Mail', width: 150 },
-  { id: 'mail', label: 'Дата заявки оредра', width: 180 },
-  { id: 'numberPhone', label: 'Банк', width: 150 },
-  { id: 'date', label: 'Сумма отправки ₽', width: 180 },
-  { id: 'date1', label: 'Сумма получения USDT', width: 180 },
+  { id: 'username', label: 'Логин', width: 140 },
+  { id: 'email', label: 'Mail', width: 190 },
+  { id: 'transactionDate', label: 'Дата заявки оредра', width: 180 },
+  { id: 'currentName', label: 'Банк', width: 150 },
+  { id: 'amount', label: 'Сумма отправки ₽', width: 180 },
+  { id: 'amountIn', label: 'Сумма получения USDT', width: 180 },
   { id: 'balance', label: 'Время для выдачи реквизитов', width: 80 },
   { id: 'status1', label: 'Время для оплаты', width: 100 },
   { id: 'status', label: 'Статус', width: 100 },
   { id: '', width: 88 },
 ];
 
-const defaultFilters: ITransactionTableFilters = {
+const STATUS_OPTIONS = [
+  { value: 'all', label: 'Все' },
+  { value: 'Wait requisites', label: 'Ожидание реквизитов' },
+  { value: 'Process', label: 'В процессе оплаты' },
+  { value: 'Marked as paid', label: 'Отмеченно как оплаченно' },
+  { value: 'Canceled', label: 'Отклоненные' },
+  { value: 'Success', label: 'Выполненные' },
+];
+
+const defaultFilters: IP2PTableFilters = {
   transactionStatus: '',
-  transactionType: '',
-  typePay: '',
-  email: '',
 };
 
 // ----------------------------------------------------------------------
@@ -73,18 +80,19 @@ export default function TransactionListView() {
     transactions,
     pageInfo: { totalPages, currentPage, totalElements },
     mutate,
-  } = useGetTransactionList({
+  } = useGetTransactionP2pList({
     page: table.page,
     pageSize: table.rowsPerPage,
     transactionStatus: filters.transactionStatus,
-    transactionType: filters.transactionType,
-    typePay: filters.typePay,
-    // typePay: 'p2pp2p',
   });
 
-  const updateTable = () => {
+  const updateTable = useCallback(() => {
     mutate();
-  };
+  }, [mutate]);
+
+  useEffect(() => {
+    setInterval(updateTable, 10000);
+  }, [updateTable]);
 
   useEffect(() => {
     setTableData(transactions || []);
@@ -103,7 +111,7 @@ export default function TransactionListView() {
   const handleFilters = useCallback(
     (name: string, value: string) => {
       table.onResetPage();
-      setFilters((prevState: ITransactionTableFilters) => ({
+      setFilters((prevState: IP2PTableFilters) => ({
         ...prevState,
         [name]: value,
       }));
@@ -126,6 +134,8 @@ export default function TransactionListView() {
       />
 
       <Card>
+        <P2PTableTabs options={STATUS_OPTIONS} onFilters={handleFilters} filters={filters} />
+
         <TransactionTableToolbar filters={filters} onFilters={handleFilters} />
 
         {canReset && (
@@ -178,7 +188,7 @@ export default function TransactionListView() {
               <TableBody>
                 {dataFiltered.map((row) => (
                   <TransactionTableRow
-                    key={row.accountId}
+                    key={row.transactionId}
                     row={row}
                     selected={table.selected.includes(row.accountId.toString())}
                     onSelectRow={() => table.onSelectRow(row.accountId.toString())}
@@ -212,26 +222,26 @@ function applyFilter({
 }: {
   inputData: ITransaction[];
   comparator: (a: any, b: any) => number;
-  filters: ITransactionTableFilters;
+  filters: IP2PTableFilters;
 }) {
-  const { email = '' } = filters;
-
-  const stabilizedThis = inputData.map((el, index) => [el, index] as const);
-
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-
-  inputData = stabilizedThis.map((el) => el[0]);
-
-  if (email) {
-    inputData = inputData.filter(
-      // @ts-ignore
-      (transaction) => transaction.email.toLowerCase().indexOf(email.toLowerCase()) !== -1
-    );
-  }
+  // const { email = '' } = filters;
+  //
+  // const stabilizedThis = inputData.map((el, index) => [el, index] as const);
+  //
+  // stabilizedThis.sort((a, b) => {
+  //   const order = comparator(a[0], b[0]);
+  //   if (order !== 0) return order;
+  //   return a[1] - b[1];
+  // });
+  //
+  // inputData = stabilizedThis.map((el) => el[0]);
+  //
+  // if (email) {
+  //   inputData = inputData.filter(
+  //     // @ts-ignore
+  //     (transaction) => transaction.email.toLowerCase().indexOf(email.toLowerCase()) !== -1
+  //   );
+  // }
 
   return inputData;
 }

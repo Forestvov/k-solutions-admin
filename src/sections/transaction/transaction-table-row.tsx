@@ -70,7 +70,7 @@ export default function TransactionTableRow({ row, selected, onSelectRow, update
         </TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{transactionLinkType}</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(transactionDate)}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(new Date(transactionDate))}</TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>$ {amount ? fNumber(amount) : '0'}</TableCell>
 

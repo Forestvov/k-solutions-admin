@@ -29,8 +29,10 @@ export interface ITransaction {
   fio: string;
   username: string;
   image: string;
-  contact?: string;
-  qrCode?: string;
+  contactFrom: string;
+  contact: string;
+  qrCode: string;
+  amountIn: number;
 }
 
 export interface Pageable {
@@ -62,4 +64,16 @@ export interface ITransactionTableFilters {
   typePay: string;
   transactionType: TransactionType;
   email: '';
+}
+
+export interface CounterResponse {
+  waitRequisitesCount: number;
+  processCount: number;
+  markAsPaidCount: number;
+  cancelledCount: number;
+  successCount: number;
+}
+
+export interface IP2PTableFilters {
+  transactionStatus: string;
 }

@@ -17,6 +17,7 @@ const PageCompaniesEdit = lazy(() => import('src/pages/admin/companies/edit'));
 
 // p2p
 const P2pListPage = lazy(() => import('src/pages/admin/p2p/list'));
+const P2pEditPage = lazy(() => import('src/pages/admin/p2p/edit'));
 
 // news
 const NewsListPage = lazy(() => import('src/pages/admin/news/list'));
@@ -68,7 +69,10 @@ export const dashboardRoutes = [
       },
       {
         path: 'p2p',
-        children: [{ path: 'list', element: <P2pListPage />, index: true }],
+        children: [
+          { element: <P2pListPage />, index: true },
+          { path: ':id/edit', element: <P2pEditPage /> },
+        ],
       },
       {
         path: 'news',

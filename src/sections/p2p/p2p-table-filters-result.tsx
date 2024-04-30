@@ -5,12 +5,12 @@ import Stack, { StackProps } from '@mui/material/Stack';
 
 import Iconify from 'src/components/iconify';
 
-import { ITransactionTableFilters } from 'src/types/transaction';
+import { IP2PTableFilters } from 'src/types/transaction';
 
 // ----------------------------------------------------------------------
 
 type Props = StackProps & {
-  filters: ITransactionTableFilters;
+  filters: IP2PTableFilters;
   onFilters: (name: string, value: string) => void;
   //
   onResetFilters: VoidFunction;
@@ -28,6 +28,10 @@ export default function P2pTableFiltersResult({
   // const handleRemoveRole = useCallback(() => {
   //   onFilters('role', '');
   // }, [onFilters]);
+
+  if (Object.values(results).length < 1) {
+    return null;
+  }
 
   return (
     <Stack spacing={1.5} {...other}>

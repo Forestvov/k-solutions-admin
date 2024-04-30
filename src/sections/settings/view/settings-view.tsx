@@ -15,7 +15,7 @@ import BodyApi from '../body-api';
 const SettingsView = () => {
   const settings = useSettingsContext();
 
-  const [tab, setTab] = useState<SettingTabType>('api');
+  const [tab, setTab] = useState<SettingTabType>('tokens');
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>

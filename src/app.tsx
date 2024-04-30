@@ -15,6 +15,8 @@ import { MotionLazy } from 'src/components/animate/motion-lazy';
 import { SettingsDrawer, SettingsProvider } from 'src/components/settings';
 
 import { AuthProvider } from 'src/auth/context/jwt';
+import { CounterProvider } from 'src/counter/context';
+import { TimerProvider } from './timer/context';
 
 // ----------------------------------------------------------------------
 
@@ -36,9 +38,13 @@ export default function App() {
         >
           <ThemeProvider>
             <MotionLazy>
-              <SettingsDrawer />
-              <ProgressBar />
-              <Router />
+              <TimerProvider>
+                <CounterProvider>
+                  <SettingsDrawer />
+                  <ProgressBar />
+                  <Router />
+                </CounterProvider>
+              </TimerProvider>
             </MotionLazy>
           </ThemeProvider>
         </SettingsProvider>

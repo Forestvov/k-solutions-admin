@@ -9,6 +9,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import { RouterLink } from 'src/routes/components';
 
 import Iconify from '../../iconify';
+import NavItemCounter from './ nav-item-counter';
 import { NavItemProps, NavItemStateProps } from '../types';
 
 // ----------------------------------------------------------------------
@@ -63,7 +64,7 @@ const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
         {title && (
           <Box component="span" sx={{ flex: '1 1 auto', minWidth: 0 }}>
             <Box component="span" className="label">
-              {title}
+              {title === 'p2p' ? <NavItemCounter /> : title}
             </Box>
 
             {caption && (

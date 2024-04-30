@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm, useFieldArray } from 'react-hook-form';
 import { useMemo, useEffect, useCallback } from 'react';
+import { useForm, useFieldArray } from 'react-hook-form';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -97,10 +97,6 @@ const BodyApi = () => {
     });
   };
 
-  const handleRemove = (index: number) => {
-    remove(index);
-  };
-
   if (tokensLoading) {
     return <div />;
   }
@@ -144,16 +140,6 @@ const BodyApi = () => {
                   onDelete={() => setValue(`data[${idx}].qrCode`, '', { shouldValidate: true })}
                 />
               </Stack>
-            </Stack>
-            <Stack spacing={3} sx={{ p: 3 }} alignItems="flex-end">
-              <Button
-                size="small"
-                color="error"
-                startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
-                onClick={() => handleRemove(idx)}
-              >
-                Удалить
-              </Button>
             </Stack>
           </Card>
         ))}

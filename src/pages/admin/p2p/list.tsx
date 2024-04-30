@@ -8,7 +8,7 @@ export default function P2pListPage() {
   return (
     <>
       <Helmet>
-        <title> Админка: p2p Лист</title>
+        <title> p2p Лист</title>
       </Helmet>
 
       <P2PListView />
