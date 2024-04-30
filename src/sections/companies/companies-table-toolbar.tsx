@@ -7,9 +7,10 @@ import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-import {CompanyType, ICompanyTableFilters, StatusType} from 'src/types/company';
+import { StatusType, CompanyType, ICompanyTableFilters } from 'src/types/company';
+
 import getLabel from './get-label';
-import getLabelStatus from "./get-label-status";
+import getLabelStatus from './get-label-status';
 
 // ----------------------------------------------------------------------
 
@@ -103,7 +104,7 @@ export default function CompaniesTableToolbar({ filters, onFilters }: Props) {
                 size="small"
                 checked={filters.briefcaseStatus.includes(option)}
               />
-                {getLabelStatus(option)}
+              {getLabelStatus(option)}
             </MenuItem>
           ))}
         </Select>

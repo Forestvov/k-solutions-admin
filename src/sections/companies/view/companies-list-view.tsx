@@ -13,7 +13,6 @@ import {
   GridActionsCellItem,
   GridToolbarContainer,
   GridRowSelectionModel,
-  GridToolbarQuickFilter,
   GridColumnVisibilityModel,
 } from '@mui/x-data-grid';
 

@@ -13,7 +13,7 @@ export interface ICompanyResponse {
 }
 
 export type CompanyType = 'Company' | 'Franchise' | '';
-export type StatusType = 'In progress' | 'Collection completed' | 'Loan payed' | ''
+export type StatusType = 'In progress' | 'Collection completed' | 'Loan payed' | '';
 
 export interface ICompany {
   id: number;

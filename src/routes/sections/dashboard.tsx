@@ -80,9 +80,7 @@ export const dashboardRoutes = [
       },
       {
         path: 'settings',
-        children: [
-          { element: <SettingsPage />, index: true, path: 'list' },
-        ],
+        children: [{ element: <SettingsPage />, index: true, path: 'list' }],
       },
     ],
   },

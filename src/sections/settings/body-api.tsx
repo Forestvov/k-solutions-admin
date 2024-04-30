@@ -1,39 +1,38 @@
 import * as Yup from 'yup';
-import {useFieldArray, useForm} from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm, useFieldArray } from 'react-hook-form';
 import { useMemo, useEffect, useCallback } from 'react';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 import { toBase64 } from 'src/utils/toBase64';
 
-import {saveTokens, useGetTokens} from 'src/api/settings';
+import { saveTokens, useGetTokens } from 'src/api/settings';
 
+import Iconify from 'src/components/iconify';
 import FormProvider, { RHFSelect, RHFUpload, RHFTextField } from 'src/components/hook-form';
 
 import { SettingToken } from 'src/types/settings';
-import LoadingButton from "@mui/lab/LoadingButton";
-import Button from "@mui/material/Button";
-import Iconify from "src/components/iconify";
 
 const BodyApi = () => {
   const { tokens, tokensLoading } = useGetTokens();
 
   const NewBlogSchema = Yup.object().shape({
-    data: Yup.array()
-      .of(
-        Yup.object().shape({
-          currentName: Yup.string().required('Платежная система обязательна'),
-          value: Yup.string().required('Адрес кошелька обязателен'),
-          transactionLinkType: Yup.string().required('Тип обязателен'),
-          image: Yup.string().required('Лого обязателено'),
-          qrCode: Yup.string().required('Qrcode обязателен'),
-          currencyTypeId: Yup.string(),
-        })
-      )
+    data: Yup.array().of(
+      Yup.object().shape({
+        currentName: Yup.string().required('Платежная система обязательна'),
+        value: Yup.string().required('Адрес кошелька обязателен'),
+        transactionLinkType: Yup.string().required('Тип обязателен'),
+        image: Yup.string().required('Лого обязателено'),
+        qrCode: Yup.string().required('Qrcode обязателен'),
+        currencyTypeId: Yup.string(),
+      })
+    ),
   });
 
   const defaultValues = useMemo<{ data: SettingToken[] }>(
@@ -64,12 +63,11 @@ const BodyApi = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await saveTokens(data.data)
+      await saveTokens(data.data);
     } catch (error) {
       console.error(error);
     }
   });
-
 
   const handleDropSingleFile = useCallback(
     async (acceptedFiles: File[], name: string) => {
@@ -82,7 +80,6 @@ const BodyApi = () => {
     },
     [setValue]
   );
-
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -104,8 +101,8 @@ const BodyApi = () => {
     remove(index);
   };
 
-  if(tokensLoading) {
-    return <div/>
+  if (tokensLoading) {
+    return <div />;
   }
 
   return (
@@ -161,20 +158,25 @@ const BodyApi = () => {
           </Card>
         ))}
       </Stack>
-      <Stack spacing={3} sx={{ p: 5 }} direction="row" alignItems="center" justifyContent="space-between">
+      <Stack
+        spacing={3}
+        sx={{ p: 5 }}
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+      >
         <Button
           size="large"
           color="primary"
-
           startIcon={<Iconify icon="mingcute:add-line" />}
           onClick={handleAdd}
           sx={{ flexShrink: 0 }}
         >
           Добавить описание
         </Button>
-      <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
-        Обновить
-      </LoadingButton>
+        <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
+          Обновить
+        </LoadingButton>
       </Stack>
     </FormProvider>
   );

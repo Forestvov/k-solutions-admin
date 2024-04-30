@@ -10,7 +10,7 @@ import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { SettingTabType } from 'src/types/settings';
 
 import Tabs from '../tabs';
-import BodyApi from "../body-api";
+import BodyApi from '../body-api';
 
 const SettingsView = () => {
   const settings = useSettingsContext();
@@ -31,7 +31,7 @@ const SettingsView = () => {
       />
 
       <Tabs tab={tab} setTab={setTab} />
-        <BodyApi/>
+      <BodyApi />
     </Container>
   );
 };

@@ -77,7 +77,7 @@ export const endpoints = {
     list: '/transaction/history',
     update: '/transaction',
     tokens: 'transaction/get-token-list',
-    save: 'transaction/save-system-token-list'
+    save: 'transaction/save-system-token-list',
   },
   news: {
     list: '/news/page',

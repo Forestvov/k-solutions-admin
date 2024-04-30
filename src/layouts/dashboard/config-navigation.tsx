@@ -104,9 +104,7 @@ export function useNavData() {
             title: 'Настройка системы',
             path: paths.dashboard.settings.root,
             icon: ICONS.analytics,
-            children: [
-              { title: 'Конфигурация', path: paths.dashboard.settings.root },
-            ],
+            children: [{ title: 'Конфигурация', path: paths.dashboard.settings.root }],
           },
         ],
       },

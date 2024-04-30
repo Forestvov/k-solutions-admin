@@ -42,7 +42,7 @@ export const paths = {
       edit: (id: string) => `${ROOTS.DASHBOARD}/news/${id}/edit`,
     },
     settings: {
-      root: `${ROOTS.DASHBOARD}/settings/list`
-    }
+      root: `${ROOTS.DASHBOARD}/settings/list`,
+    },
   },
 };

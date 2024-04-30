@@ -1,15 +1,15 @@
 import { Helmet } from 'react-helmet-async';
 
-import { SettingView } from "src/sections/settings/view";
+import { SettingView } from 'src/sections/settings/view';
 
 export default function SettingsPage() {
-    return (
-        <>
-            <Helmet>
-                <title> Настройки</title>
-            </Helmet>
+  return (
+    <>
+      <Helmet>
+        <title> Настройки</title>
+      </Helmet>
 
-            <SettingView/>
-        </>
-    );
+      <SettingView />
+    </>
+  );
 }

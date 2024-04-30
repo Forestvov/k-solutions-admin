@@ -64,24 +64,24 @@ export function RenderCellRanges({ params }: ParamsProps) {
 export function RenderCellPublish({ params }: ParamsProps) {
   const status = params.row.briefcaseStatus;
 
-    if((params.row.pamAmount / params.row.amountFinish) * 100 > 70) {
-        return (
-            <Stack direction="row" alignItems="center" height="100%">
-                {status && (
-                    <Label
-                        variant="soft"
-                        sx={{
-                            width: '152px',
-                            color: '##6F00DE',
-                            background: '#8E33FF29'
-                        }}
-                    >
-                        Горячее предложение
-                    </Label>
-                )}
-            </Stack>
-        );
-    }
+  if ((params.row.pamAmount / params.row.amountFinish) * 100 > 70) {
+    return (
+      <Stack direction="row" alignItems="center" height="100%">
+        {status && (
+          <Label
+            variant="soft"
+            sx={{
+              width: '152px',
+              color: '##6F00DE',
+              background: '#8E33FF29',
+            }}
+          >
+            Горячее предложение
+          </Label>
+        )}
+      </Stack>
+    );
+  }
 
   return (
     <Stack direction="row" alignItems="center" height="100%">
