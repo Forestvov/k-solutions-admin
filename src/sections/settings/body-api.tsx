@@ -39,7 +39,7 @@ const BodyApi = () => {
     () => ({
       data: tokens,
     }),
-    []
+    [tokens]
   );
 
   const methods = useForm({
@@ -81,7 +81,7 @@ const BodyApi = () => {
     [setValue]
   );
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append } = useFieldArray({
     control,
     name: 'data',
   });

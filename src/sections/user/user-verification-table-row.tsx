@@ -41,7 +41,7 @@ export default function UserVerificationTableRow({
   onSelectRow,
   updateTable,
 }: Props) {
-  const { fio, numberPhone, balance, status, email, registeredDate, userName, role } = row;
+  const { fio, numberPhone,  status, email,  userName, role } = row;
 
   const quickEdit = useBoolean();
   const openPhotoFirst = useBoolean();

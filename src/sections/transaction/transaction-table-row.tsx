@@ -38,7 +38,6 @@ export default function TransactionTableRow({ row, selected, onSelectRow, update
     amount,
     transactionStatus,
     email,
-    typePay,
     transactionDate,
     username,
     transactionType,

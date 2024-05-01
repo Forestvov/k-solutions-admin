@@ -1,7 +1,7 @@
-import { useCallback } from 'react';
+// import { useCallback } from 'react';
 
 import Stack from '@mui/material/Stack';
-import { SelectChangeEvent } from '@mui/material/Select';
+// import { SelectChangeEvent } from '@mui/material/Select';
 
 import { IP2PTableFilters } from 'src/types/transaction';
 
@@ -12,22 +12,22 @@ type Props = {
   onFilters: (name: string, value: string) => void;
 };
 
-const roleOptions: string[] = [''];
+// const roleOptions: string[] = [''];
 
 export default function P2pTableToolbar({ filters, onFilters }: Props) {
-  const handleFilterSearch = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      onFilters('email', event.target.value);
-    },
-    [onFilters]
-  );
-
-  const handleFilterRole = useCallback(
-    (event: SelectChangeEvent<string>) => {
-      onFilters('role', event.target.value);
-    },
-    [onFilters]
-  );
+  // const handleFilterSearch = useCallback(
+  //   (event: React.ChangeEvent<HTMLInputElement>) => {
+  //     onFilters('email', event.target.value);
+  //   },
+  //   [onFilters]
+  // );
+  //
+  // const handleFilterRole = useCallback(
+  //   (event: SelectChangeEvent<string>) => {
+  //     onFilters('role', event.target.value);
+  //   },
+  //   [onFilters]
+  // );
 
   // @ts-ignore
   return (
