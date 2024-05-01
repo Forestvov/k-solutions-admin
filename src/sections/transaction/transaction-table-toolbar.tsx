@@ -57,7 +57,7 @@ export default function TransactionTableToolbar({ filters, onFilters }: Props) {
 
   const handleFilterTypePay = useCallback(
     (event: SelectChangeEvent<string>) => {
-      onFilters('typePay', event.target.value);
+      onFilters('transactionLinkType', event.target.value);
     },
     [onFilters]
   );
@@ -119,7 +119,7 @@ export default function TransactionTableToolbar({ filters, onFilters }: Props) {
 
         <Select
           // @ts-ignore
-          value={filters.typePay}
+          value={filters.transactionLinkType}
           onChange={handleFilterTypePay}
           input={<OutlinedInput label="Платежная система" />}
           renderValue={(selected) => methodPay[selected]}
@@ -131,7 +131,11 @@ export default function TransactionTableToolbar({ filters, onFilters }: Props) {
         >
           {Object.keys(methodPay).map((option) => (
             <MenuItem key={option} value={option}>
-              <Checkbox disableRipple size="small" checked={filters.typePay.includes(option)} />
+              <Checkbox
+                disableRipple
+                size="small"
+                checked={filters.transactionLinkType.includes(option)}
+              />
               {methodPay[option]}
             </MenuItem>
           ))}

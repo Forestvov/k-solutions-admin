@@ -7,13 +7,13 @@ import { ITransaction, TransactionType, IResponseTransaction } from '../types/tr
 
 interface PropList extends IPagination {
   transactionStatus: string;
-  typePay: string;
+  transactionLinkType: string;
   transactionType: TransactionType;
 }
 
 export function useGetTransactionList({
   transactionStatus = '',
-  typePay = '',
+  transactionLinkType = '',
   transactionType,
   page,
   pageSize,
@@ -29,7 +29,7 @@ export function useGetTransactionList({
         sortDir: 'ASC',
         criteria: [
           { key: 'transactionStatus', value: transactionStatus },
-          { key: 'typePay', value: typePay },
+          { key: 'transactionLinkType', value: transactionLinkType },
           { key: 'transactionType', value: transactionType },
         ],
       },

@@ -50,7 +50,7 @@ const TABLE_HEAD = [
 const defaultFilters: ITransactionTableFilters = {
   transactionStatus: '',
   transactionType: '',
-  typePay: '',
+  transactionLinkType: '',
   email: '',
 };
 
@@ -76,7 +76,7 @@ export default function TransactionListView() {
     pageSize: table.rowsPerPage,
     transactionStatus: filters.transactionStatus,
     transactionType: filters.transactionType,
-    typePay: filters.typePay,
+    transactionLinkType: filters.transactionLinkType,
   });
 
   const updateTable = () => {

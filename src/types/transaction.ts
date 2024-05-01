@@ -61,7 +61,7 @@ export type ITransactionTableFilterValue = string | string[];
 
 export interface ITransactionTableFilters {
   transactionStatus: string;
-  typePay: string;
+  transactionLinkType: string;
   transactionType: TransactionType;
   email: '';
 }

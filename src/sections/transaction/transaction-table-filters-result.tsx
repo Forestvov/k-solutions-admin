@@ -46,13 +46,13 @@ export default function TransactionTableFiltersResult({
   }, [onFilters]);
 
   const handleRemoveTypePay = useCallback(() => {
-    onFilters('typePay', '');
+    onFilters('transactionLinkType', '');
   }, [onFilters]);
 
   if (
     !filters.transactionType.length &&
     !filters.transactionStatus.length &&
-    !filters.typePay.length
+    !filters.transactionLinkType.length
   ) {
     return null;
   }
@@ -89,11 +89,11 @@ export default function TransactionTableFiltersResult({
           </Block>
         )}
 
-        {!!filters.typePay.length && (
-          <Block label="Статус:">
+        {!!filters.transactionLinkType.length && (
+          <Block label="Платежная система:">
             <Chip
-              key={filters.typePay}
-              label={methodPay[filters.typePay]}
+              key={filters.transactionLinkType}
+              label={methodPay[filters.transactionLinkType]}
               size="small"
               onDelete={handleRemoveTypePay}
             />
