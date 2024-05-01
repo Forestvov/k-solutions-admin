@@ -47,6 +47,8 @@ export const endpoints = {
     files: '/company-invest/file/list',
   },
   briefcase: {
+    adminPage: '/briefcase-account/page',
+    updateBrief: 'briefcase-account/order-close',
     page: '/briefcase/page',
     list: '/briefcase/list',
     add: '/briefcase',

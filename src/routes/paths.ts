@@ -30,6 +30,9 @@ export const paths = {
     transaction: {
       root: `${ROOTS.DASHBOARD}/transaction/list`,
     },
+    close: {
+      root: `${ROOTS.DASHBOARD}/close/list`,
+    },
     p2p: {
       list: `${ROOTS.DASHBOARD}/p2p`,
       edit: (id: string) => `${ROOTS.DASHBOARD}/p2p/${id}/edit`,

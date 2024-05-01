@@ -80,6 +80,12 @@ export function useNavData() {
             ],
           },
           {
+            title: 'Заявки на закрытие',
+            path: paths.dashboard.close.root,
+            icon: ICONS.chat,
+            children: [{ title: 'Список', path: paths.dashboard.close.root }],
+          },
+          {
             title: 'Транзакции',
             path: paths.dashboard.transaction.root,
             icon: ICONS.order,
