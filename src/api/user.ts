@@ -121,7 +121,6 @@ export const updateUser = async (data: { [p: string]: any; accountId: number }) 
     role: data.role || 'User',
   };
 
-
   await axios.put(endpoints.user.update, formDataCompany, {
     headers: {
       'Content-Type': 'application/json',

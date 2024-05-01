@@ -28,7 +28,6 @@ type Props = {
   currentUser?: IUser;
 };
 
-
 const USER_STATUS = [
   { value: 'Not verified YC', label: 'Нет запроса на верификацию' },
   { value: 'Not verified email', label: 'Почта не подтверждена' },
@@ -39,7 +38,12 @@ const USER_STATUS = [
   { value: 'Disable', label: 'Заблокирован' },
 ];
 
-export default function UserVerificationQuickEditForm({ currentUser, open, onClose, updateTable }: Props) {
+export default function UserVerificationQuickEditForm({
+  currentUser,
+  open,
+  onClose,
+  updateTable,
+}: Props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const NewUserSchema = Yup.object().shape({

@@ -35,7 +35,7 @@ const TransactionListPage = lazy(() => import('src/pages/admin/transaction/list'
 const SettingsPage = lazy(() => import('src/pages/admin/settings/root'));
 
 // Close
-const CloseListPage = lazy(() => import('src/pages/admin/close/list'))
+const CloseListPage = lazy(() => import('src/pages/admin/close/list'));
 
 // ----------------------------------------------------------------------
 
@@ -67,7 +67,7 @@ export const dashboardRoutes = [
         path: 'user',
         children: [
           { element: <UserListPage />, index: true },
-          { path: 'verification', element: <UserVerificationPage />,  },
+          { path: 'verification', element: <UserVerificationPage /> },
         ],
       },
       {

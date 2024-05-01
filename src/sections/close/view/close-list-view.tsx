@@ -49,7 +49,7 @@ const TABLE_HEAD = [
 
 const defaultFilters: ICloseTableFilters = {
   briefcaseAccountOrderToCloseStatus: '',
-  email: '',
+  accountMail: '',
 };
 
 // ----------------------------------------------------------------------

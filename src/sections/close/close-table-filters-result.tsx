@@ -8,7 +8,7 @@ import Stack, { StackProps } from '@mui/material/Stack';
 
 import Iconify from 'src/components/iconify';
 
-import {ICloseTableFilters, ICloseTableFilterValue} from "src/types/brief";
+import { ICloseTableFilters, ICloseTableFilterValue } from 'src/types/brief';
 
 // ----------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ const STATUS: Record<string, string> = {
   Process: 'В обработке',
   Approved: 'Одобренна',
   Canceled: 'Отклонена',
-}
+};
 
 export default function CloseTableFiltersResult({
   filters,

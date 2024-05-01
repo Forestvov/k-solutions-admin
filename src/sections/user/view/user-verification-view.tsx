@@ -26,14 +26,12 @@ import {
   TablePaginationCustom,
 } from 'src/components/table';
 
-import { IUser, UserRoleType, IUserTableFilters, IUserTableFilterValue } from 'src/types/user';
+import { IUser, IUserTableFilters, IUserTableFilterValue } from 'src/types/user';
 
-import UserTableRow from '../user-table-row';
-import { useGetUserList, useGetVerificationUserList } from '../../../api/user';
-import UserTableToolbar from '../user-table-toolbar';
+import { useGetVerificationUserList } from '../../../api/user';
 import UserTableFiltersResult from '../user-table-filters-result';
+import UserVerificationTableRow from '../user-verification-table-row';
 import UserVerificationTableToolbar from '../user-verification-table-toolbar';
-import UserVerificationTableRow from "../user-verification-table-row";
 
 // ----------------------------------------------------------------------
 

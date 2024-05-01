@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Box from '@mui/material/Box';
-import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import MenuItem from '@mui/material/MenuItem';
@@ -16,10 +15,8 @@ import DialogContent from '@mui/material/DialogContent';
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, { RHFSelect } from 'src/components/hook-form';
 
-import { IUser } from '../../types/user';
-import { updateUser } from '../../api/user';
-import {IBrief} from "../../types/brief";
-import {updateBrief} from "../../api/brief";
+import { IBrief } from '../../types/brief';
+import { updateBrief } from '../../api/brief';
 
 // ----------------------------------------------------------------------
 
@@ -49,7 +46,10 @@ export default function CloseQuickEditForm({ current, open, onClose, updateTable
   });
 
   useEffect(() => {
-    methods.setValue('briefcaseAccountOrderToCloseStatus', current?.briefcaseAccountOrderToCloseStatus || '');
+    methods.setValue(
+      'briefcaseAccountOrderToCloseStatus',
+      current?.briefcaseAccountOrderToCloseStatus || ''
+    );
   }, [current, methods]);
 
   const {
@@ -61,7 +61,7 @@ export default function CloseQuickEditForm({ current, open, onClose, updateTable
   const onSubmit = handleSubmit(async (data) => {
     try {
       if (current?.briefcaseAccountId) {
-        await updateBrief(current.briefcaseAccountId, data.briefcaseAccountOrderToCloseStatus)
+        await updateBrief(current.briefcaseAccountId, data.briefcaseAccountOrderToCloseStatus);
         updateTable();
         reset();
         onClose();
@@ -91,7 +91,7 @@ export default function CloseQuickEditForm({ current, open, onClose, updateTable
         <DialogContent>
           <Box
             sx={{
-              paddingTop: '15px'
+              paddingTop: '15px',
             }}
             rowGap={3}
             columnGap={2}

@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 
-import { UserVerificationView} from 'src/sections/user/view';
+import { UserVerificationView } from 'src/sections/user/view';
 
 // ----------------------------------------------------------------------
 

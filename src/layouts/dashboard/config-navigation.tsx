@@ -68,7 +68,10 @@ export function useNavData() {
             title: 'Пользователи',
             path: paths.dashboard.user.list,
             icon: ICONS.user,
-            children: [{ title: 'Cписок', path: paths.dashboard.user.list },{ title: 'Верификация', path: paths.dashboard.user.verification }],
+            children: [
+              { title: 'Cписок', path: paths.dashboard.user.list },
+              { title: 'Верификация', path: paths.dashboard.user.verification },
+            ],
           },
           {
             title: 'Компании',

@@ -12,7 +12,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import Iconify from 'src/components/iconify';
 
-import {ICloseTableFilters, ICloseTableFilterValue} from "src/types/brief";
+import { ICloseTableFilters, ICloseTableFilterValue } from 'src/types/brief';
 
 // ----------------------------------------------------------------------
 
@@ -76,7 +76,11 @@ export default function CloseTableToolbar({ filters, onFilters }: Props) {
         >
           {Object.keys(STATUS).map((option) => (
             <MenuItem key={option} value={option}>
-              <Checkbox disableRipple size="small" checked={filters.briefcaseAccountOrderToCloseStatus.includes(option)} />
+              <Checkbox
+                disableRipple
+                size="small"
+                checked={filters.briefcaseAccountOrderToCloseStatus.includes(option)}
+              />
               {STATUS[option]}
             </MenuItem>
           ))}

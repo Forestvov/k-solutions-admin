@@ -11,7 +11,11 @@ interface PropList extends IPagination {
   briefcaseAccountOrderToCloseStatus: string;
 }
 
-export function useGetCloseBrief({ briefcaseAccountOrderToCloseStatus = '', page, pageSize }: PropList) {
+export function useGetCloseBrief({
+  briefcaseAccountOrderToCloseStatus = '',
+  page,
+  pageSize,
+}: PropList) {
   const URL = endpoints.briefcase.adminPage;
 
   const { data, isLoading, error, isValidating, mutate } = useSWR<BriefResponse>(
@@ -21,7 +25,9 @@ export function useGetCloseBrief({ briefcaseAccountOrderToCloseStatus = '', page
         page,
         size: pageSize,
         sortDir: 'ASC',
-        criteria: [{ key: 'briefcaseAccountOrderToCloseStatus', value: briefcaseAccountOrderToCloseStatus }],
+        criteria: [
+          { key: 'briefcaseAccountOrderToCloseStatus', value: briefcaseAccountOrderToCloseStatus },
+        ],
       },
       'post',
     ],
@@ -45,13 +51,22 @@ export function useGetCloseBrief({ briefcaseAccountOrderToCloseStatus = '', page
       listEmpty: !isLoading && !data?.content.length,
       mutate,
     }),
-    [data?.content, data?.last, data?.totalElements, error, isLoading, isValidating, mutate]
+    [
+      data?.content,
+      data?.number,
+      data?.totalElements,
+      data?.totalPages,
+      error,
+      isLoading,
+      isValidating,
+      mutate,
+    ]
   );
 
   return memoizedValue;
 }
 
-export const updateBrief = async (id: number,status: string) => {
+export const updateBrief = async (id: number, status: string) => {
   await axios.put(`${endpoints.briefcase.updateBrief}/${id}/${status}`, {
     headers: {
       'Content-Type': 'application/json',

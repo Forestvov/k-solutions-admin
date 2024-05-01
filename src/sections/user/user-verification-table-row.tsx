@@ -14,7 +14,7 @@ import Iconify from 'src/components/iconify';
 import { IUser } from 'src/types/user';
 
 import UserPhotoForm from './user-photo-form';
-import UserVerificationQuickEditForm from "./user-verification-quick-edit-form";
+import UserVerificationQuickEditForm from './user-verification-quick-edit-form';
 
 // ----------------------------------------------------------------------
 

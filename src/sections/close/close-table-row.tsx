@@ -13,7 +13,7 @@ import { fNumber } from 'src/utils/format-number';
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
-import {IBrief} from "src/types/brief";
+import { IBrief } from 'src/types/brief';
 
 import CloseQuickEditForm from './close-quick-edit-form';
 
@@ -33,7 +33,15 @@ const STATUS: Record<string, string> = {
 };
 
 export default function CloseTableRow({ row, selected, onSelectRow, updateTable }: Props) {
-  const { accountFio, amount,  createddate, briefcaseName, briefcaseAccountOrderToCloseStatus, accountUsername, accountMail } = row;
+  const {
+    accountFio,
+    amount,
+    createddate,
+    briefcaseName,
+    briefcaseAccountOrderToCloseStatus,
+    accountUsername,
+    accountMail,
+  } = row;
 
   const quickEdit = useBoolean();
 
