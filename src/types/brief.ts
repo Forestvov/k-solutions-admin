@@ -18,7 +18,7 @@ export interface IBrief {
   accountId: number;
   accountFio: string;
   accountUsername: string;
-  accountMail: string;
+  email: string;
   briefcaseName: string;
   briefcaseCode: any;
   amount: number;
@@ -51,5 +51,5 @@ export interface Sort2 {
 export type ICloseTableFilterValue = string;
 export interface ICloseTableFilters {
   briefcaseAccountOrderToCloseStatus: string;
-  accountMail: string;
+  email: string;
 }

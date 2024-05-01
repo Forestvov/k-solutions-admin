@@ -9,10 +9,12 @@ import axios, { fetcher, endpoints } from '../utils/axios';
 
 interface PropList extends IPagination {
   briefcaseAccountOrderToCloseStatus: string;
+  email: string;
 }
 
 export function useGetCloseBrief({
   briefcaseAccountOrderToCloseStatus = '',
+  email = '',
   page,
   pageSize,
 }: PropList) {
@@ -27,6 +29,7 @@ export function useGetCloseBrief({
         sortDir: 'ASC',
         criteria: [
           { key: 'briefcaseAccountOrderToCloseStatus', value: briefcaseAccountOrderToCloseStatus },
+          { key: 'email', value: email },
         ],
       },
       'post',

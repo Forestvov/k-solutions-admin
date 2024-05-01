@@ -39,7 +39,7 @@ import CloseTableFiltersResult from '../close-table-filters-result';
 const TABLE_HEAD = [
   { id: 'fio', label: 'Фио', width: 180 },
   { id: 'username', label: 'Логин', width: 180 },
-  { id: 'accountMail', label: 'Mail', width: 190 },
+  { id: 'email', label: 'Mail', width: 190 },
   { id: 'createddate', label: 'Дата заявки', width: 180 },
   { id: 'balance', label: 'Франшиза', width: 100 },
   { id: 'amount', label: 'Сумма', width: 100 },
@@ -49,7 +49,7 @@ const TABLE_HEAD = [
 
 const defaultFilters: ICloseTableFilters = {
   briefcaseAccountOrderToCloseStatus: '',
-  accountMail: '',
+  email: '',
 };
 
 // ----------------------------------------------------------------------
@@ -73,6 +73,7 @@ export default function CloseListView() {
     page: table.page,
     pageSize: table.rowsPerPage,
     briefcaseAccountOrderToCloseStatus: filters.briefcaseAccountOrderToCloseStatus,
+    email: filters.email
   });
 
   const updateTable = () => {
@@ -207,7 +208,7 @@ function applyFilter({
   comparator: (a: any, b: any) => number;
   filters: ICloseTableFilters;
 }) {
-  const { accountMail } = filters;
+  const { email } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
@@ -219,9 +220,9 @@ function applyFilter({
 
   inputData = stabilizedThis.map((el) => el[0]);
 
-  if (accountMail) {
+  if (email) {
     inputData = inputData.filter(
-      (user) => user.accountMail.toLowerCase().indexOf(accountMail.toLowerCase()) !== -1
+      (user) => user.email.toLowerCase().indexOf(email.toLowerCase()) !== -1
     );
   }
 

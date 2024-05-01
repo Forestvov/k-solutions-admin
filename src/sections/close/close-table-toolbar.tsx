@@ -30,7 +30,7 @@ const STATUS: Record<string, string> = {
 export default function CloseTableToolbar({ filters, onFilters }: Props) {
   const handleFilterSearch = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      onFilters('accountMail', event.target.value);
+      onFilters('email', event.target.value);
     },
     [onFilters]
   );
@@ -90,7 +90,7 @@ export default function CloseTableToolbar({ filters, onFilters }: Props) {
       <Stack direction="row" alignItems="center" spacing={2} flexGrow={1} sx={{ width: 1 }}>
         <TextField
           fullWidth
-          value={filters.accountMail}
+          value={filters.email}
           onChange={handleFilterSearch}
           placeholder="Поиск по e-mail"
           InputProps={{

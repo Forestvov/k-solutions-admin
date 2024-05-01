@@ -40,7 +40,7 @@ export default function CloseTableRow({ row, selected, onSelectRow, updateTable 
     briefcaseName,
     briefcaseAccountOrderToCloseStatus,
     accountUsername,
-    accountMail,
+    email,
   } = row;
 
   const quickEdit = useBoolean();
@@ -61,7 +61,7 @@ export default function CloseTableRow({ row, selected, onSelectRow, updateTable 
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{accountUsername}</TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{accountMail}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{email}</TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(createddate)}</TableCell>
 
