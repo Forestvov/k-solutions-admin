@@ -29,7 +29,7 @@ export interface ICompany {
   finishDay: string;
   createdDate: string;
   pampInvestors: number;
-  pamAmount: number;
+  pampAmount: number;
   companyType: CompanyType;
 }
 

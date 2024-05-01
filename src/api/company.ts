@@ -48,7 +48,7 @@ export const createCompany = async (data: IData) => {
     image: data.image,
     finishDay: data.finishDay,
     pampInvestors: data.pampInvestors,
-    pamAmount: data.pamAmount,
+    pampAmount: data.pampAmount,
     lang: 'ru',
   };
 
@@ -96,7 +96,7 @@ export const updateCompany = async (data: IData, briefcaseId: number, companyId:
     image: data.image,
     finishDay: data.finishDay,
     pampInvestors: data.pampInvestors,
-    pamAmount: data.pamAmount,
+    pampAmount: data.pampAmount,
     lang: 'ru',
   };
 

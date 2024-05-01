@@ -178,7 +178,7 @@ export default function CompaniesListView() {
       renderCell: (params) => <RenderCellPrice params={params} />,
     },
     {
-      field: 'pamAmount',
+      field: 'pampAmount',
       headerName: 'Собрано',
       width: 150,
       editable: false,

@@ -64,7 +64,7 @@ export function RenderCellRanges({ params }: ParamsProps) {
 export function RenderCellPublish({ params }: ParamsProps) {
   const status = params.row.briefcaseStatus;
 
-  if ((params.row.pamAmount / params.row.amountFinish) * 100 > 70) {
+  if ((params.row.pampAmount / params.row.amountFinish) * 100 > 70) {
     return (
       <Stack direction="row" alignItems="center" height="100%">
         {status && (
@@ -124,7 +124,7 @@ export function RenderCellProgress({ params }: ParamsProps) {
       {params.row.companyType === 'Company' && (
         <>
           <LinearProgress
-            value={(params.row.pamAmount / params.row.amountFinish) * 100}
+            value={(params.row.pampAmount / params.row.amountFinish) * 100}
             variant="determinate"
             color={
               (params.row.inventoryType === 'out of stock' && 'error') ||
@@ -133,7 +133,7 @@ export function RenderCellProgress({ params }: ParamsProps) {
             }
             sx={{ mb: 1, height: 6, width: 80 }}
           />
-          {fPercent((params.row.pamAmount / params.row.amountFinish) * 100)}
+          {fPercent((params.row.pampAmount / params.row.amountFinish) * 100)}
         </>
       )}
     </Stack>

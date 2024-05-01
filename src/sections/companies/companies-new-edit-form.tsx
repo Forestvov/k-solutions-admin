@@ -74,7 +74,7 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
       logo: currentCompany?.logo || '',
       finishDay: currentCompany?.finishDay ? new Date(currentCompany.finishDay) : '',
       pampInvestors: currentCompany?.pampInvestors || '',
-      pamAmount: currentCompany?.pamAmount || '',
+      pampAmount: currentCompany?.pampAmount || '',
       companyInvestDetailInputs: currentCompany?.companyInvestDetailDtoList || [
         {
           id: '',
@@ -288,7 +288,7 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
 
           <Stack spacing={3} sx={{ p: 3 }}>
             <RHFTextField
-              name="pamAmount"
+              name="pampAmount"
               label="Собрано ($)"
               placeholder="0"
               type="number"
