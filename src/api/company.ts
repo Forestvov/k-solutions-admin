@@ -182,7 +182,13 @@ export function useGetCompaniesDetailList() {
   const URL = endpoints.company.detailList;
 
   const { data, isLoading, error, isValidating } = useSWR<IDetailTypeList[]>(
-    [URL, {}, 'post'],
+    [
+      URL,
+      {
+        criteria: [{ key: 'lang', value: 'ru' }],
+      },
+      'post',
+    ],
     fetcher,
     {
       revalidateOnFocus: false,
