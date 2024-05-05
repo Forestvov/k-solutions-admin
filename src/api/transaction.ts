@@ -26,7 +26,7 @@ export function useGetTransactionList({
       {
         page,
         size: pageSize,
-        sortDir: 'ASC',
+        sortDir: 'DESC',
         criteria: [
           { key: 'transactionStatus', value: transactionStatus },
           { key: 'transactionLinkType', value: transactionLinkType },

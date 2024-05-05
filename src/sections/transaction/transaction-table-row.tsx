@@ -28,6 +28,7 @@ const TRANSACTION_STATUS: Record<string, string> = {
   Canceled: 'Отклонена',
   Success: 'Одобренна',
   Process: 'В обработке',
+  'Marked as paid': 'Отмеченно как оплаченно',
 };
 
 export default function TransactionTableRow({ row, selected, onSelectRow, updateTable }: Props) {
@@ -80,6 +81,7 @@ export default function TransactionTableRow({ row, selected, onSelectRow, update
               (transactionStatus === 'Success' && 'success') ||
               (transactionStatus === 'Process' && 'info') ||
               (transactionStatus === 'Canceled' && 'error') ||
+              (transactionStatus === 'Marked as paid' && 'info') ||
               'default'
             }
           >

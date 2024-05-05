@@ -27,9 +27,9 @@ type Props = {
 };
 
 const STATUS: Record<string, string> = {
-  Process: 'В обработке',
-  Approved: 'Одобренна',
-  Canceled: 'Отклонена',
+  'Order to close': 'В обработке',
+  'Approved to extract': 'Одобренна',
+  'Canceled to extract': 'Отклонена'
 };
 
 export default function CloseTableRow({ row, selected, onSelectRow, updateTable }: Props) {
@@ -38,7 +38,7 @@ export default function CloseTableRow({ row, selected, onSelectRow, updateTable 
     amount,
     createddate,
     briefcaseName,
-    briefcaseAccountOrderToCloseStatus,
+    briefcaseAccountStatus,
     accountUsername,
     email,
   } = row;
@@ -73,17 +73,17 @@ export default function CloseTableRow({ row, selected, onSelectRow, updateTable 
           <Label
             variant="soft"
             color={
-              (briefcaseAccountOrderToCloseStatus === 'Approved' && 'success') ||
-              (briefcaseAccountOrderToCloseStatus === 'Process' && 'warning') ||
-              (briefcaseAccountOrderToCloseStatus === 'Canceled' && 'error') ||
+              (briefcaseAccountStatus === 'Approved to extract' && 'success') ||
+              (briefcaseAccountStatus === 'Order to close' && 'warning') ||
+              (briefcaseAccountStatus === 'Canceled to extract' && 'error') ||
               'default'
             }
           >
-            {STATUS[briefcaseAccountOrderToCloseStatus]}
+            {STATUS[briefcaseAccountStatus]}
           </Label>
         </TableCell>
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
-          {briefcaseAccountOrderToCloseStatus !== 'Approved' && (
+          {briefcaseAccountStatus === 'Order to close' && (
             <Tooltip title="Quick Edit" placement="top" arrow>
               <IconButton
                 color={quickEdit.value ? 'inherit' : 'default'}

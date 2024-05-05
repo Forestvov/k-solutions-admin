@@ -50,6 +50,6 @@ export interface Sort2 {
 
 export type ICloseTableFilterValue = string;
 export interface ICloseTableFilters {
-  briefcaseAccountOrderToCloseStatus: string;
+  briefcaseAccountStatus: string;
   email: string;
 }

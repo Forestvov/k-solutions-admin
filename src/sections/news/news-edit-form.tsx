@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -82,7 +83,7 @@ const NewsEditForm = ({ currentPost }: Props) => {
     try {
       const newData = {
         ...data,
-        createdDate: new Date(data.createdDate).toLocaleString(),
+        createdDate: `${dayjs(data.createdDate).format('YYYY-MM-DD')}, 00:00:00`,
       };
 
       if (currentPost) {

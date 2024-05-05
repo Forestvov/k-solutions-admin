@@ -48,7 +48,7 @@ const TABLE_HEAD = [
 ];
 
 const defaultFilters: ICloseTableFilters = {
-  briefcaseAccountOrderToCloseStatus: '',
+  briefcaseAccountStatus: 'Order to close',
   email: '',
 };
 
@@ -72,7 +72,7 @@ export default function CloseListView() {
   } = useGetCloseBrief({
     page: table.page,
     pageSize: table.rowsPerPage,
-    briefcaseAccountOrderToCloseStatus: filters.briefcaseAccountOrderToCloseStatus,
+    briefcaseAccountStatus: filters.briefcaseAccountStatus,
     email: filters.email
   });
 

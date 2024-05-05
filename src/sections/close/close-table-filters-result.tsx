@@ -22,9 +22,9 @@ type Props = StackProps & {
 };
 
 const STATUS: Record<string, string> = {
-  Process: 'В обработке',
-  Approved: 'Одобренна',
-  Canceled: 'Отклонена',
+  'Order to close': 'В обработке',
+  'Approved to extract': 'Одобренна',
+  'Canceled to extract': 'Отклонена'
 };
 
 export default function CloseTableFiltersResult({
@@ -35,10 +35,10 @@ export default function CloseTableFiltersResult({
   ...other
 }: Props) {
   const handleRemoveRole = useCallback(() => {
-    onFilters('briefcaseAccountOrderToCloseStatus', '');
+    onFilters('briefcaseAccountStatus', '');
   }, [onFilters]);
 
-  if (!filters.briefcaseAccountOrderToCloseStatus.length) {
+  if (!filters.briefcaseAccountStatus.length) {
     return null;
   }
 
@@ -52,11 +52,11 @@ export default function CloseTableFiltersResult({
       </Box>
 
       <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
-        {!!filters.briefcaseAccountOrderToCloseStatus.length && (
+        {!!filters.briefcaseAccountStatus.length && (
           <Block label="Статус:">
             <Chip
-              key={filters.briefcaseAccountOrderToCloseStatus}
-              label={STATUS[filters.briefcaseAccountOrderToCloseStatus]}
+              key={filters.briefcaseAccountStatus}
+              label={STATUS[filters.briefcaseAccountStatus]}
               size="small"
               onDelete={handleRemoveRole}
             />

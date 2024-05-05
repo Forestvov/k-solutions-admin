@@ -37,7 +37,7 @@ export default function CloseTableToolbar({ filters, onFilters }: Props) {
 
   const handleFilterStatus = useCallback(
     (event: SelectChangeEvent<string>) => {
-      onFilters('briefcaseAccountOrderToCloseStatus', event.target.value);
+      onFilters('briefcaseAccountStatus', event.target.value);
     },
     [onFilters]
   );
@@ -64,7 +64,7 @@ export default function CloseTableToolbar({ filters, onFilters }: Props) {
         <InputLabel>Статус</InputLabel>
 
         <Select
-          value={filters.briefcaseAccountOrderToCloseStatus}
+          value={filters.briefcaseAccountStatus}
           onChange={handleFilterStatus}
           input={<OutlinedInput label="Статус" />}
           renderValue={(selected) => STATUS[selected]}
@@ -79,7 +79,7 @@ export default function CloseTableToolbar({ filters, onFilters }: Props) {
               <Checkbox
                 disableRipple
                 size="small"
-                checked={filters.briefcaseAccountOrderToCloseStatus.includes(option)}
+                checked={filters.briefcaseAccountStatus.includes(option)}
               />
               {STATUS[option]}
             </MenuItem>
