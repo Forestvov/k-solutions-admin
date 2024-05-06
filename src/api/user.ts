@@ -74,7 +74,8 @@ export function useGetVerificationUserList({ page, pageSize, email = '' }: Verif
       {
         page,
         size: pageSize,
-        sortDir: 'ASC',
+        sortDir: 'DESC',
+        sortField: 'registeredDate',
         criteria: [
           { key: 'email', value: email },
           { key: 'status', value: 'Process' },
