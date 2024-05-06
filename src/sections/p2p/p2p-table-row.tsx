@@ -136,8 +136,8 @@ export default function P2pTableRow({ row, selected, onSelectRow, updateTable }:
       <TableCell sx={{ whiteSpace: 'nowrap' }}>{email}</TableCell>
       <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(new Date(transactionDate))}</TableCell>
       <TableCell sx={{ whiteSpace: 'nowrap' }}>{currentName}</TableCell>
+      <TableCell sx={{ whiteSpace: 'nowrap' }}>{amountIn ? fNumber(amountIn) : '0'} ₽</TableCell>
       <TableCell sx={{ whiteSpace: 'nowrap' }}>$ {amount ? fNumber(amount) : '0'}</TableCell>
-      <TableCell sx={{ whiteSpace: 'nowrap' }}>$ {amountIn ? fNumber(amountIn) : '0'}</TableCell>
       <TableCell sx={{ whiteSpace: 'nowrap' }}>
         {transactionStatus === 'Wait requisites' ? (
           <div>

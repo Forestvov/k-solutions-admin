@@ -304,7 +304,7 @@ const P2PEditForm = ({ current, update }: Props) => {
             <RHFTextField name="cartNumber" label="Номер карты ЮЗЕРА *" />
             <RHFTextField name="cartName" label="Имя владельца карты ЮЗЕРА *" />
             <RHFTextField
-              name="amount"
+              name="amountIn"
               label="Сумма отправки ₽ *"
               InputProps={{
                 startAdornment: (
@@ -317,7 +317,7 @@ const P2PEditForm = ({ current, update }: Props) => {
               }}
             />
             <RHFTextField
-              name="amountIn"
+              name="amount"
               label="Сумма получения $ *"
               InputProps={{
                 startAdornment: (
