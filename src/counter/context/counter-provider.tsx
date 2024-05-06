@@ -31,10 +31,7 @@ export function CounterProvider({ children }: Props) {
   useEffect(() => {
     if (user) {
       getCounter();
-
-      const interval = setInterval(getCounter, 10000);
-
-      return () => clearInterval(interval);
+      setInterval(getCounter, 10000);
     }
   }, [user, getCounter]);
 
