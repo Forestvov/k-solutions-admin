@@ -19,7 +19,8 @@ export function useGetUserList({ role = '', email = '', page, pageSize }: PropLi
       {
         page,
         size: pageSize,
-        sortDir: 'ASC',
+        sortDir: 'DESC',
+        sortField: 'registeredDate',
         criteria: [
           { key: 'role', value: role },
           { key: 'email', value: email },

@@ -21,7 +21,8 @@ export function useGetNews({ lang = 'ru', page, pageSize }: PropList) {
       {
         page,
         size: pageSize,
-        sortDir: 'ASC',
+        sortDir: 'DESC',
+        sortField: 'createdDate',
         criteria: [{ key: 'lang', value: lang }],
       },
       'post',

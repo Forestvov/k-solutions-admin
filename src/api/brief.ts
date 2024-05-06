@@ -26,7 +26,8 @@ export function useGetCloseBrief({
       {
         page,
         size: pageSize,
-        sortDir: 'ASC',
+        sortDir: 'DESC',
+        sortField: 'createddate',
         criteria: [
           { key: 'briefcaseAccountStatus', value: briefcaseAccountStatus },
           { key: 'email', value: email },

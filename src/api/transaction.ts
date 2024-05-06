@@ -27,6 +27,7 @@ export function useGetTransactionList({
         page,
         size: pageSize,
         sortDir: 'DESC',
+        sortField: 'transactionDate',
         criteria: [
           { key: 'transactionStatus', value: transactionStatus },
           { key: 'transactionLinkType', value: transactionLinkType },
@@ -82,7 +83,8 @@ export function useGetTransactionP2pList({ page, pageSize, transactionStatus = '
       {
         page,
         size: pageSize,
-        sortDir: 'ASC',
+        sortDir: 'DESC',
+        sortField: 'transactionDate',
         criteria: [
           { key: 'transactionLinkType', value: 'p2p' },
           { key: 'transactionStatus', value: transactionStatus === 'all' ? '' : transactionStatus },

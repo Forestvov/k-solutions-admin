@@ -143,7 +143,8 @@ export function useGetCompanies({
       {
         page,
         size: pageSize,
-        sortDir: 'ASC',
+        sortDir: 'DESC',
+        sortField: 'createdDate',
         criteria: [
           { key: 'companyType', value: companyType },
           { key: 'briefcaseStatus', value: briefcaseStatus },
