@@ -13,6 +13,8 @@ export interface BriefResponse {
 }
 
 export interface IBrief {
+  briefcaseAccountDetailId: number;
+  currentAmount: number;
   briefcaseAccountId: number;
   briefcaseId: number;
   accountId: number;

@@ -24,7 +24,7 @@ type Props = StackProps & {
 const STATUS: Record<string, string> = {
   'Order to close': 'В обработке',
   'Approved to extract': 'Одобренна',
-  'Canceled to extract': 'Отклонена'
+  'Canceled to extract': 'Отклонена',
 };
 
 export default function CloseTableFiltersResult({

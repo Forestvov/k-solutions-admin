@@ -29,7 +29,7 @@ type Props = {
 const STATUS: Record<string, string> = {
   'Order to close': 'В обработке',
   'Approved to extract': 'Одобренна',
-  'Canceled to extract': 'Отклонена'
+  'Canceled to extract': 'Отклонена',
 };
 
 export default function CloseTableRow({ row, selected, onSelectRow, updateTable }: Props) {
@@ -40,6 +40,7 @@ export default function CloseTableRow({ row, selected, onSelectRow, updateTable 
     briefcaseName,
     briefcaseAccountStatus,
     accountUsername,
+    currentAmount,
     email,
   } = row;
 
@@ -66,6 +67,10 @@ export default function CloseTableRow({ row, selected, onSelectRow, updateTable 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(createddate)}</TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{briefcaseName}</TableCell>
+
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>
+          $ {currentAmount ? fNumber(currentAmount) : '0'}
+        </TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>$ {amount ? fNumber(amount) : '0'}</TableCell>
 

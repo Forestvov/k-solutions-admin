@@ -22,9 +22,9 @@ type Props = {
 };
 
 const STATUS: Record<string, string> = {
-  Process: 'В обработке',
-  Approved: 'Одобренна',
-  Canceled: 'Отклонена',
+  'Order to close': 'В обработке',
+  'Approved to extract': 'Одобренна',
+  'Canceled to extract': 'Отклонена',
 };
 
 export default function CloseTableToolbar({ filters, onFilters }: Props) {

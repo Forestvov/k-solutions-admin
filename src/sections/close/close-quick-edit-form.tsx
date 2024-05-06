@@ -28,9 +28,9 @@ type Props = {
 };
 
 const STATUS = [
-  { value: 'Process', label: 'В обработке' },
-  { value: 'Approved', label: 'Одобренна' },
-  { value: 'Canceled', label: 'Отклонена' },
+  { value: 'ORDER_TO_CLOSE', label: 'В обработке' },
+  { value: 'APPROVED_FOR_EXTRACT', label: 'Одобренна' },
+  { value: 'CANCELED_FOR_EXTRACT', label: 'Отклонена' },
 ];
 
 export default function CloseQuickEditForm({ current, open, onClose, updateTable }: Props) {
@@ -60,8 +60,11 @@ export default function CloseQuickEditForm({ current, open, onClose, updateTable
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      if (current?.briefcaseAccountId) {
-        await updateBrief(current.briefcaseAccountId, data.briefcaseAccountOrderToCloseStatus);
+      if (current?.briefcaseAccountDetailId) {
+        await updateBrief(
+          current.briefcaseAccountDetailId,
+          data.briefcaseAccountOrderToCloseStatus
+        );
         updateTable();
         reset();
         onClose();

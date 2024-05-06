@@ -42,6 +42,7 @@ const TABLE_HEAD = [
   { id: 'email', label: 'Mail', width: 190 },
   { id: 'createddate', label: 'Дата заявки', width: 180 },
   { id: 'balance', label: 'Франшиза', width: 100 },
+  { id: 'currentAmount', label: 'Баланс портфеля', width: 100 },
   { id: 'amount', label: 'Сумма', width: 100 },
   { id: 'status', label: 'Статус', width: 100 },
   { id: '', width: 88 },
@@ -73,7 +74,7 @@ export default function CloseListView() {
     page: table.page,
     pageSize: table.rowsPerPage,
     briefcaseAccountStatus: filters.briefcaseAccountStatus,
-    email: filters.email
+    email: filters.email,
   });
 
   const updateTable = () => {
@@ -153,7 +154,7 @@ export default function CloseListView() {
           />
 
           <Scrollbar>
-            <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 1330 }}>
+            <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 1500 }}>
               <TableHeadCustom
                 order={table.order}
                 orderBy={table.orderBy}

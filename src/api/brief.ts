@@ -31,6 +31,7 @@ export function useGetCloseBrief({
         criteria: [
           { key: 'briefcaseAccountStatus', value: briefcaseAccountStatus },
           { key: 'email', value: email },
+          { key: 'type', value: 'Return' },
         ],
       },
       'post',
