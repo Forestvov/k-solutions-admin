@@ -91,7 +91,9 @@ export default function TransactionListView() {
   }, [mutate]);
 
   useEffect(() => {
-    setInterval(updateTable, 10000);
+    const interval = setInterval(updateTable, 10000);
+
+    return () => clearInterval(interval);
   }, [updateTable]);
 
   useEffect(() => {
