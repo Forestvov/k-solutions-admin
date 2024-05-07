@@ -14,15 +14,27 @@ import Iconify from 'src/components/iconify';
 
 import { IUserTableFilters, IUserTableFilterValue } from 'src/types/user';
 
+import { USER_STATUS } from './status-dto';
+
 // ----------------------------------------------------------------------
 
 type Props = {
   filters: IUserTableFilters;
   onFilters: (name: string, value: IUserTableFilterValue) => void;
-  roleOptions: string[];
 };
 
-export default function UserTableToolbar({ filters, onFilters, roleOptions }: Props) {
+const roleOptions = ['User', 'Admin'];
+const statusOptions = [
+  'Disable',
+  'Enable',
+  'Canceled',
+  'Verified',
+  'Process',
+  'Not verified email',
+  'Not verified YC',
+];
+
+export default function UserTableToolbar({ filters, onFilters }: Props) {
   const handleFilterSearch = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       onFilters('email', event.target.value);
@@ -31,8 +43,15 @@ export default function UserTableToolbar({ filters, onFilters, roleOptions }: Pr
   );
 
   const handleFilterRole = useCallback(
-    (event: SelectChangeEvent<string[]>) => {
+    (event: SelectChangeEvent<string>) => {
       onFilters('role', event.target.value);
+    },
+    [onFilters]
+  );
+
+  const handleFilterStatus = useCallback(
+    (event: SelectChangeEvent<string>) => {
+      onFilters('status', event.target.value);
     },
     [onFilters]
   );
@@ -75,6 +94,35 @@ export default function UserTableToolbar({ filters, onFilters, roleOptions }: Pr
             <MenuItem key={option} value={option}>
               <Checkbox disableRipple size="small" checked={filters.role.includes(option)} />
               {option}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <FormControl
+        sx={{
+          flexShrink: 0,
+          width: { xs: 1, md: 200 },
+        }}
+      >
+        <InputLabel>Статус</InputLabel>
+
+        <Select
+          // @ts-ignore
+          value={filters.status}
+          onChange={handleFilterStatus}
+          input={<OutlinedInput label="Статус" />}
+          renderValue={(selected) => USER_STATUS[selected]}
+          MenuProps={{
+            PaperProps: {
+              sx: { maxHeight: 240 },
+            },
+          }}
+        >
+          {statusOptions.map((option) => (
+            <MenuItem key={option} value={option}>
+              <Checkbox disableRipple size="small" checked={filters.status.includes(option)} />
+              {USER_STATUS[option]}
             </MenuItem>
           ))}
         </Select>

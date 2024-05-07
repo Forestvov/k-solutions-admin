@@ -49,6 +49,7 @@ const TABLE_HEAD = [
 const defaultFilters: IUserTableFilters = {
   role: '',
   email: '',
+  status: '',
 };
 
 // ----------------------------------------------------------------------
@@ -73,6 +74,7 @@ export default function UserListView() {
     pageSize: table.rowsPerPage,
     role: filters.role as UserRoleType,
     email: filters.email as string,
+    status: filters.status as string,
   });
 
   const updateTable = () => {
@@ -125,7 +127,6 @@ export default function UserListView() {
         <UserTableToolbar
           filters={filters}
           onFilters={handleFilters}
-          roleOptions={['User', 'Admin']}
         />
 
         {canReset && (

@@ -8,9 +8,10 @@ import { UserRoleType, IUserResponse } from '../types/user';
 interface PropList extends IPagination {
   role: UserRoleType;
   email: string;
+  status: string;
 }
 
-export function useGetUserList({ role = '', email = '', page, pageSize }: PropList) {
+export function useGetUserList({ role = '', email = '', page, pageSize, status }: PropList) {
   const URL = endpoints.user.list;
 
   const { data, isLoading, error, isValidating, mutate } = useSWR<IUserResponse>(
@@ -24,6 +25,7 @@ export function useGetUserList({ role = '', email = '', page, pageSize }: PropLi
         criteria: [
           { key: 'role', value: role },
           { key: 'email', value: email },
+          { key: 'status', value: status },
         ],
       },
       'put',

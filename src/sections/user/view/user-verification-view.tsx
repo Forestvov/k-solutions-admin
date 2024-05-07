@@ -49,6 +49,7 @@ const TABLE_HEAD = [
 const defaultFilters: IUserTableFilters = {
   email: '',
   role: '',
+  status: ''
 };
 
 // ----------------------------------------------------------------------

@@ -72,6 +72,7 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
       // @ts-ignore
       images: currentCompany?.images || [],
       logo: currentCompany?.logo || '',
+      image: currentCompany?.image || '',
       finishDay: currentCompany?.finishDay ? new Date(currentCompany.finishDay) : '',
       pampInvestors: currentCompany?.pampInvestors || '',
       pampAmount: currentCompany?.pampAmount || '',
@@ -165,11 +166,11 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
   );
 
   const handleDropSingleFile = useCallback(
-    async (acceptedFiles: File[]) => {
+    async (acceptedFiles: File[], name: 'logo' | 'image') => {
       const file = await toBase64(acceptedFiles[0]);
 
       if (file) {
-        setValue('logo', file, { shouldValidate: true });
+        setValue(name, file, { shouldValidate: true });
       }
     },
     [setValue]
@@ -352,8 +353,41 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
               <RHFUpload
                 name="logo"
                 maxSize={3145728}
-                onDrop={handleDropSingleFile}
+                onDrop={(file) => handleDropSingleFile(file, 'logo')}
                 onDelete={() => setValue('logo', '', { shouldValidate: true })}
+              />
+            </Stack>
+          </Stack>
+        </Card>
+      </Grid>
+    </>
+  );
+
+  const renderImage = (
+    <>
+      {mdUp && (
+        <Grid md={4}>
+          <Typography variant="h6" sx={{ mb: 0.5 }}>
+            Обложка
+          </Typography>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            Загрузите обложку
+          </Typography>
+        </Grid>
+      )}
+
+      <Grid xs={12} md={8}>
+        <Card>
+          {!mdUp && <CardHeader title="Обложка" />}
+
+          <Stack spacing={3} sx={{ p: 3 }}>
+            <Stack spacing={1.5}>
+              <Typography variant="subtitle2">Обложка</Typography>
+              <RHFUpload
+                name="image"
+                maxSize={3145728}
+                onDrop={(file) => handleDropSingleFile(file, 'image')}
+                onDelete={() => setValue('image', '', { shouldValidate: true })}
               />
             </Stack>
           </Stack>
@@ -419,6 +453,8 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
         {renderDescriptions}
 
         {renderLogo}
+
+        {renderImage}
 
         {renderFiles}
 

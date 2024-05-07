@@ -10,6 +10,8 @@ import Iconify from 'src/components/iconify';
 
 import { IUserTableFilters, IUserTableFilterValue } from 'src/types/user';
 
+import { USER_STATUS } from './status-dto';
+
 // ----------------------------------------------------------------------
 
 type Props = StackProps & {
@@ -32,7 +34,11 @@ export default function UserTableFiltersResult({
     onFilters('role', '');
   }, [onFilters]);
 
-  if (!filters.role.length) {
+  const handleRemoveStatus = useCallback(() => {
+    onFilters('status', '');
+  }, [onFilters]);
+
+  if (!filters.role.length && !filters.status.length) {
     return null;
   }
 
@@ -53,6 +59,17 @@ export default function UserTableFiltersResult({
               label={filters.role}
               size="small"
               onDelete={handleRemoveRole}
+            />
+          </Block>
+        )}
+
+        {!!filters.status.length && (
+          <Block label="Статус:">
+            <Chip
+              key={filters.status}
+              label={USER_STATUS[filters.status]}
+              size="small"
+              onDelete={handleRemoveStatus}
             />
           </Block>
         )}

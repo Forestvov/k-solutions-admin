@@ -57,4 +57,5 @@ export type IUserTableFilterValue = string | string[];
 export interface IUserTableFilters {
   role: UserRoleType;
   email: string;
+  status: string;
 }
