@@ -45,6 +45,7 @@ const P2PEditForm = ({ current, update }: Props) => {
       currentName: current?.currentName || '',
       amount: current?.amount || '',
       amountIn: current?.amountIn || '',
+      amountOut: current?.amountOut || '',
       contactFrom: current?.contactFrom || '',
       cartName: current?.cartName || '',
       cartNumber: current?.cartNumber,
@@ -182,7 +183,7 @@ const P2PEditForm = ({ current, update }: Props) => {
           currentName: data.currentName,
           typePay: current.typePay,
           amountIn: +data.amountIn,
-          amount: +data.amount,
+          amountOut: +data.amountOut,
           fio: data.fio,
           username: data.username,
           image: current.image,
@@ -303,32 +304,50 @@ const P2PEditForm = ({ current, update }: Props) => {
             </RHFSelect>
             <RHFTextField name="cartNumber" label="Номер карты ЮЗЕРА *" />
             <RHFTextField name="cartName" label="Имя владельца карты ЮЗЕРА *" />
-            <RHFTextField
-              name="amountIn"
-              label="Сумма отправки ₽ *"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Box component="span" sx={{ color: 'text.disabled' }}>
-                      ₽
-                    </Box>
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <RHFTextField
-              name="amount"
-              label="Сумма получения $ *"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Box component="span" sx={{ color: 'text.disabled' }}>
-                      $
-                    </Box>
-                  </InputAdornment>
-                ),
-              }}
-            />
+            {current.transactionType === 'In' ? (
+              <>
+                <RHFTextField
+                  name="amountIn"
+                  label="Сумма отправки ₽ *"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Box component="span" sx={{ color: 'text.disabled' }}>
+                          ₽
+                        </Box>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <RHFTextField
+                  name="amountOut"
+                  label="Сумма получения $ *"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Box component="span" sx={{ color: 'text.disabled' }}>
+                          $
+                        </Box>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </>
+            ) : (
+              <RHFTextField
+                name="amountOut"
+                label="Сумма вывода ₽ *"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Box component="span" sx={{ color: 'text.disabled' }}>
+                        ₽
+                      </Box>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            )}
           </Stack>
         </Card>
       </Grid>
@@ -383,6 +402,7 @@ const P2PEditForm = ({ current, update }: Props) => {
               label="Введите номер карты"
               disabled={current?.transactionStatus !== 'Wait requisites'}
             />
+
             <RHFTextField
               name="cardName"
               label="Введите имя владельца карты"
@@ -405,7 +425,14 @@ const P2PEditForm = ({ current, update }: Props) => {
             )}
           </Stack>
         </Card>
+      </Grid>
+    </>
+  );
 
+  const renderButton = (
+    <>
+      {mdUp && <Grid md={4} />}
+      <Grid xs={12} md={8}>
         <Stack spacing={3} sx={{ p: 3 }} alignItems="flex-end">
           <LoadingButton
             type="submit"
@@ -430,7 +457,9 @@ const P2PEditForm = ({ current, update }: Props) => {
 
         {renderInfo}
 
-        {renderRequest}
+        {current.transactionType === 'In' ? renderRequest : null}
+
+        {renderButton}
       </Grid>
     </FormProvider>
   );

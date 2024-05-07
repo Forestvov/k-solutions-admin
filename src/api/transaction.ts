@@ -72,9 +72,15 @@ export function useGetTransactionList({
 
 interface p2pRequest extends IPagination {
   transactionStatus: string;
+  transactionType: 'In' | 'Out';
 }
 
-export function useGetTransactionP2pList({ page, pageSize, transactionStatus = '' }: p2pRequest) {
+export function useGetTransactionP2pList({
+  page,
+  pageSize,
+  transactionStatus = '',
+  transactionType,
+}: p2pRequest) {
   const URL = endpoints.transaction.list;
 
   const { data, isLoading, error, isValidating, mutate } = useSWR<IResponseTransaction>(
@@ -87,6 +93,7 @@ export function useGetTransactionP2pList({ page, pageSize, transactionStatus = '
         sortField: 'transactionDate',
         criteria: [
           { key: 'transactionLinkType', value: 'p2p' },
+          { key: 'transactionType', value: transactionType },
           { key: 'transactionStatus', value: transactionStatus === 'all' ? '' : transactionStatus },
         ],
       },

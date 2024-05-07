@@ -36,7 +36,22 @@ import TransactionTableFiltersResult from '../p2p-table-filters-result';
 
 // ----------------------------------------------------------------------
 
-const TABLE_HEAD = [
+
+const STATUS_OPTIONS = [
+  { value: 'all', label: 'Все' },
+  { value: 'Wait requisites', label: 'Ожидание реквизитов' },
+  { value: 'Process', label: 'В процессе оплаты' },
+  { value: 'Marked as paid', label: 'Отмеченно как оплаченно' },
+  { value: 'Canceled', label: 'Отклоненные' },
+  { value: 'Success', label: 'Выполненные' },
+];
+
+const defaultFilters: IP2PTableFilters = {
+  transactionStatus: '',
+  transactionType: 'In',
+};
+
+const TABLE_HEAD_IN = [
   { id: 'fio', label: 'Фио', width: 180 },
   { id: 'username', label: 'Логин', width: 140 },
   { id: 'email', label: 'Mail', width: 190 },
@@ -50,19 +65,16 @@ const TABLE_HEAD = [
   { id: '', width: 88 },
 ];
 
-const STATUS_OPTIONS = [
-  { value: 'all', label: 'Все' },
-  { value: 'Wait requisites', label: 'Ожидание реквизитов' },
-  { value: 'Process', label: 'В процессе оплаты' },
-  { value: 'Marked as paid', label: 'Отмеченно как оплаченно' },
-  { value: 'Canceled', label: 'Отклоненные' },
-  { value: 'Success', label: 'Выполненные' },
+const TABLE_HEAD_OUT = [
+  { id: 'fio', label: 'Фио', width: 180 },
+  { id: 'username', label: 'Логин', width: 140 },
+  { id: 'email', label: 'Mail', width: 190 },
+  { id: 'transactionDate', label: 'Дата заявки оредра', width: 180 },
+  { id: 'currentName', label: 'Банк', width: 150 },
+  { id: 'amount', label: 'Сумма вывода ₽', width: 180 },
+  { id: 'status', label: 'Статус', width: 100 },
+  { id: '', width: 88 },
 ];
-
-const defaultFilters: IP2PTableFilters = {
-  transactionStatus: '',
-};
-
 // ----------------------------------------------------------------------
 
 export default function TransactionListView() {
@@ -84,7 +96,10 @@ export default function TransactionListView() {
     page: table.page,
     pageSize: table.rowsPerPage,
     transactionStatus: filters.transactionStatus,
+    transactionType: filters.transactionType,
   });
+
+
 
   const updateTable = useCallback(() => {
     mutate();
@@ -175,7 +190,7 @@ export default function TransactionListView() {
               <TableHeadCustom
                 order={table.order}
                 orderBy={table.orderBy}
-                headLabel={TABLE_HEAD}
+                headLabel={filters.transactionType === 'In' ? TABLE_HEAD_IN : TABLE_HEAD_OUT}
                 rowCount={totalPages}
                 numSelected={table.selected.length}
                 onSort={table.onSort}
@@ -190,6 +205,7 @@ export default function TransactionListView() {
               <TableBody>
                 {dataFiltered.map((row) => (
                   <TransactionTableRow
+                    type={filters.transactionType}
                     key={row.transactionId}
                     row={row}
                     selected={table.selected.includes(row.accountId.toString())}

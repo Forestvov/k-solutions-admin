@@ -27,6 +27,7 @@ type Props = {
   row: ITransaction;
   onSelectRow: VoidFunction;
   updateTable: VoidFunction;
+  type: 'In' | 'Out';
 };
 
 const USER_STATUS: Record<string, string> = {
@@ -37,7 +38,7 @@ const USER_STATUS: Record<string, string> = {
   'Marked as paid': 'Отмеченно как оплаченно',
 };
 
-export default function P2pTableRow({ row, selected, onSelectRow, updateTable }: Props) {
+export default function P2pTableRow({ row, selected, onSelectRow, updateTable, type }: Props) {
   const {
     fio,
     transactionDate,
@@ -45,9 +46,11 @@ export default function P2pTableRow({ row, selected, onSelectRow, updateTable }:
     username,
     amount,
     amountIn,
+    amountOut,
     email,
     transactionStatus,
     transactionId,
+    transactionType,
   } = row;
 
   const router = useRouter();
@@ -130,32 +133,47 @@ export default function P2pTableRow({ row, selected, onSelectRow, updateTable }:
         <ListItemText
           primary={fio ?? 'не указно'}
           primaryTypographyProps={{ typography: 'body2' }}
+          secondary={transactionType === 'In' ? 'Пополнение' : 'Вывод'}
         />
       </TableCell>
       <TableCell sx={{ whiteSpace: 'nowrap' }}>{username}</TableCell>
       <TableCell sx={{ whiteSpace: 'nowrap' }}>{email}</TableCell>
       <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(new Date(transactionDate))}</TableCell>
       <TableCell sx={{ whiteSpace: 'nowrap' }}>{currentName}</TableCell>
-      <TableCell sx={{ whiteSpace: 'nowrap' }}>{amountIn ? fNumber(amountIn) : '0'} ₽</TableCell>
-      <TableCell sx={{ whiteSpace: 'nowrap' }}>$ {amount ? fNumber(amount) : '0'}</TableCell>
-      <TableCell sx={{ whiteSpace: 'nowrap' }}>
-        {transactionStatus === 'Wait requisites' ? (
-          <div>
-            <span className={`minutes-requisites-${transactionId}`} />
-            :
-            <span className={`seconds-requisites-${transactionId}`} />
-          </div>
-        ) : null}
-      </TableCell>
-      <TableCell sx={{ whiteSpace: 'nowrap' }}>
-        {transactionStatus === 'Process' ? (
-          <div>
-            <span className={`minutes-process-${transactionId}`} />
-            :
-            <span className={`seconds-process-${transactionId}`} />
-          </div>
-        ) : null}
-      </TableCell>
+
+      {transactionType === 'In' ? (
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{amountIn ? fNumber(amountIn) : '0'} ₽</TableCell>
+      ) : (
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>
+          {amountOut ? fNumber(amountOut) : '0'} ₽
+        </TableCell>
+      )}
+
+      {type === 'In' && (
+        <>
+          <TableCell sx={{ whiteSpace: 'nowrap' }}>$ {amount ? fNumber(amount) : '0'}</TableCell>
+          <TableCell sx={{ whiteSpace: 'nowrap' }}>
+            {transactionStatus === 'Wait requisites' ? (
+              <div>
+                <span className={`minutes-requisites-${transactionId}`} />
+                :
+                <span className={`seconds-requisites-${transactionId}`} />
+              </div>
+            ) : null}
+          </TableCell>
+
+          <TableCell sx={{ whiteSpace: 'nowrap' }}>
+            {transactionStatus === 'Process' ? (
+              <div>
+                <span className={`minutes-process-${transactionId}`} />
+                :
+                <span className={`seconds-process-${transactionId}`} />
+              </div>
+            ) : null}
+          </TableCell>
+        </>
+      )}
+
       <TableCell>
         <Label
           variant="soft"

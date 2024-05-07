@@ -1,7 +1,12 @@
-// import { useCallback } from 'react';
+import { useCallback } from 'react';
 
 import Stack from '@mui/material/Stack';
-// import { SelectChangeEvent } from '@mui/material/Select';
+import Checkbox from "@mui/material/Checkbox";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import { IP2PTableFilters } from 'src/types/transaction';
 
@@ -12,7 +17,7 @@ type Props = {
   onFilters: (name: string, value: string) => void;
 };
 
-// const roleOptions: string[] = [''];
+const transactionOptions: string[] = ['In', 'Out'];
 
 export default function P2pTableToolbar({ filters, onFilters }: Props) {
   // const handleFilterSearch = useCallback(
@@ -22,12 +27,12 @@ export default function P2pTableToolbar({ filters, onFilters }: Props) {
   //   [onFilters]
   // );
   //
-  // const handleFilterRole = useCallback(
-  //   (event: SelectChangeEvent<string>) => {
-  //     onFilters('role', event.target.value);
-  //   },
-  //   [onFilters]
-  // );
+  const handleFilterType = useCallback(
+    (event: SelectChangeEvent<string>) => {
+      onFilters('transactionType', event.target.value);
+    },
+    [onFilters]
+  );
 
   // @ts-ignore
   return (
@@ -43,38 +48,38 @@ export default function P2pTableToolbar({ filters, onFilters }: Props) {
         pr: { xs: 2.5, md: 1 },
       }}
     >
-      {/* <FormControl */}
-      {/*  sx={{ */}
-      {/*    flexShrink: 0, */}
-      {/*    width: { xs: 1, md: 200 }, */}
-      {/*  }} */}
-      {/* > */}
-      {/*  <InputLabel>Роль</InputLabel> */}
+       <FormControl
+        sx={{
+          flexShrink: 0,
+          width: { xs: 1, md: 200 },
+        }}
+       >
+        <InputLabel>Тип</InputLabel>
 
-      {/*  <Select */}
-      {/*    // @ts-ignore */}
-      {/*    value={filters.role} */}
-      {/*    onChange={handleFilterRole} */}
-      {/*    input={<OutlinedInput label="Role" />} */}
-      {/*    renderValue={(selected) => selected} */}
-      {/*    MenuProps={{ */}
-      {/*      PaperProps: { */}
-      {/*        sx: { maxHeight: 240 }, */}
-      {/*      }, */}
-      {/*    }} */}
-      {/*  > */}
-      {/*    {roleOptions.map((option) => ( */}
-      {/*      <MenuItem key={option} value={option}> */}
-      {/*        <Checkbox */}
-      {/*          disableRipple */}
-      {/*          size="small" */}
-      {/*          checked={filters.transactionStatus.includes(option)} */}
-      {/*        /> */}
-      {/*        {option} */}
-      {/*      </MenuItem> */}
-      {/*    ))} */}
-      {/*  </Select> */}
-      {/* </FormControl> */}
+        <Select
+          // @ts-ignore
+          value={filters.transactionType}
+          onChange={handleFilterType}
+          input={<OutlinedInput label="Тип" />}
+          renderValue={(selected) => selected === 'In' ? 'Пополнение': 'Вывод'}
+          MenuProps={{
+            PaperProps: {
+              sx: { maxHeight: 240 },
+            },
+          }}
+        >
+          {transactionOptions.map((option) => (
+            <MenuItem key={option} value={option}>
+              <Checkbox
+                disableRipple
+                size="small"
+                checked={filters.transactionType.includes(option)}
+              />
+              {option === 'In' ? 'Пополнение': 'Вывод'}
+            </MenuItem>
+          ))}
+        </Select>
+       </FormControl>
 
       {/* <Stack direction="row" alignItems="center" spacing={2} flexGrow={1} sx={{ width: 1 }}> */}
       {/*  <TextField */}

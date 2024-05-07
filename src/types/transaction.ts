@@ -26,6 +26,7 @@ export interface ITransaction {
   currentName: any;
   typePay: string;
   amount: number;
+  amountOut: number;
   fio: string;
   username: string;
   image: string;
@@ -76,4 +77,5 @@ export interface CounterResponse {
 
 export interface IP2PTableFilters {
   transactionStatus: string;
+  transactionType: 'In' | 'Out';
 }
