@@ -74,8 +74,8 @@ export default function CompaniesNewEditForm({ currentCompany }: Prop) {
       logo: currentCompany?.logo || '',
       image: currentCompany?.image || '',
       finishDay: currentCompany?.finishDay ? new Date(currentCompany.finishDay) : '',
-      pampInvestors: currentCompany?.pampInvestors || '',
-      pampAmount: currentCompany?.pampAmount || '',
+      pampInvestors: currentCompany?.pampInvestors || 0,
+      pampAmount: currentCompany?.pampAmount || 0,
       companyInvestDetailInputs: currentCompany?.companyInvestDetailDtoList || [
         {
           id: '',
