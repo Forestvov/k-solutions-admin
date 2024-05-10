@@ -74,6 +74,12 @@ export function useNavData() {
             ],
           },
           {
+            title: 'Заявки',
+            path: paths.dashboard.order.root,
+            icon: ICONS.blank,
+            children: [{ title: 'Список', path: paths.dashboard.order.root }],
+          },
+          {
             title: 'Компании',
             path: paths.dashboard.companies.root,
             icon: ICONS.invoice,

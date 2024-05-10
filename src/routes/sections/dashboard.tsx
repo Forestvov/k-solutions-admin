@@ -37,6 +37,9 @@ const SettingsPage = lazy(() => import('src/pages/admin/settings/root'));
 // Close
 const CloseListPage = lazy(() => import('src/pages/admin/close/list'));
 
+// Close
+const OrderListPage = lazy(() => import('src/pages/admin/order/list'));
+
 // ----------------------------------------------------------------------
 
 export const dashboardRoutes = [
@@ -96,6 +99,10 @@ export const dashboardRoutes = [
       {
         path: 'settings',
         children: [{ element: <SettingsPage />, index: true, path: 'list' }],
+      },
+      {
+        path: 'order',
+        children: [{ element: <OrderListPage />, index: true, path: 'list' }],
       },
     ],
   },

@@ -90,6 +90,9 @@ export const endpoints = {
     page: '/news',
     update: '/news',
   },
+  order: {
+    list: '/order-contact/page',
+  },
   settings: {
     wait_requisites: '/setting/code/p2p.time.wait_requisites',
     time_accept: '/setting/code/p2p.time.accept',
