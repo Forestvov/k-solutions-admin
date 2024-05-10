@@ -3,7 +3,13 @@ import { useState, useCallback } from 'react';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
+import MenuItem from '@mui/material/MenuItem';
+import Checkbox from '@mui/material/Checkbox';
 import Container from '@mui/material/Container';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
@@ -19,6 +25,7 @@ import { useSettingsContext } from '../../../components/settings';
 
 const defaultFilters: NewsFilter = {
   lang: 'ru',
+  type: '',
 };
 
 const NewsListView = () => {
@@ -38,9 +45,17 @@ const NewsListView = () => {
     }));
   }, []);
 
+  const handleFilterType = useCallback(
+    (event: SelectChangeEvent<string>) => {
+      handleFilters('type', event.target.value);
+    },
+    [handleFilters]
+  );
+
   const { news, newsLoading, mutate } = useGetNews({
     ...paginationModel,
     lang: filters.lang,
+    type: filters.type,
   });
 
   return (
@@ -77,6 +92,46 @@ const NewsListView = () => {
           },
         }}
       />
+      <Stack
+        alignItems={{ xs: 'flex-end', md: 'center' }}
+        direction={{
+          xs: 'column',
+          md: 'row',
+        }}
+        sx={{
+          marginBottom: '40px',
+        }}
+      >
+        <FormControl
+          sx={{
+            flexShrink: 0,
+            width: { xs: 1, md: 200 },
+          }}
+        >
+          <InputLabel>Тип</InputLabel>
+
+          <Select
+            value={filters.type}
+            onChange={handleFilterType}
+            input={<OutlinedInput label="Тип" />}
+            renderValue={(selected) => selected === 'News' ? 'Новость' : 'Событие'}
+            MenuProps={{
+              PaperProps: {
+                sx: { maxHeight: 240 },
+              },
+            }}
+          >
+            <MenuItem key="News" value="News">
+              <Checkbox disableRipple size="small" checked={filters.type.includes('News')} />
+              Новость
+            </MenuItem>
+            <MenuItem key="Event" value="Event">
+              <Checkbox disableRipple size="small" checked={filters.type.includes('Event')} />
+              Событие
+            </MenuItem>
+          </Select>
+        </FormControl>
+      </Stack>
       <Stack
         direction="row"
         spacing="40px"

@@ -16,6 +16,8 @@ export interface INewPost {
   id: number;
   newsTypeId: string;
   newsType: string;
+  type: 'News' | 'Event';
+  url: string;
   title: string;
   descriptions: string;
   createdDate: string;
@@ -48,4 +50,5 @@ export type LangType = 'ru' | 'eng' | 'de';
 
 export interface NewsFilter {
   lang: LangType;
+  type: string;
 }

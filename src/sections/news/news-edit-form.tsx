@@ -42,9 +42,11 @@ const NewsEditForm = ({ currentPost }: Props) => {
   const NewBlogSchema = Yup.object().shape({
     title: Yup.string().required('Загаловк обязателен'),
     descriptions: Yup.string().required('Описание обязательно'),
-    newsType: Yup.string().required('Тип события обязателен'),
+    newsType: Yup.string().required('Язык события обязателен'),
     createdDate: Yup.string().required('Дата события обязательна'),
     photo: Yup.string(),
+    type: Yup.string(),
+    url: Yup.string(),
   });
 
   const defaultValues = useMemo(
@@ -54,6 +56,8 @@ const NewsEditForm = ({ currentPost }: Props) => {
       lang: currentPost?.lang || 'ru',
       descriptions: currentPost?.descriptions || '',
       newsType: currentPost?.newsType || '',
+      type: currentPost?.type || 'Event',
+      url: currentPost?.url || '',
       createdDate: currentPost?.createdDate ? new Date(currentPost?.createdDate) : '',
       photo: currentPost?.photo || '',
     }),
@@ -129,7 +133,7 @@ const NewsEditForm = ({ currentPost }: Props) => {
           {!mdUp && <CardHeader title="Details" />}
 
           <Stack spacing={3} sx={{ p: 3 }}>
-            <RHFSelect name="lang" label="Выбирети тип *">
+            <RHFSelect name="lang" label="Выбирети язык *">
               <MenuItem key="ru" value="ru">
                 Русский
               </MenuItem>
@@ -141,6 +145,15 @@ const NewsEditForm = ({ currentPost }: Props) => {
               </MenuItem>
             </RHFSelect>
 
+            <RHFSelect name="type" label="Выбирети тип *">
+              <MenuItem key="Event" value="Event">
+                Событие
+              </MenuItem>
+              <MenuItem key="News" value="News">
+                Новость
+              </MenuItem>
+            </RHFSelect>
+
             <RHFTextField name="title" label="Заголовок события " />
 
             <CompaniesNewEditFormDate label="Дата события" name="createdDate" />
@@ -148,6 +161,8 @@ const NewsEditForm = ({ currentPost }: Props) => {
             <RHFTextField name="newsType" label="Категория события " />
 
             <RHFTextField name="descriptions" label="Описание события" multiline rows={3} />
+
+            <RHFTextField name="url" label="Ссылка на новость"  rows={3} />
           </Stack>
         </Card>
       </Grid>
