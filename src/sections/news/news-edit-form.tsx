@@ -150,7 +150,7 @@ const NewsEditForm = ({ currentPost }: Props) => {
                 Событие
               </MenuItem>
               <MenuItem key="News" value="News">
-                Новость
+                Аналитика
               </MenuItem>
             </RHFSelect>
 

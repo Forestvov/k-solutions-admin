@@ -114,7 +114,7 @@ const NewsListView = () => {
             value={filters.type}
             onChange={handleFilterType}
             input={<OutlinedInput label="Тип" />}
-            renderValue={(selected) => selected === 'News' ? 'Новость' : 'Событие'}
+            renderValue={(selected) => selected === 'News' ? 'Аналитика' : 'Событие'}
             MenuProps={{
               PaperProps: {
                 sx: { maxHeight: 240 },
@@ -123,7 +123,7 @@ const NewsListView = () => {
           >
             <MenuItem key="News" value="News">
               <Checkbox disableRipple size="small" checked={filters.type.includes('News')} />
-              Новость
+              Аналитика
             </MenuItem>
             <MenuItem key="Event" value="Event">
               <Checkbox disableRipple size="small" checked={filters.type.includes('Event')} />
