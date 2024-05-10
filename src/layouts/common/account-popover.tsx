@@ -16,23 +16,6 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 // ----------------------------------------------------------------------
 
-const OPTIONS = [
-  {
-    label: 'Home',
-    linkTo: '/',
-  },
-  {
-    label: 'Profile',
-    linkTo: '/#1',
-  },
-  {
-    label: 'Settings',
-    linkTo: '/#2',
-  },
-];
-
-// ----------------------------------------------------------------------
-
 export default function AccountPopover() {
   const router = useRouter();
 

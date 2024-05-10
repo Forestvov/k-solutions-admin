@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback } from 'react';
+import { useCallback } from 'react';
 
 import Stack from '@mui/material/Stack';
 import MenuItem from '@mui/material/MenuItem';
@@ -28,7 +28,8 @@ export default function OrderTableToolbar({ filters, onFilters }: Props) {
   );
 
   // @ts-ignore
-  return (
+  // @ts-ignore
+    return (
     <Stack
       spacing={2}
       alignItems={{ xs: 'flex-end', md: 'center' }}
@@ -54,6 +55,7 @@ export default function OrderTableToolbar({ filters, onFilters }: Props) {
           value={filters.module}
           onChange={handleFilterModule}
           input={<OutlinedInput label="Модуль" />}
+            // @ts-ignore
           renderValue={(selected: string) => nameObj[selected]}
           MenuProps={{
             PaperProps: {

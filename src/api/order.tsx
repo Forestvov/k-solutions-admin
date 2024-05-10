@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
 import useSWR from 'swr';
+import { useMemo } from 'react';
 
 import { IResponseOrder } from '../types/order';
 import { IPagination } from '../types/pagination';

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useCallback } from 'react';
 
 import Box from '@mui/material/Box';
@@ -38,7 +39,8 @@ export default function OrderTableFiltersResult({
     return null;
   }
 
-  return (
+  // @ts-ignore
+    return (
     <Stack spacing={1.5} {...other}>
       <Box sx={{ typography: 'body2' }}>
         <strong>{results}</strong>

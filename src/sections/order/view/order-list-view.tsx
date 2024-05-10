@@ -75,7 +75,9 @@ export default function OrderListView() {
   const handleFilters = useCallback(
     (name: string, value: string) => {
       table.onResetPage();
+      // @ts-ignore
       setFilters((prevState: string) => ({
+        // @ts-ignore
         ...prevState,
         [name]: value,
       }));

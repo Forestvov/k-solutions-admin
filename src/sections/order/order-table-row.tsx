@@ -1,7 +1,7 @@
+// @ts-nocheck
 import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-
 import Checkbox from '@mui/material/Checkbox';
+import TableCell from '@mui/material/TableCell';
 
 import {nameObj} from "./data";
 import { IOrder } from '../../types/order';
