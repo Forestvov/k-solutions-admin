@@ -87,7 +87,7 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
         },
       ],
     }),
-    [currentCompany]
+    [currentCompany?.amountFinish, currentCompany?.amountMin, currentCompany?.briefcaseName, currentCompany?.briefcaseStatus, currentCompany?.companyInvestDetailDtoList, currentCompany?.companyType, currentCompany?.descriptions, currentCompany.finishDay, currentCompany?.image, currentCompany?.images, currentCompany?.logo, currentCompany?.pampAmount, currentCompany?.pampInvestors, currentCompany?.percents, currentCompany?.ranges, lang]
   );
 
   const methods = useForm<FormState>({
@@ -208,7 +208,7 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
         )}?companyId=${companyCurrentId}&lang=${currentLang}`
       );
     },
-    [router]
+    [reset, router]
   );
 
   const renderTabs = (
