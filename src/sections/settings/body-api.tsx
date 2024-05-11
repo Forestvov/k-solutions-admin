@@ -119,6 +119,12 @@ const BodyApi = () => {
                 <MenuItem key="p2p" value="p2p">
                   p2p
                 </MenuItem>
+                <MenuItem key="Bank" value="Bank">
+                  Bank
+                </MenuItem>
+                <MenuItem key="Wallet" value="Wallet">
+                  Wallet
+                </MenuItem>
               </RHFSelect>
               <Stack spacing={1.5}>
                 <Typography variant="subtitle2">Логотип</Typography>
