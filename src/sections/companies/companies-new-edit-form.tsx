@@ -60,6 +60,7 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
     percents: Yup.number().required('Name is required'),
   });
 
+  // @ts-ignore
   const defaultValues = useMemo(
     () => ({
       companyType: currentCompany?.companyType || 'Company',
@@ -87,6 +88,7 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
         },
       ],
     }),
+    // @ts-ignore
     [currentCompany?.amountFinish, currentCompany?.amountMin, currentCompany?.briefcaseName, currentCompany?.briefcaseStatus, currentCompany?.companyInvestDetailDtoList, currentCompany?.companyType, currentCompany?.descriptions, currentCompany.finishDay, currentCompany?.image, currentCompany?.images, currentCompany?.logo, currentCompany?.pampAmount, currentCompany?.pampInvestors, currentCompany?.percents, currentCompany?.ranges, lang]
   );
 
