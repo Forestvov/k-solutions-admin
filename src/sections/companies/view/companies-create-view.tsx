@@ -32,7 +32,7 @@ export default function ProductCreateView() {
         }}
       />
 
-      <CompaniesNewEditForm />
+      <CompaniesNewEditForm lang="ru" />
     </Container>
   );
 }

@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import MenuItem from '@mui/material/MenuItem';
+import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Unstable_Grid2';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
@@ -16,7 +17,6 @@ import { useResponsive } from 'src/hooks/use-responsive';
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, { RHFSelect, RHFUpload, RHFTextField } from 'src/components/hook-form';
 
-import { styled } from '@mui/material/styles';
 import { paths } from '../../routes/paths';
 import { errorCatcher } from './errorCatcher';
 import { useRouter } from '../../routes/hooks';
@@ -37,7 +37,7 @@ interface FormState extends ExtendCompany {
   images: any;
 }
 
-type Prop = { currentCompany?: ExtendCompany; id: string; companyId: string; lang: string };
+type Prop = { currentCompany?: ExtendCompany; id?: string; companyId?: string; lang: string };
 
 export default function CompaniesNewEditForm({ currentCompany, companyId, id, lang }: Prop) {
   const mdUp = useResponsive('up', 'md');
@@ -200,11 +200,11 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
   );
 
   const handleEditRow = useCallback(
-    (currentId: string, companyCurrentId: string, currentLang: string) => {
+    (currentId?: string, companyCurrentId?: string, currentLang?: string) => {
       reset()
       router.push(
         `${paths.dashboard.companies.edit(
-          currentId
+          currentId ?? ''
         )}?companyId=${companyCurrentId}&lang=${currentLang}`
       );
     },
