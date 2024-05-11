@@ -15,13 +15,14 @@ import CompaniesNewEditForm from '../companies-new-edit-form';
 type Props = {
   id: string;
   companyId: string;
+  lang: string;
 };
 
-export default function ProductEditView({ id, companyId }: Props) {
+export default function ProductEditView({ id, companyId, lang }: Props) {
   const settings = useSettingsContext();
 
-  const { brief } = useGetBrief(id);
-  const { company } = useGetCompany(companyId);
+  const { brief } = useGetBrief(id, lang);
+  const { company } = useGetCompany(companyId, lang);
   const { files } = useGetFiles(companyId);
 
   return (
@@ -43,7 +44,7 @@ export default function ProductEditView({ id, companyId }: Props) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      <CompaniesNewEditForm currentCompany={{ ...brief, ...company, images: files }} />
+      <CompaniesNewEditForm id={id} companyId={companyId} currentCompany={{ ...brief, ...company, images: files }} lang={lang} />
     </Container>
   );
 }

@@ -134,7 +134,7 @@ export default function CompaniesListView() {
 
   const handleEditRow = useCallback(
     (id: string, companyId: string) => {
-      router.push(`${paths.dashboard.companies.edit(id)}?companyId=${companyId}`);
+      router.push(`${paths.dashboard.companies.edit(id)}?companyId=${companyId}&lang=ru`);
     },
     [router]
   );

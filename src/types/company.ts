@@ -25,6 +25,7 @@ export interface ICompany {
   ranges: number;
   percents: number;
   image: string;
+  lang: string;
   companyInvestId: number;
   finishDay: string;
   createdDate: string;

@@ -53,7 +53,8 @@ export const endpoints = {
     list: '/briefcase/list',
     add: '/briefcase',
     update: '/briefcase/page',
-    details: '/briefcase',
+    details: '/briefcase/admin/language',
+    updateBriefLang: '/briefcase',
   },
   mail: {
     list: '/mail/list',

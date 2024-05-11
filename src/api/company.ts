@@ -57,9 +57,10 @@ export const createCompany = async (data: IData) => {
       'Content-Type': 'application/json',
     },
   });
-
   const { id } = resCompanyInvest.data;
-  await axios.post(endpoints.briefcase.add, { ...formDataBrief, companyInvestId: id });
+
+  const resBrief = await axios.post(endpoints.briefcase.add, { ...formDataBrief, companyInvestId: id });
+  const {briefcaseId} = resBrief.data
 
   if (data.images.length) {
     const list = Promise.all(data.images.map((file) => toBase64(file)));
@@ -69,6 +70,11 @@ export const createCompany = async (data: IData) => {
         data.map((file) => addCompanyFile(file, id, 'png'));
       }
     });
+  }
+
+  return {
+    companyInvestId: id,
+    briefcaseId,
   }
 };
 
@@ -82,7 +88,7 @@ export const updateCompany = async (data: IData, briefcaseId: number, companyId:
     logo: data.logo,
     descriptions: data.descriptions,
     companyInvestDetailInputs: data.companyInvestDetailInputs,
-    lang: 'ru',
+    lang: data.lang,
   };
 
   const formDataBrief = {
@@ -97,7 +103,7 @@ export const updateCompany = async (data: IData, briefcaseId: number, companyId:
     finishDay: data.finishDay,
     pampInvestors: data.pampInvestors,
     pampAmount: data.pampAmount,
-    lang: 'ru',
+    lang: data.lang,
   };
 
   await axios.put(endpoints.company.root, formDataCompany, {
@@ -106,20 +112,7 @@ export const updateCompany = async (data: IData, briefcaseId: number, companyId:
     },
   });
 
-  await axios.put(endpoints.briefcase.details, { ...formDataBrief });
-
-  // const { id } = resCompanyInvest.data;
-  // await axios.post(endpoints.briefcase.add, { ...formDataBrief, companyInvestId: id });
-  //
-  // if (data.images.length) {
-  //     const list = Promise.all(data.images.map((file) => toBase64(file)));
-  //     // eslint-disable-next-line @typescript-eslint/no-shadow
-  //     list.then((data) => {
-  //         if (data.length) {
-  //             data.map((file) => addCompanyFile(file, id, 'png'));
-  //         }
-  //     });
-  // }
+  await axios.put(endpoints.briefcase.updateBriefLang, { ...formDataBrief });
 };
 
 // ----------------------------------------------------------------------
@@ -212,7 +205,7 @@ export function useGetCompaniesDetailList() {
 
 // ----------------------------------------------------------------------
 
-export function useGetBrief(id: string) {
+export function useGetBrief(id: string, lang: string) {
   const URL = `${endpoints.briefcase.details}/${id}`;
 
   const { data, isLoading, error, isValidating } = useSWR<ExtendCompany>(
@@ -221,7 +214,7 @@ export function useGetBrief(id: string) {
       {},
       'get',
       {
-        lang: 'ru',
+        lang
       },
     ],
     fetcher,
@@ -245,7 +238,7 @@ export function useGetBrief(id: string) {
 
 // ----------------------------------------------------------------------
 
-export function useGetCompany(id: string) {
+export function useGetCompany(id: string, lang: string) {
   const URL = `${endpoints.company.root}/${id}`;
 
   const { data, isLoading, error, isValidating } = useSWR<ExtendCompany>(
@@ -254,7 +247,7 @@ export function useGetCompany(id: string) {
       {},
       'get',
       {
-        lang: 'ru',
+        lang
       },
     ],
     fetcher,

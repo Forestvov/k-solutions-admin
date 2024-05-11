@@ -25,7 +25,7 @@ export default function Page() {
         <title>Компании</title>
       </Helmet>
 
-      <CompanyEdit id={`${id}`} companyId={`${query?.get('companyId')}`} />
+      <CompanyEdit id={`${id}`} companyId={`${query?.get('companyId')}`} lang={`${query?.get('lang')}`} />
     </>
   );
 }
