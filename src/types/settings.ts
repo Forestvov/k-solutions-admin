@@ -6,5 +6,6 @@ export interface SettingToken {
   value: string;
   image?: string;
   qrCode: string;
+  staticCurse: string;
   transactionLinkType: string;
 }

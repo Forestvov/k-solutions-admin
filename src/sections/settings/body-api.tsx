@@ -31,6 +31,7 @@ const BodyApi = () => {
         image: Yup.string().required('Лого обязателено'),
         qrCode: Yup.string().required('Qrcode обязателен'),
         currencyTypeId: Yup.string(),
+        staticCurse: Yup.string(),
       })
     ),
   });
@@ -92,6 +93,7 @@ const BodyApi = () => {
       currentName: '',
       value: '',
       transactionLinkType: 'Visa',
+      staticCurse: '0',
       image: '',
       qrCode: '',
     });
@@ -126,6 +128,7 @@ const BodyApi = () => {
                   Wallet
                 </MenuItem>
               </RHFSelect>
+              <RHFTextField name={`data[${idx}].staticCurse`} label="Статичный курс" />
               <Stack spacing={1.5}>
                 <Typography variant="subtitle2">Логотип</Typography>
                 <RHFUpload
