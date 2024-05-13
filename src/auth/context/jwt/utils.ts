@@ -47,8 +47,6 @@ export const tokenExpired = (exp: number) => {
   clearTimeout(expiredTimer);
 
   expiredTimer = setTimeout(() => {
-    alert('Token expired');
-
     sessionStorage.removeItem('acceptToken');
 
     window.location.href = paths.auth.jwt.login;

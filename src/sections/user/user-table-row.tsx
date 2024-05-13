@@ -57,7 +57,7 @@ export default function UserTableRow({ row, selected, onSelectRow, updateTable }
         </TableCell>
 
         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-          <Link to={`/${accountId}/personal`} target="_blank">
+          <Link to={`/${accountId}/personal`} >
             <ListItemText
               primary={fio ?? 'не указно'}
               secondary={role === 'Admin' ? 'Администратор' : 'Пользователь'}
