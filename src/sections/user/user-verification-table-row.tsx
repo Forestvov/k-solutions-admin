@@ -49,7 +49,7 @@ export default function UserVerificationTableRow({
   onSelectRow,
   updateTable,
 }: Props) {
-  const { fio, numberPhone, status, email, accountId, userName, role } = row;
+  const { fio, numberPhone, status, email, accountId, userName, role, famCeo } = row;
 
   const quickEdit = useBoolean();
   const openPhotoFirst = useBoolean();
@@ -65,7 +65,7 @@ export default function UserVerificationTableRow({
         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
           <Link to={`/${accountId}/personal`}>
             <ListItemText
-              primary={fio ?? 'не указно'}
+              primary={fio.length > 1 ? fio : famCeo}
               secondary={role === 'Admin' ? 'Администратор' : 'Пользователь'}
               primaryTypographyProps={{ typography: 'body2' }}
             />
