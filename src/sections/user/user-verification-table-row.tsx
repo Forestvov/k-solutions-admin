@@ -1,7 +1,10 @@
+import { NavLink } from 'react-router-dom';
+
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
+import { styled } from '@mui/material/styles';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
@@ -35,13 +38,18 @@ const USER_STATUS: Record<string, string> = {
   'Not verified YC': 'Нет запроса на верификацию',
 };
 
+const Link = styled(NavLink)`
+  color: #fff;
+  text-decoration: none;
+`;
+
 export default function UserVerificationTableRow({
   row,
   selected,
   onSelectRow,
   updateTable,
 }: Props) {
-  const { fio, numberPhone,  status, email,  userName, role } = row;
+  const { fio, numberPhone, status, email, accountId, userName, role } = row;
 
   const quickEdit = useBoolean();
   const openPhotoFirst = useBoolean();
@@ -55,11 +63,13 @@ export default function UserVerificationTableRow({
         </TableCell>
 
         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-          <ListItemText
-            primary={fio ?? 'не указно'}
-            secondary={role === 'Admin' ? 'Администратор' : 'Пользователь'}
-            primaryTypographyProps={{ typography: 'body2' }}
-          />
+          <Link to={`/${accountId}/personal`}>
+            <ListItemText
+              primary={fio ?? 'не указно'}
+              secondary={role === 'Admin' ? 'Администратор' : 'Пользователь'}
+              primaryTypographyProps={{ typography: 'body2' }}
+            />
+          </Link>
         </TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{userName}</TableCell>

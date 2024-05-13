@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router-dom';
+
 import Tooltip from '@mui/material/Tooltip';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
@@ -12,6 +14,7 @@ import Iconify from 'src/components/iconify';
 
 import { IUser } from 'src/types/user';
 
+import { styled } from '@mui/material/styles';
 import { fDate } from '../../utils/format-time';
 import { fNumber } from '../../utils/format-number';
 import UserQuickEditForm from './user-quick-edit-form';
@@ -35,8 +38,14 @@ const USER_STATUS: Record<string, string> = {
   'Not verified YC': 'Нет запроса на верификацию',
 };
 
+const Link = styled(NavLink)`
+  color: #fff;
+  text-decoration: none;
+`;
+
 export default function UserTableRow({ row, selected, onSelectRow, updateTable }: Props) {
-  const { fio, numberPhone, balance, status, email, registeredDate, userName, role } = row;
+  const { fio, numberPhone, balance, status, email, registeredDate, userName, role, accountId } =
+    row;
 
   const quickEdit = useBoolean();
 
@@ -48,11 +57,13 @@ export default function UserTableRow({ row, selected, onSelectRow, updateTable }
         </TableCell>
 
         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-          <ListItemText
-            primary={fio ?? 'не указно'}
-            secondary={role === 'Admin' ? 'Администратор' : 'Пользователь'}
-            primaryTypographyProps={{ typography: 'body2' }}
-          />
+          <Link to={`/${accountId}/personal`}>
+            <ListItemText
+              primary={fio ?? 'не указно'}
+              secondary={role === 'Admin' ? 'Администратор' : 'Пользователь'}
+              primaryTypographyProps={{ typography: 'body2' }}
+            />
+          </Link>
         </TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{userName}</TableCell>

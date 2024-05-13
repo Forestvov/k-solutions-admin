@@ -59,8 +59,11 @@ export const createCompany = async (data: IData) => {
   });
   const { id } = resCompanyInvest.data;
 
-  const resBrief = await axios.post(endpoints.briefcase.add, { ...formDataBrief, companyInvestId: id });
-  const {briefcaseId} = resBrief.data
+  const resBrief = await axios.post(endpoints.briefcase.add, {
+    ...formDataBrief,
+    companyInvestId: id,
+  });
+  const { briefcaseId } = resBrief.data;
 
   if (data.images.length) {
     const list = Promise.all(data.images.map((file) => toBase64(file)));
@@ -75,7 +78,7 @@ export const createCompany = async (data: IData) => {
   return {
     companyInvestId: id,
     briefcaseId,
-  }
+  };
 };
 
 // ----------------------------------------------------------------------
@@ -214,7 +217,7 @@ export function useGetBrief(id: string, lang: string) {
       {},
       'get',
       {
-        lang
+        lang,
       },
     ],
     fetcher,
@@ -247,7 +250,7 @@ export function useGetCompany(id: string, lang: string) {
       {},
       'get',
       {
-        lang
+        lang,
       },
     ],
     fetcher,
