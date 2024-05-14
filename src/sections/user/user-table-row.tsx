@@ -44,8 +44,18 @@ const Link = styled(NavLink)`
 `;
 
 export default function UserTableRow({ row, selected, onSelectRow, updateTable }: Props) {
-  const { fio, numberPhone, balance, status, email, registeredDate, userName, role, accountId, famCeo } =
-    row;
+  const {
+    fio,
+    numberPhone,
+    balance,
+    status,
+    email,
+    registeredDate,
+    userName,
+    role,
+    accountId,
+    famCeo,
+  } = row;
 
   const quickEdit = useBoolean();
 
@@ -57,7 +67,7 @@ export default function UserTableRow({ row, selected, onSelectRow, updateTable }
         </TableCell>
 
         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-          <Link to={`/${accountId}/personal`} >
+          <Link to={`/admin/user/${accountId}/edit`}>
             <ListItemText
               primary={fio.length > 1 ? fio : famCeo}
               secondary={role === 'Admin' ? 'Администратор' : 'Пользователь'}

@@ -15,6 +15,7 @@ export default function UserEditPage() {
       </Helmet>
 
       <iframe
+        frameBorder={0}
         title="Пользователь"
         src={`https://k-solutions.ltd/${id}/personal`}
         height="100%"

@@ -63,7 +63,7 @@ export default function UserVerificationTableRow({
         </TableCell>
 
         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-          <Link to={`/${accountId}/personal`}>
+          <Link to={`/admin/user/${accountId}/edit`}>
             <ListItemText
               primary={fio.length > 1 ? fio : famCeo}
               secondary={role === 'Admin' ? 'Администратор' : 'Пользователь'}
