@@ -16,7 +16,7 @@ export default function UserEditPage() {
 
       <iframe
         title="Пользователь"
-        src={`http://185.215.186.138:8082/${id}/personal`}
+        src={`https://k-solutions.ltd/${id}/personal`}
         height="100%"
         width="100%"
       />
