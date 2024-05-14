@@ -27,15 +27,15 @@ export const CompaniesNewEditFormDetail = () => {
     });
   };
 
-  const handleRemove = (index: number) => {
-    remove(index);
+  const handleRemove = (id: number) => {
+    remove(id);
   };
 
   return (
     <>
       {fields.map((value, index) => (
-        <>
-          <Stack spacing={3} sx={{ p: 3 }} key={index}>
+        <div key={value.id}>
+          <Stack spacing={3} sx={{ p: 3 }} >
             <RHFAutocomplete
               freeSolo
               name={`companyInvestDetailInputs[${index}].companyInvestDetailTypeDescriptions`}
@@ -89,7 +89,7 @@ export const CompaniesNewEditFormDetail = () => {
           </Stack>
 
           <Divider sx={{ my: 3, borderStyle: 'dashed' }} />
-        </>
+        </div>
       ))}
       <Stack spacing={3} sx={{ p: 3 }}>
         <Button

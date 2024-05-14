@@ -47,7 +47,7 @@ const authJwt = {
 
 export const authRoutes = [
   {
-    path: 'auth',
+    path: 'admin',
     children: [authJwt],
   },
 ];

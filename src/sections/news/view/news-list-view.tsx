@@ -82,7 +82,7 @@ const NewsListView = () => {
             variant="contained"
             startIcon={<Iconify icon="mingcute:add-line" />}
           >
-            Создать событие
+            Создать
           </Button>
         }
         sx={{

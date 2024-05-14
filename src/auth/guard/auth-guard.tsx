@@ -40,6 +40,8 @@ function Container({ children }: Props) {
         returnTo: window.location.pathname,
       }).toString();
 
+      console.log(loginPaths)
+
       const loginPath = loginPaths[method];
 
       const href = `${loginPath}?${searchParams}`;

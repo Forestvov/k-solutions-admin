@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import Tooltip from '@mui/material/Tooltip';
 import TableRow from '@mui/material/TableRow';
@@ -14,7 +14,7 @@ import Iconify from 'src/components/iconify';
 
 import { IUser } from 'src/types/user';
 
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import { fDate } from '../../utils/format-time';
 import { fNumber } from '../../utils/format-number';
 import UserQuickEditForm from './user-quick-edit-form';
@@ -38,12 +38,9 @@ const USER_STATUS: Record<string, string> = {
   'Not verified YC': 'Нет запроса на верификацию',
 };
 
-const Link = styled(NavLink)`
-  color: #fff;
-  text-decoration: none;
-`;
-
 export default function UserTableRow({ row, selected, onSelectRow, updateTable }: Props) {
+  const theme = useTheme();
+
   const {
     fio,
     numberPhone,
@@ -66,14 +63,23 @@ export default function UserTableRow({ row, selected, onSelectRow, updateTable }
           <Checkbox checked={selected} onClick={onSelectRow} />
         </TableCell>
 
-        <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-          <Link to={`/admin/user/${accountId}/edit`}>
+        <TableCell
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            '> a': {
+              textDecoration: 'none',
+              color: theme.palette.text.primary,
+            },
+          }}
+        >
+          <NavLink to={`/admin/user/${accountId}/edit`}>
             <ListItemText
               primary={fio.length > 1 ? fio : famCeo}
               secondary={role === 'Admin' ? 'Администратор' : 'Пользователь'}
               primaryTypographyProps={{ typography: 'body2' }}
             />
-          </Link>
+          </NavLink>
         </TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{userName}</TableCell>

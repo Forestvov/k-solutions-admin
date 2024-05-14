@@ -55,6 +55,7 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
   });
 
   const franchiseShema = Yup.object().shape({
+    amountMin: Yup.number().required('Введите минимальную сумму'),
     briefcaseName: Yup.string().required('Name is required'),
     descriptions: Yup.string().required('Name is required'),
     percents: Yup.number().required('Name is required'),
@@ -317,15 +318,16 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
                   type="number"
                   InputLabelProps={{ shrink: true }}
                 />
-                <RHFTextField
-                  name="amountMin"
-                  label="Минимальная сумма ($) *"
-                  placeholder="0"
-                  type="number"
-                  InputLabelProps={{ shrink: true }}
-                />
               </>
             )}
+
+            <RHFTextField
+              name="amountMin"
+              label="Минимальная сумма ($) *"
+              placeholder="0"
+              type="number"
+              InputLabelProps={{ shrink: true }}
+            />
 
             <RHFTextField
               name="percents"
@@ -530,6 +532,8 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Grid container spacing={3}>
+        {renderActions}
+
         {renderTabs}
 
         {renderDetails}

@@ -12,8 +12,8 @@ export const paths = {
   // AUTH
   auth: {
     jwt: {
-      login: `${ROOTS.AUTH}/jwt/login`,
-      register: `${ROOTS.AUTH}/jwt/register`,
+      login: `${ROOTS.DASHBOARD}/jwt/login`,
+      register: `${ROOTS.DASHBOARD}/jwt/register`,
     },
   },
   // DASHBOARD

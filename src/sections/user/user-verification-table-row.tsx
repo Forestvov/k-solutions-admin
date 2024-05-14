@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
@@ -51,6 +51,8 @@ export default function UserVerificationTableRow({
 }: Props) {
   const { fio, numberPhone, status, email, accountId, userName, role, famCeo } = row;
 
+  const theme = useTheme();
+
   const quickEdit = useBoolean();
   const openPhotoFirst = useBoolean();
   const openPhotoSecond = useBoolean();
@@ -62,7 +64,16 @@ export default function UserVerificationTableRow({
           <Checkbox checked={selected} onClick={onSelectRow} />
         </TableCell>
 
-        <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
+        <TableCell
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            '> a': {
+              textDecoration: 'none',
+              color: theme.palette.text.primary,
+            },
+          }}
+        >
           <Link to={`/admin/user/${accountId}/edit`}>
             <ListItemText
               primary={fio.length > 1 ? fio : famCeo}
