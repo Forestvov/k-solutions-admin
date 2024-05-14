@@ -27,6 +27,7 @@ const NewsEditPage = lazy(() => import('src/pages/admin/news/edit'));
 // USER
 const UserListPage = lazy(() => import('src/pages/admin/user/list'));
 const UserVerificationPage = lazy(() => import('src/pages/admin/user/verification'));
+const UserEditPage = lazy(() => import('src/pages/admin/user/edit'));
 
 // Transaction
 const TransactionListPage = lazy(() => import('src/pages/admin/transaction/list'));
@@ -71,6 +72,7 @@ export const dashboardRoutes = [
         children: [
           { element: <UserListPage />, index: true },
           { path: 'verification', element: <UserVerificationPage /> },
+          { path: ':id/edit', element: <UserEditPage /> },
         ],
       },
       {
