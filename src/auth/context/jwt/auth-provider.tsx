@@ -84,7 +84,7 @@ export function AuthProvider({ children }: Props) {
 
   const initialize = useCallback(async () => {
     try {
-      const acceptToken = sessionStorage.getItem(STORAGE_KEY);
+      const acceptToken = localStorage.getItem(STORAGE_KEY);
 
       if (acceptToken && isValidToken(acceptToken)) {
         setSession(acceptToken);
@@ -164,7 +164,7 @@ export function AuthProvider({ children }: Props) {
 
       const { acceptToken, user } = res.data;
 
-      sessionStorage.setItem(STORAGE_KEY, acceptToken);
+      localStorage.setItem(STORAGE_KEY, acceptToken);
 
       dispatch({
         type: Types.REGISTER,
