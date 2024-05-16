@@ -10,7 +10,7 @@ axiosInstance.interceptors.response.use(
   (config) => config,
   async (error) => {
     const originalRequest = error.config;
-    if (error.response.status === 500 && error.config && !error.config._isRetry) {
+    if (error.response.status === 403 && error.config && !error.config._isRetry) {
       originalRequest._isRetry = true;
       try {
         const config = {
