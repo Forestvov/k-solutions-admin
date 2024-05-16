@@ -20,7 +20,7 @@ import FormProvider, { RHFSelect, RHFUpload, RHFTextField } from 'src/components
 import { SettingToken } from 'src/types/settings';
 
 const BodyApi = () => {
-  const { tokens, tokensLoading } = useGetTokens();
+  const { tokens, tokensLoading, mutate } = useGetTokens();
 
   const NewBlogSchema = Yup.object().shape({
     data: Yup.array().of(
@@ -28,8 +28,8 @@ const BodyApi = () => {
         currentName: Yup.string().required('Платежная система обязательна'),
         value: Yup.string().required('Адрес кошелька обязателен'),
         transactionLinkType: Yup.string().required('Тип обязателен'),
-        image: Yup.string().required('Лого обязателено'),
-        qrCode: Yup.string().required('Qrcode обязателен'),
+        image: Yup.string(),
+        qrCode: Yup.string(),
         currencyTypeId: Yup.string(),
         staticCurse: Yup.string(),
       })
@@ -38,7 +38,10 @@ const BodyApi = () => {
 
   const defaultValues = useMemo<{ data: SettingToken[] }>(
     () => ({
-      data: tokens,
+      data: tokens.map((token) => ({
+        ...token,
+        staticCurse: token.staticCurse ?? 1,
+      })),
     }),
     [tokens]
   );
@@ -58,13 +61,20 @@ const BodyApi = () => {
 
   useEffect(() => {
     if (tokens) {
-      setValue('data', tokens);
+      setValue(
+        'data',
+        tokens.map((token) => ({
+          ...token,
+          staticCurse: token.staticCurse ?? 1,
+        }))
+      );
     }
   }, [setValue, tokens]);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
       await saveTokens(data.data);
+      await mutate()
     } catch (error) {
       console.error(error);
     }
@@ -93,7 +103,7 @@ const BodyApi = () => {
       currentName: '',
       value: '',
       transactionLinkType: 'Visa',
-      staticCurse: '0',
+      staticCurse: '1',
       image: '',
       qrCode: '',
     });

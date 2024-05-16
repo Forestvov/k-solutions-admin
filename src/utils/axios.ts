@@ -7,8 +7,32 @@ import { HOST_API } from 'src/config-global';
 const axiosInstance = axios.create({ baseURL: HOST_API });
 
 axiosInstance.interceptors.response.use(
-  (res) => res,
-  (error) => Promise.reject((error.response && error.response.data) || 'Something went wrong')
+  (config) => config,
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response.status === 500 && error.config && !error.config._isRetry) {
+      originalRequest._isRetry = true;
+      try {
+        const config = {
+          method: 'PUT',
+          maxBodyLength: Infinity,
+          url: `${HOST_API}/auth/token`,
+          headers: {
+            'Content-Type': 'application/json',
+            withCredentials: true,
+            Authorization: localStorage.getItem('refreshToken'),
+          },
+        };
+        const response = await axios.request<any>(config);
+        localStorage.setItem('acceptToken', response.data.acceptToken);
+        localStorage.setItem('refreshToken', response.data.refreshToken);
+        return await axiosInstance.request(originalRequest);
+      } catch (e) {
+        console.log('НЕ АВТОРИЗОВАН');
+      }
+    }
+    throw error;
+  }
 );
 
 export default axiosInstance;

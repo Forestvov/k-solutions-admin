@@ -2,8 +2,8 @@ import { useMemo, useEffect, useReducer, useCallback } from 'react';
 
 import axios, { endpoints } from 'src/utils/axios';
 
+import { setSession } from './utils';
 import { AuthContext } from './auth-context';
-import { setSession, isValidToken } from './utils';
 import { AuthUserType, ActionMapType, AuthStateType } from '../../types';
 
 // ----------------------------------------------------------------------
@@ -73,7 +73,8 @@ const reducer = (state: AuthStateType, action: ActionsType) => {
 
 // ----------------------------------------------------------------------
 
-const STORAGE_KEY = 'acceptToken';
+const STORAGE_ACCEPT_KEY = 'acceptToken';
+const STORAGE_REFRESH_KEY = 'refreshToken';
 
 type Props = {
   children: React.ReactNode;
@@ -84,10 +85,11 @@ export function AuthProvider({ children }: Props) {
 
   const initialize = useCallback(async () => {
     try {
-      const acceptToken = localStorage.getItem(STORAGE_KEY);
+      const acceptToken = localStorage.getItem(STORAGE_ACCEPT_KEY);
+      const refreshToken = localStorage.getItem(STORAGE_REFRESH_KEY);
 
-      if (acceptToken && isValidToken(acceptToken)) {
-        setSession(acceptToken);
+      if (acceptToken && refreshToken) {
+        setSession(acceptToken, refreshToken);
 
         const res = await axios.get(endpoints.auth.me);
         const user = res.data;
@@ -132,9 +134,9 @@ export function AuthProvider({ children }: Props) {
     };
 
     const res = await axios.post(endpoints.auth.login, data);
-    const { acceptToken } = res.data;
+    const { acceptToken, refreshToken } = res.data;
 
-    setSession(acceptToken);
+    setSession(acceptToken, refreshToken);
 
     const resUser = await axios.get(endpoints.auth.me);
     const user = resUser.data;
@@ -164,8 +166,6 @@ export function AuthProvider({ children }: Props) {
 
       const { acceptToken, user } = res.data;
 
-      localStorage.setItem(STORAGE_KEY, acceptToken);
-
       dispatch({
         type: Types.REGISTER,
         payload: {
@@ -181,7 +181,7 @@ export function AuthProvider({ children }: Props) {
 
   // LOGOUT
   const logout = useCallback(async () => {
-    setSession(null);
+    setSession(null, null);
     dispatch({
       type: Types.LOGOUT,
     });
