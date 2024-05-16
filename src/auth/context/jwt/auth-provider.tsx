@@ -1,6 +1,10 @@
+// eslint-disable-next-line import/no-named-default
+import { default as axiosDefault } from 'axios';
 import { useMemo, useEffect, useReducer, useCallback } from 'react';
 
 import axios, { endpoints } from 'src/utils/axios';
+
+import { HOST_API } from 'src/config-global';
 
 import { setSession } from './utils';
 import { AuthContext } from './auth-context';
@@ -133,7 +137,7 @@ export function AuthProvider({ children }: Props) {
       password,
     };
 
-    const res = await axios.post(endpoints.auth.login, data);
+    const res = await axiosDefault.post(`${HOST_API}${endpoints.auth.login}`, data);
     const { acceptToken, refreshToken } = res.data;
 
     setSession(acceptToken, refreshToken);
