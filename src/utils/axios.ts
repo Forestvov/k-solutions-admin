@@ -6,11 +6,17 @@ import { HOST_API } from 'src/config-global';
 
 const axiosInstance = axios.create({ baseURL: HOST_API });
 
+
+axiosInstance.interceptors.request.use((config) => {
+  config.headers.Authorization = `${localStorage.getItem('acceptToken')}`
+  return config
+})
+
 axiosInstance.interceptors.response.use(
   (config) => config,
   async (error) => {
     const originalRequest = error.config;
-    if (error.response.message.includes('JWT expired') && error.config) {
+    if (error.response.data.message.includes('JWT') || error.response.data.status === 403) {
       originalRequest._isRetry = true;
       try {
         const config = {
