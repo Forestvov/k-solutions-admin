@@ -33,6 +33,7 @@ export const createCompany = async (data: IData) => {
     companyName: data.briefcaseName,
     companyType: data.companyType,
     logo: data.logo,
+    briefcaseStatus: data.briefcaseStatus,
     descriptions: data.descriptions,
     companyInvestDetailInputs: data.companyInvestDetailInputs,
     lang: 'ru',
@@ -40,7 +41,7 @@ export const createCompany = async (data: IData) => {
 
   const formDataBrief = {
     briefcaseName: data.briefcaseName,
-    briefcaseStatus: 'In progress',
+    briefcaseStatus: data.briefcaseStatus,
     amountFinish: data.amountFinish,
     amountMin: data.amountMin,
     ranges: data.ranges,

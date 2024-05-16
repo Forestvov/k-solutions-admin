@@ -30,6 +30,7 @@ import {
   deleteCompanyFile,
   addEditCompanyFile,
 } from '../../api/company';
+import getLabelStatus from "./get-label-status";
 
 // ----------------------------------------------------------------------
 
@@ -67,7 +68,7 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
       companyType: currentCompany?.companyType || 'Company',
       briefcaseName: currentCompany?.briefcaseName || '',
       descriptions: currentCompany?.descriptions || '',
-      briefcaseStatus: currentCompany?.briefcaseStatus || '',
+      briefcaseStatus: currentCompany?.briefcaseStatus || 'In progress',
       amountFinish: currentCompany?.amountFinish || '',
       amountMin: currentCompany?.amountMin || '',
       ranges: currentCompany?.ranges || '',
@@ -297,11 +298,25 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
 
           <Stack spacing={3} sx={{ p: 3 }}>
             <RHFSelect name="companyType" label="Выбирети тип *">
-              <MenuItem key="Company" value="Company">
+              <MenuItem key="Company" value="Company" onClick={() => setValue('briefcaseStatus', 'In progress')}>
                 Компания
               </MenuItem>
-              <MenuItem key="Franchise" value="Franchise">
+              <MenuItem key="Franchise" value="Franchise" onClick={() => setValue('briefcaseStatus', 'Collection completed')}>
                 Франшиза
+              </MenuItem>
+            </RHFSelect>
+
+            <RHFSelect name="briefcaseStatus" label="Выбирети статус *">
+              {values.companyType === 'Company' &&
+              <MenuItem key="In progress" value="In progress">
+                {getLabelStatus('In progress')}
+              </MenuItem>
+              }
+              <MenuItem key="Collection completed" value="Collection completed">
+                {getLabelStatus('Collection completed')}
+              </MenuItem>
+              <MenuItem key="Loan payed" value="Loan payed">
+                {getLabelStatus('Loan payed')}
               </MenuItem>
             </RHFSelect>
 
