@@ -14,6 +14,13 @@ import LoadingButton from '@mui/lab/LoadingButton';
 
 import { useResponsive } from 'src/hooks/use-responsive';
 
+import {
+  createCompany,
+  updateCompany,
+  deleteCompanyFile,
+  addEditCompanyFile,
+} from 'src/api/company';
+
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, { RHFSelect, RHFUpload, RHFTextField } from 'src/components/hook-form';
 
@@ -21,16 +28,10 @@ import { paths } from '../../routes/paths';
 import { errorCatcher } from './errorCatcher';
 import { useRouter } from '../../routes/hooks';
 import { toBase64 } from '../../utils/toBase64';
+import getLabelStatus from './get-label-status';
 import { ExtendCompany } from '../../types/company';
 import { CompaniesNewEditFormDate } from './companies-new-edit-form-date';
 import { CompaniesNewEditFormDetail } from './companies-new-edit-form-detail';
-import {
-  createCompany,
-  updateCompany,
-  deleteCompanyFile,
-  addEditCompanyFile,
-} from '../../api/company';
-import getLabelStatus from "./get-label-status";
 
 // ----------------------------------------------------------------------
 
@@ -91,7 +92,24 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
       ],
     }),
     // @ts-ignore
-    [currentCompany?.amountFinish, currentCompany?.amountMin, currentCompany?.briefcaseName, currentCompany?.briefcaseStatus, currentCompany?.companyInvestDetailDtoList, currentCompany?.companyType, currentCompany?.descriptions, currentCompany?.finishDay, currentCompany?.image, currentCompany?.images, currentCompany?.logo, currentCompany?.pampAmount, currentCompany?.pampInvestors, currentCompany?.percents, currentCompany?.ranges, lang]
+    [
+      currentCompany?.amountFinish,
+      currentCompany?.amountMin,
+      currentCompany?.briefcaseName,
+      currentCompany?.briefcaseStatus,
+      currentCompany?.companyInvestDetailDtoList,
+      currentCompany?.companyType,
+      currentCompany?.descriptions,
+      currentCompany?.finishDay,
+      currentCompany?.image,
+      currentCompany?.images,
+      currentCompany?.logo,
+      currentCompany?.pampAmount,
+      currentCompany?.pampInvestors,
+      currentCompany?.percents,
+      currentCompany?.ranges,
+      lang,
+    ]
   );
 
   const methods = useForm<FormState>({
@@ -205,7 +223,7 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
 
   const handleEditRow = useCallback(
     (currentId?: string, companyCurrentId?: string, currentLang?: string) => {
-      reset()
+      reset();
       router.push(
         `${paths.dashboard.companies.edit(
           currentId ?? ''
@@ -298,20 +316,28 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
 
           <Stack spacing={3} sx={{ p: 3 }}>
             <RHFSelect name="companyType" label="Выбирети тип *">
-              <MenuItem key="Company" value="Company" onClick={() => setValue('briefcaseStatus', 'In progress')}>
+              <MenuItem
+                key="Company"
+                value="Company"
+                onClick={() => setValue('briefcaseStatus', 'In progress')}
+              >
                 Компания
               </MenuItem>
-              <MenuItem key="Franchise" value="Franchise" onClick={() => setValue('briefcaseStatus', 'Collection completed')}>
+              <MenuItem
+                key="Franchise"
+                value="Franchise"
+                onClick={() => setValue('briefcaseStatus', 'Collection completed')}
+              >
                 Франшиза
               </MenuItem>
             </RHFSelect>
 
             <RHFSelect name="briefcaseStatus" label="Выбирети статус *">
-              {values.companyType === 'Company' &&
-              <MenuItem key="In progress" value="In progress">
-                {getLabelStatus('In progress')}
-              </MenuItem>
-              }
+              {values.companyType === 'Company' && (
+                <MenuItem key="In progress" value="In progress">
+                  {getLabelStatus('In progress')}
+                </MenuItem>
+              )}
               <MenuItem key="Collection completed" value="Collection completed">
                 {getLabelStatus('Collection completed')}
               </MenuItem>
@@ -325,15 +351,13 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
             <RHFTextField name="descriptions" label="Краткое описание *" multiline rows={4} />
 
             {values.companyType === 'Company' && (
-              <>
-                <RHFTextField
-                  name="amountFinish"
-                  label="Цель сбора ($) *"
-                  placeholder="0"
-                  type="number"
-                  InputLabelProps={{ shrink: true }}
-                />
-              </>
+              <RHFTextField
+                name="amountFinish"
+                label="Цель сбора ($) *"
+                placeholder="0"
+                type="number"
+                InputLabelProps={{ shrink: true }}
+              />
             )}
 
             <RHFTextField

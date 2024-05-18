@@ -11,6 +11,7 @@ import { ExtendCompany, IDetailTypeList, ICompanyResponse } from '../types/compa
 
 // ----------------------------------------------------------------------
 
+// @ts-ignore
 interface IData extends ExtendCompany {
   images: File[];
 }
@@ -98,7 +99,7 @@ export const updateCompany = async (data: IData, briefcaseId: number, companyId:
   const formDataBrief = {
     briefcaseId,
     briefcaseName: data.briefcaseName,
-    briefcaseStatus: 'In progress',
+    briefcaseStatus: data.briefcaseStatus,
     amountFinish: data.amountFinish,
     amountMin: data.amountMin,
     ranges: data.ranges,
