@@ -22,6 +22,7 @@ export interface ICompany {
   briefcaseStatus: StatusType;
   amountFinish: string | number;
   amountMin: number;
+  amount: number;
   ranges: number;
   percents: number;
   image: string;

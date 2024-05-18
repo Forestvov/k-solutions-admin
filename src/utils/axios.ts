@@ -81,7 +81,7 @@ export const endpoints = {
   briefcase: {
     adminPage: '/briefcase-account/page',
     updateBrief: 'briefcase-account/order-close',
-    page: '/briefcase/page',
+    page: '/briefcase-account/page/common',
     list: '/briefcase/list',
     add: '/briefcase',
     update: '/briefcase/page',

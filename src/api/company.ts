@@ -149,6 +149,9 @@ export function useGetCompanies({
         ],
       },
       'post',
+      {
+        lang: 'ru',
+      },
     ],
     fetcher,
     {
