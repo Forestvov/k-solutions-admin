@@ -54,6 +54,10 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
     percents: Yup.number().required('Введите ставку'),
     finishDay: Yup.string().required('Введите дату'),
     ranges: Yup.number().required('Введите срок'),
+    images: Yup.array()
+      .of(Yup.string())
+      .min(1, 'Добавьте медиафайлы')
+      .required('Добавьте медиафайлы'),
   });
 
   const franchiseShema = Yup.object().shape({
@@ -61,6 +65,10 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
     briefcaseName: Yup.string().required('Name is required'),
     descriptions: Yup.string().required('Name is required'),
     percents: Yup.number().required('Name is required'),
+    images: Yup.array()
+      .of(Yup.string())
+      .min(1, 'Добавьте медиафайлы')
+      .required('Добавьте медиафайлы'),
   });
 
   // @ts-ignore
@@ -126,6 +134,8 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
   } = methods;
 
   const values = watch();
+
+  console.log(values);
 
   const router = useRouter();
 
