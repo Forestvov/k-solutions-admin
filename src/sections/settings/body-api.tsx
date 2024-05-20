@@ -117,7 +117,7 @@ const BodyApi = () => {
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Stack spacing={5}>
         {fields.map((item, idx) => (
-          <Card key={idx} sx={{ maxWidth: '855px' }}>
+          <Card key={item.currencyTypeId} sx={{ maxWidth: '855px' }}>
             <Stack spacing={3} sx={{ p: 3 }}>
               <RHFTextField name={`data[${idx}].currencyTypeId`}  sx={{display: 'none'}} />
               <RHFTextField name={`data[${idx}].currentName`} label="Платежная система " />
