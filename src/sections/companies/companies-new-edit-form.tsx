@@ -39,9 +39,9 @@ interface FormState extends ExtendCompany {
   images: any;
 }
 
-type Prop = { currentCompany?: ExtendCompany; id?: string; companyId?: string; lang: string };
+type Prop = { currentCompany?: ExtendCompany; id?: string; companyId?: string; lang: string, updateFiles?: VoidFunction };
 
-export default function CompaniesNewEditForm({ currentCompany, companyId, id, lang }: Prop) {
+export default function CompaniesNewEditForm({ currentCompany, companyId, id, lang, updateFiles }: Prop) {
   const mdUp = useResponsive('up', 'md');
 
   const { enqueueSnackbar } = useSnackbar();
@@ -54,10 +54,7 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
     percents: Yup.number().required('Введите ставку'),
     finishDay: Yup.string().required('Введите дату'),
     ranges: Yup.number().required('Введите срок'),
-    images: Yup.array()
-      .of(Yup.string())
-      .min(1, 'Добавьте медиафайлы')
-      .required('Добавьте медиафайлы'),
+    images: Yup.array().min(1, 'Добавьте медиафайлы').required('Добавьте медиафайлы'),
   });
 
   const franchiseShema = Yup.object().shape({
@@ -65,10 +62,7 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
     briefcaseName: Yup.string().required('Name is required'),
     descriptions: Yup.string().required('Name is required'),
     percents: Yup.number().required('Name is required'),
-    images: Yup.array()
-      .of(Yup.string())
-      .min(1, 'Добавьте медиафайлы')
-      .required('Добавьте медиафайлы'),
+    images: Yup.array().min(1, 'Добавьте медиафайлы').required('Добавьте медиафайлы'),
   });
 
   // @ts-ignore
@@ -135,8 +129,6 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
 
   const values = watch();
 
-  console.log(values);
-
   const router = useRouter();
 
   useEffect(() => {
@@ -186,8 +178,11 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
 
   const handleDrop = useCallback(
     async (acceptedFiles: File[]) => {
-      if (currentCompany) {
-        acceptedFiles.map((file) => addEditCompanyFile(file, currentCompany.companyInvestId));
+
+      if (currentCompany && updateFiles) {
+        Promise.all(acceptedFiles.map((file) => addEditCompanyFile(file, currentCompany.companyInvestId))).then(() => {
+          updateFiles()
+        });
       }
 
       const files = values.images || [];
@@ -200,7 +195,7 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
 
       await setValue('images', [...files, ...newFiles], { shouldValidate: true });
     },
-    [currentCompany, setValue, values.images]
+    [currentCompany, updateFiles, setValue, values.images]
   );
 
   const handleDropSingleFile = useCallback(

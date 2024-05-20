@@ -23,7 +23,7 @@ export default function ProductEditView({ id, companyId, lang }: Props) {
 
   const { brief } = useGetBrief(id, lang);
   const { company } = useGetCompany(companyId, lang);
-  const { files } = useGetFiles(companyId);
+  const { files, mutate: updateFiles } = useGetFiles(companyId);
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
@@ -44,7 +44,7 @@ export default function ProductEditView({ id, companyId, lang }: Props) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      <CompaniesNewEditForm id={id} companyId={companyId} currentCompany={{ ...brief, ...company, images: files }} lang={lang} />
+      <CompaniesNewEditForm id={id} companyId={companyId} updateFiles={updateFiles} currentCompany={{ ...brief, ...company, images: files }} lang={lang} />
     </Container>
   );
 }

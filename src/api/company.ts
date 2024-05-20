@@ -281,7 +281,7 @@ export function useGetCompany(id: string, lang: string) {
 export function useGetFiles(id: string) {
   const URL = `${endpoints.company.files}/${id}`;
 
-  const { data, isLoading, error, isValidating } = useSWR<File[]>(
+  const { data, isLoading, error, isValidating, mutate } = useSWR<File[]>(
     [
       URL,
       {},
@@ -307,8 +307,9 @@ export function useGetFiles(id: string) {
       filesLoading: isLoading,
       filesError: error,
       filesValidating: isValidating,
+      mutate
     }),
-    [data, error, isLoading, isValidating]
+    [data, error, isLoading, isValidating, mutate]
   );
 
   return memoizedValue;
