@@ -8,7 +8,7 @@ pipeline {
 
     agent {
     node {
-     label 'k-solutions-com'
+     label 'k-solutions-admin-com'
      }
     }
 
