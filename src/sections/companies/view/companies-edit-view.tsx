@@ -1,4 +1,5 @@
 // @ts-nocheck
+import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
 import { paths } from 'src/routes/paths';
@@ -6,6 +7,7 @@ import { paths } from 'src/routes/paths';
 import { useGetBrief, useGetFiles, useGetCompany } from 'src/api/company';
 
 import { useSettingsContext } from 'src/components/settings';
+import { LoadingScreen } from 'src/components/loading-screen';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
 import CompaniesNewEditForm from '../companies-new-edit-form';
@@ -21,9 +23,9 @@ type Props = {
 export default function ProductEditView({ id, companyId, lang }: Props) {
   const settings = useSettingsContext();
 
-  const { brief } = useGetBrief(id, lang);
-  const { company } = useGetCompany(companyId, lang);
-  const { files, mutate: updateFiles } = useGetFiles(companyId);
+  const { brief, briefLoading } = useGetBrief(id, lang);
+  const { company, companyLoading } = useGetCompany(companyId, lang);
+  const { files, filesLoading, mutate: updateFiles } = useGetFiles(companyId);
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
@@ -44,7 +46,21 @@ export default function ProductEditView({ id, companyId, lang }: Props) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      <CompaniesNewEditForm id={id} companyId={companyId} updateFiles={updateFiles} currentCompany={{ ...brief, ...company, images: files }} lang={lang} />
+      {briefLoading || companyLoading || filesLoading ? (
+        <Box
+          sx={{ height: '80%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        >
+          <LoadingScreen />
+        </Box>
+      ) : (
+        <CompaniesNewEditForm
+          id={id}
+          companyId={companyId}
+          updateFiles={updateFiles}
+          currentCompany={{ ...brief, ...company, images: files }}
+          lang={lang}
+        />
+      )}
     </Container>
   );
 }
