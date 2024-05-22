@@ -2,6 +2,7 @@
 import 'src/global.css';
 
 // ----------------------------------------------------------------------
+import { useEffect } from 'react';
 
 import Router from 'src/routes/sections';
 
@@ -22,6 +23,16 @@ import { TimerProvider } from './timer/context';
 
 export default function App() {
   useScrollToTop();
+
+  useEffect(() => {
+    document.addEventListener('wheel', () => {
+      // @ts-ignore
+      if (document.activeElement && document.activeElement?.type === 'number') {
+        // @ts-ignore
+        document.activeElement?.blur();
+      }
+    });
+  }, []);
 
   return (
     <AuthProvider>
