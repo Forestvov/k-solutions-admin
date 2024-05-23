@@ -11,6 +11,7 @@ import { LoadingScreen } from 'src/components/loading-screen';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
 import CompaniesNewEditForm from '../companies-new-edit-form';
+import { useEffect, useState } from 'react';
 
 // ----------------------------------------------------------------------
 
@@ -23,9 +24,18 @@ type Props = {
 export default function ProductEditView({ id, companyId, lang }: Props) {
   const settings = useSettingsContext();
 
+  const [show, setShow] = useState(false);
   const { brief, briefLoading } = useGetBrief(id, lang);
   const { company, companyLoading } = useGetCompany(companyId, lang);
   const { files, filesLoading, mutate: updateFiles } = useGetFiles(companyId);
+
+  useEffect(() => {
+    if (!briefLoading && !companyLoading && !filesLoading) {
+      setTimeout(() => {
+        setShow(true);
+      }, 2000);
+    }
+  }, [briefLoading, companyLoading.filesLoading]);
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
@@ -46,13 +56,16 @@ export default function ProductEditView({ id, companyId, lang }: Props) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      {briefLoading || companyLoading || filesLoading ? (
+      {(briefLoading || companyLoading || filesLoading || show) && (
         <Box
           sx={{ height: '80%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
         >
           <LoadingScreen />
         </Box>
-      ) : (
+      )}
+      <Box
+        sx={{ display: briefLoading || companyLoading || filesLoading || show ? 'none' : 'block' }}
+      >
         <CompaniesNewEditForm
           id={id}
           companyId={companyId}
@@ -60,7 +73,7 @@ export default function ProductEditView({ id, companyId, lang }: Props) {
           currentCompany={{ ...brief, ...company, images: files }}
           lang={lang}
         />
-      )}
+      </Box>
     </Container>
   );
 }
