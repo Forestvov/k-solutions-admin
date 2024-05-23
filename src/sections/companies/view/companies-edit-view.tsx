@@ -37,6 +37,8 @@ export default function ProductEditView({ id, companyId, lang }: Props) {
     }
   }, [briefLoading, companyLoading, filesLoading]);
 
+  console.log(show);
+
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
       <CustomBreadcrumbs
@@ -56,7 +58,7 @@ export default function ProductEditView({ id, companyId, lang }: Props) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      {(briefLoading || companyLoading || filesLoading || show) && (
+      {(briefLoading || companyLoading || filesLoading || !show) && (
         <Box
           sx={{ height: '80%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
         >
@@ -64,7 +66,7 @@ export default function ProductEditView({ id, companyId, lang }: Props) {
         </Box>
       )}
       <Box
-        sx={{ display: briefLoading || companyLoading || filesLoading || show ? 'none' : 'block' }}
+        sx={{ display: briefLoading || companyLoading || filesLoading || !show ? 'none' : 'block' }}
       >
         <CompaniesNewEditForm
           id={id}
