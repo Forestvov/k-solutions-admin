@@ -38,7 +38,7 @@ pipeline {
             stage('Run docker container') {
                  steps {
                      script {
-                        sh("docker run -td -p 80:8081 --name f-ksolutions-admin  f-ksolutions-admin ")
+                         sh(" docker run -td --restart unless-stopped -v /opt/certs/:/opt/certs  --name f-ksolutions-admin -p 80:80 -p 443:443 f-ksolutions-admin ")
                      }
                   }
              }
