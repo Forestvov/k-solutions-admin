@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
@@ -11,7 +12,6 @@ import { LoadingScreen } from 'src/components/loading-screen';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
 import CompaniesNewEditForm from '../companies-new-edit-form';
-import { useEffect, useState } from 'react';
 
 // ----------------------------------------------------------------------
 
@@ -35,7 +35,7 @@ export default function ProductEditView({ id, companyId, lang }: Props) {
         setShow(true);
       }, 2000);
     }
-  }, [briefLoading, companyLoading.filesLoading]);
+  }, [briefLoading, companyLoading, filesLoading]);
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
