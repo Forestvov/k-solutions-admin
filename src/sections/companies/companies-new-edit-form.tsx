@@ -39,9 +39,21 @@ interface FormState extends ExtendCompany {
   images: any;
 }
 
-type Prop = { currentCompany?: ExtendCompany; id?: string; companyId?: string; lang: string, updateFiles?: VoidFunction };
+type Prop = {
+  currentCompany?: ExtendCompany;
+  id?: string;
+  companyId?: string;
+  lang: string;
+  updateFiles?: VoidFunction;
+};
 
-export default function CompaniesNewEditForm({ currentCompany, companyId, id, lang, updateFiles }: Prop) {
+export default function CompaniesNewEditForm({
+  currentCompany,
+  companyId,
+  id,
+  lang,
+  updateFiles,
+}: Prop) {
   const mdUp = useResponsive('up', 'md');
 
   const { enqueueSnackbar } = useSnackbar();
@@ -178,10 +190,11 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
 
   const handleDrop = useCallback(
     async (acceptedFiles: File[]) => {
-
       if (currentCompany && updateFiles) {
-        Promise.all(acceptedFiles.map((file) => addEditCompanyFile(file, currentCompany.companyInvestId))).then(() => {
-          updateFiles()
+        Promise.all(
+          acceptedFiles.map((file) => addEditCompanyFile(file, currentCompany.companyInvestId))
+        ).then(() => {
+          updateFiles();
         });
       }
 
@@ -580,17 +593,17 @@ export default function CompaniesNewEditForm({ currentCompany, companyId, id, la
 
         {renderTabs}
 
-        {renderDetails}
-
-        {renderPump}
-
-        {renderDescriptions}
-
         {renderLogo}
 
         {renderImage}
 
         {renderFiles}
+
+        {renderDetails}
+
+        {renderPump}
+
+        {renderDescriptions}
 
         {renderActions}
       </Grid>
