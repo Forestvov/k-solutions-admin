@@ -49,7 +49,9 @@ const TABLE_HEAD = [
 const defaultFilters: IUserTableFilters = {
   email: '',
   role: '',
-  status: ''
+  status: '',
+  fam: '',
+  name: '',
 };
 
 // ----------------------------------------------------------------------
@@ -73,6 +75,7 @@ export default function UserVerificationView() {
     page: table.page,
     pageSize: table.rowsPerPage,
     email: filters.email,
+    fio: `${filters.fam}  ${filters.name}`,
   });
 
   const updateTable = () => {

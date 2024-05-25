@@ -9,9 +9,17 @@ interface PropList extends IPagination {
   role: UserRoleType;
   email: string;
   status: string;
+  fio: string;
 }
 
-export function useGetUserList({ role = '', email = '', page, pageSize, status }: PropList) {
+export function useGetUserList({
+  role = '',
+  email = '',
+  fio = '',
+  page,
+  pageSize,
+  status,
+}: PropList) {
   const URL = endpoints.user.list;
 
   const { data, isLoading, error, isValidating, mutate } = useSWR<IUserResponse>(
@@ -26,6 +34,7 @@ export function useGetUserList({ role = '', email = '', page, pageSize, status }
           { key: 'role', value: role },
           { key: 'email', value: email },
           { key: 'status', value: status },
+          { key: 'fio', value: fio },
         ],
       },
       'put',
@@ -66,9 +75,15 @@ export function useGetUserList({ role = '', email = '', page, pageSize, status }
 
 interface VerificationPropList extends IPagination {
   email: string;
+  fio: string;
 }
 
-export function useGetVerificationUserList({ page, pageSize, email = '' }: VerificationPropList) {
+export function useGetVerificationUserList({
+  page,
+  pageSize,
+  email = '',
+  fio = '',
+}: VerificationPropList) {
   const URL = endpoints.user.list;
 
   const { data, isLoading, error, isValidating, mutate } = useSWR<IUserResponse>(
@@ -81,6 +96,7 @@ export function useGetVerificationUserList({ page, pageSize, email = '' }: Verif
         sortField: 'registeredDate',
         criteria: [
           { key: 'email', value: email },
+          { key: 'fio', value: fio },
           { key: 'status', value: 'Process' },
         ],
       },

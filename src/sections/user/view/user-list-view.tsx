@@ -50,6 +50,8 @@ const defaultFilters: IUserTableFilters = {
   role: '',
   email: '',
   status: '',
+  fam: '',
+  name: '',
 };
 
 // ----------------------------------------------------------------------
@@ -75,6 +77,7 @@ export default function UserListView() {
     role: filters.role as UserRoleType,
     email: filters.email as string,
     status: filters.status as string,
+    fio: `${filters.fam}  ${filters.name}`,
   });
 
   const updateTable = () => {
@@ -124,10 +127,7 @@ export default function UserListView() {
       />
 
       <Card>
-        <UserTableToolbar
-          filters={filters}
-          onFilters={handleFilters}
-        />
+        <UserTableToolbar filters={filters} onFilters={handleFilters} />
 
         {canReset && (
           <UserTableFiltersResult

@@ -11,6 +11,7 @@ import Iconify from 'src/components/iconify';
 import { IUserTableFilters, IUserTableFilterValue } from 'src/types/user';
 
 import { USER_STATUS } from './status-dto';
+import { roleOptions } from './role-options';
 
 // ----------------------------------------------------------------------
 
@@ -53,10 +54,10 @@ export default function UserTableFiltersResult({
 
       <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
         {!!filters.role.length && (
-          <Block label="Role:">
+          <Block label="Роль:">
             <Chip
               key={filters.role}
-              label={filters.role}
+              label={roleOptions.find((item) => item.name === filters.role)?.label}
               size="small"
               onDelete={handleRemoveRole}
             />

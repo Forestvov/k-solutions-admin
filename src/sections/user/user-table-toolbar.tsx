@@ -15,6 +15,7 @@ import Iconify from 'src/components/iconify';
 import { IUserTableFilters, IUserTableFilterValue } from 'src/types/user';
 
 import { USER_STATUS } from './status-dto';
+import { roleOptions } from './role-options';
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +24,6 @@ type Props = {
   onFilters: (name: string, value: IUserTableFilterValue) => void;
 };
 
-const roleOptions = ['User', 'Admin'];
 const statusOptions = [
   'Disable',
   'Enable',
@@ -38,6 +38,20 @@ export default function UserTableToolbar({ filters, onFilters }: Props) {
   const handleFilterSearch = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       onFilters('email', event.target.value);
+    },
+    [onFilters]
+  );
+
+  const handleFilterFam = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onFilters('fam', event.target.value);
+    },
+    [onFilters]
+  );
+
+  const handleFilterName = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onFilters('name', event.target.value);
     },
     [onFilters]
   );
@@ -83,7 +97,7 @@ export default function UserTableToolbar({ filters, onFilters }: Props) {
           value={filters.role}
           onChange={handleFilterRole}
           input={<OutlinedInput label="Role" />}
-          renderValue={(selected) => selected}
+          renderValue={(selected) => roleOptions.find((item) => item.name === selected)?.label}
           MenuProps={{
             PaperProps: {
               sx: { maxHeight: 240 },
@@ -91,9 +105,9 @@ export default function UserTableToolbar({ filters, onFilters }: Props) {
           }}
         >
           {roleOptions.map((option) => (
-            <MenuItem key={option} value={option}>
-              <Checkbox disableRipple size="small" checked={filters.role.includes(option)} />
-              {option}
+            <MenuItem key={option.name} value={option.name}>
+              <Checkbox disableRipple size="small" checked={filters.role.includes(option.name)} />
+              {option.label}
             </MenuItem>
           ))}
         </Select>
@@ -129,6 +143,34 @@ export default function UserTableToolbar({ filters, onFilters }: Props) {
       </FormControl>
 
       <Stack direction="row" alignItems="center" spacing={2} flexGrow={1} sx={{ width: 1 }}>
+        <TextField
+          fullWidth
+          value={filters.fam}
+          onChange={handleFilterFam}
+          placeholder="Поиск по фамилии"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+              </InputAdornment>
+            ),
+          }}
+        />
+
+        <TextField
+          fullWidth
+          value={filters.name}
+          onChange={handleFilterName}
+          placeholder="Поиск по имени"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+              </InputAdornment>
+            ),
+          }}
+        />
+
         <TextField
           fullWidth
           value={filters.email}

@@ -23,6 +23,20 @@ export default function UserVerificationTableToolbar({ filters, onFilters }: Pro
     [onFilters]
   );
 
+  const handleFilterFam = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onFilters('fam', event.target.value);
+    },
+    [onFilters]
+  );
+
+  const handleFilterName = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onFilters('name', event.target.value);
+    },
+    [onFilters]
+  );
+
   // @ts-ignore
   return (
     <Stack
@@ -38,6 +52,34 @@ export default function UserVerificationTableToolbar({ filters, onFilters }: Pro
       }}
     >
       <Stack direction="row" alignItems="center" spacing={2} flexGrow={1} sx={{ width: 1 }}>
+        <TextField
+          fullWidth
+          value={filters.fam}
+          onChange={handleFilterFam}
+          placeholder="Поиск по фамилии"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+              </InputAdornment>
+            ),
+          }}
+        />
+
+        <TextField
+          fullWidth
+          value={filters.name}
+          onChange={handleFilterName}
+          placeholder="Поиск по имени"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+              </InputAdornment>
+            ),
+          }}
+        />
+
         <TextField
           fullWidth
           value={filters.email}

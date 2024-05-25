@@ -58,4 +58,6 @@ export interface IUserTableFilters {
   role: UserRoleType;
   email: string;
   status: string;
+  fam: string;
+  name: string;
 }
