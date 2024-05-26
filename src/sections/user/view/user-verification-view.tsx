@@ -75,7 +75,7 @@ export default function UserVerificationView() {
     page: table.page,
     pageSize: table.rowsPerPage,
     email: filters.email,
-    fio: `${filters.fam}  ${filters.name}`,
+    fio: `${filters.fam} ${filters.name}`,
   });
 
   const updateTable = () => {
