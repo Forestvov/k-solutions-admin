@@ -16,6 +16,7 @@ import { IUserTableFilters, IUserTableFilterValue } from 'src/types/user';
 
 import { USER_STATUS } from './status-dto';
 import { roleOptions } from './role-options';
+import { accountType } from './account-type';
 
 // ----------------------------------------------------------------------
 
@@ -38,6 +39,13 @@ export default function UserTableToolbar({ filters, onFilters }: Props) {
   const handleFilterSearch = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       onFilters('email', event.target.value);
+    },
+    [onFilters]
+  );
+
+  const handleFilterAccountType = useCallback(
+    (event: SelectChangeEvent<string>) => {
+      onFilters('accountTypeName', event.target.value);
     },
     [onFilters]
   );
@@ -74,74 +82,110 @@ export default function UserTableToolbar({ filters, onFilters }: Props) {
   return (
     <Stack
       spacing={2}
-      alignItems={{ xs: 'flex-end', md: 'center' }}
-      direction={{
-        xs: 'column',
-        md: 'row',
-      }}
       sx={{
         p: 2.5,
         pr: { xs: 2.5, md: 1 },
       }}
     >
-      <FormControl
-        sx={{
-          flexShrink: 0,
-          width: { xs: 1, md: 200 },
+      <Stack
+        spacing={2}
+        alignItems={{ xs: 'flex-end', md: 'center' }}
+        direction={{
+          xs: 'column',
+          md: 'row',
         }}
       >
-        <InputLabel>Роль</InputLabel>
-
-        <Select
-          // @ts-ignore
-          value={filters.role}
-          onChange={handleFilterRole}
-          input={<OutlinedInput label="Role" />}
-          renderValue={(selected) => roleOptions.find((item) => item.name === selected)?.label}
-          MenuProps={{
-            PaperProps: {
-              sx: { maxHeight: 240 },
-            },
+        <FormControl
+          sx={{
+            flexShrink: 0,
+            width: { xs: 1, md: 200 },
           }}
         >
-          {roleOptions.map((option) => (
-            <MenuItem key={option.name} value={option.name}>
-              <Checkbox disableRipple size="small" checked={filters.role.includes(option.name)} />
-              {option.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+          <InputLabel>Роль</InputLabel>
 
-      <FormControl
-        sx={{
-          flexShrink: 0,
-          width: { xs: 1, md: 200 },
-        }}
-      >
-        <InputLabel>Статус</InputLabel>
+          <Select
+            // @ts-ignore
+            value={filters.role}
+            onChange={handleFilterRole}
+            input={<OutlinedInput label="Role" />}
+            renderValue={(selected) => roleOptions.find((item) => item.name === selected)?.label}
+            MenuProps={{
+              PaperProps: {
+                sx: { maxHeight: 240 },
+              },
+            }}
+          >
+            {roleOptions.map((option) => (
+              <MenuItem key={option.name} value={option.name}>
+                <Checkbox disableRipple size="small" checked={filters.role.includes(option.name)} />
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-        <Select
-          // @ts-ignore
-          value={filters.status}
-          onChange={handleFilterStatus}
-          input={<OutlinedInput label="Статус" />}
-          renderValue={(selected) => USER_STATUS[selected]}
-          MenuProps={{
-            PaperProps: {
-              sx: { maxHeight: 240 },
-            },
+        <FormControl
+          sx={{
+            flexShrink: 0,
+            width: { xs: 1, md: 200 },
           }}
         >
-          {statusOptions.map((option) => (
-            <MenuItem key={option} value={option}>
-              <Checkbox disableRipple size="small" checked={filters.status.includes(option)} />
-              {USER_STATUS[option]}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+          <InputLabel>Статус</InputLabel>
 
+          <Select
+            // @ts-ignore
+            value={filters.status}
+            onChange={handleFilterStatus}
+            input={<OutlinedInput label="Статус" />}
+            renderValue={(selected) => USER_STATUS[selected]}
+            MenuProps={{
+              PaperProps: {
+                sx: { maxHeight: 240 },
+              },
+            }}
+          >
+            {statusOptions.map((option) => (
+              <MenuItem key={option} value={option}>
+                <Checkbox disableRipple size="small" checked={filters.status.includes(option)} />
+                {USER_STATUS[option]}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl
+          sx={{
+            flexShrink: 0,
+            width: { xs: 1, md: 200 },
+          }}
+        >
+          <InputLabel>Тип Аккаунта</InputLabel>
+
+          <Select
+            // @ts-ignore
+            value={filters.accountTypeName}
+            onChange={handleFilterAccountType}
+            input={<OutlinedInput label="Тип Аккаунта" />}
+            renderValue={(selected) => accountType.find((type) => type.name === selected)?.label}
+            MenuProps={{
+              PaperProps: {
+                sx: { maxHeight: 240 },
+              },
+            }}
+          >
+            {accountType.map((option) => (
+              <MenuItem key={option.name} value={option.name}>
+                <Checkbox
+                  disableRipple
+                  size="small"
+                  checked={filters.accountTypeName.includes(option.name)}
+                />
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Stack>
       <Stack direction="row" alignItems="center" spacing={2} flexGrow={1} sx={{ width: 1 }}>
         <TextField
           fullWidth
@@ -170,7 +214,6 @@ export default function UserTableToolbar({ filters, onFilters }: Props) {
             ),
           }}
         />
-
         <TextField
           fullWidth
           value={filters.email}

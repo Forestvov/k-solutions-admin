@@ -36,7 +36,6 @@ import TransactionTableFiltersResult from '../p2p-table-filters-result';
 
 // ----------------------------------------------------------------------
 
-
 const STATUS_OPTIONS = [
   { value: 'all', label: 'Все' },
   { value: 'Wait requisites', label: 'Ожидание реквизитов' },
@@ -98,8 +97,6 @@ export default function TransactionListView() {
     transactionStatus: filters.transactionStatus,
     transactionType: filters.transactionType,
   });
-
-
 
   const updateTable = useCallback(() => {
     mutate();

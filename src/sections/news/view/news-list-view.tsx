@@ -114,7 +114,7 @@ const NewsListView = () => {
             value={filters.type}
             onChange={handleFilterType}
             input={<OutlinedInput label="Тип" />}
-            renderValue={(selected) => selected === 'News' ? 'Аналитика' : 'Событие'}
+            renderValue={(selected) => (selected === 'News' ? 'Аналитика' : 'Событие')}
             MenuProps={{
               PaperProps: {
                 sx: { maxHeight: 240 },

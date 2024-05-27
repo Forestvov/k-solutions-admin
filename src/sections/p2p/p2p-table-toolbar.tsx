@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
 
 import Stack from '@mui/material/Stack';
-import Checkbox from "@mui/material/Checkbox";
-import MenuItem from "@mui/material/MenuItem";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import OutlinedInput from "@mui/material/OutlinedInput";
+import Checkbox from '@mui/material/Checkbox';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import { IP2PTableFilters } from 'src/types/transaction';
@@ -48,12 +48,12 @@ export default function P2pTableToolbar({ filters, onFilters }: Props) {
         pr: { xs: 2.5, md: 1 },
       }}
     >
-       <FormControl
+      <FormControl
         sx={{
           flexShrink: 0,
           width: { xs: 1, md: 200 },
         }}
-       >
+      >
         <InputLabel>Тип</InputLabel>
 
         <Select
@@ -61,7 +61,7 @@ export default function P2pTableToolbar({ filters, onFilters }: Props) {
           value={filters.transactionType}
           onChange={handleFilterType}
           input={<OutlinedInput label="Тип" />}
-          renderValue={(selected) => selected === 'In' ? 'Пополнение': 'Вывод'}
+          renderValue={(selected) => (selected === 'In' ? 'Пополнение' : 'Вывод')}
           MenuProps={{
             PaperProps: {
               sx: { maxHeight: 240 },
@@ -75,11 +75,11 @@ export default function P2pTableToolbar({ filters, onFilters }: Props) {
                 size="small"
                 checked={filters.transactionType.includes(option)}
               />
-              {option === 'In' ? 'Пополнение': 'Вывод'}
+              {option === 'In' ? 'Пополнение' : 'Вывод'}
             </MenuItem>
           ))}
         </Select>
-       </FormControl>
+      </FormControl>
 
       {/* <Stack direction="row" alignItems="center" spacing={2} flexGrow={1} sx={{ width: 1 }}> */}
       {/*  <TextField */}

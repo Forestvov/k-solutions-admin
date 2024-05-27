@@ -34,7 +34,7 @@ import OrderTableFiltersResult from '../order-table-filters-result';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'module', label: 'Модуль', },
+  { id: 'module', label: 'Модуль' },
   { id: 'phoneNumber', label: 'Номер телефона' },
 ];
 

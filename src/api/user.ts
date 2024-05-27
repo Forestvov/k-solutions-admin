@@ -10,12 +10,14 @@ interface PropList extends IPagination {
   email: string;
   status: string;
   fio: string;
+  accountTypeName: string;
 }
 
 export function useGetUserList({
   role = '',
   email = '',
   fio = '',
+  accountTypeName = '',
   page,
   pageSize,
   status,
@@ -35,6 +37,7 @@ export function useGetUserList({
           { key: 'email', value: email },
           { key: 'status', value: status },
           { key: 'fio', value: fio },
+          { key: 'accountTypeName', value: accountTypeName },
         ],
       },
       'put',
@@ -74,6 +77,7 @@ export function useGetUserList({
 // --------------------------------------
 
 interface VerificationPropList extends IPagination {
+  accountTypeName: string;
   email: string;
   fio: string;
 }
@@ -81,6 +85,7 @@ interface VerificationPropList extends IPagination {
 export function useGetVerificationUserList({
   page,
   pageSize,
+  accountTypeName = '',
   email = '',
   fio = '',
 }: VerificationPropList) {
@@ -97,6 +102,7 @@ export function useGetVerificationUserList({
         criteria: [
           { key: 'email', value: email },
           { key: 'fio', value: fio },
+          { key: 'accountTypeName', value: accountTypeName },
           { key: 'status', value: 'Process' },
         ],
       },

@@ -12,6 +12,7 @@ import { IUserTableFilters, IUserTableFilterValue } from 'src/types/user';
 
 import { USER_STATUS } from './status-dto';
 import { roleOptions } from './role-options';
+import { accountType } from './account-type';
 
 // ----------------------------------------------------------------------
 
@@ -39,7 +40,11 @@ export default function UserTableFiltersResult({
     onFilters('status', '');
   }, [onFilters]);
 
-  if (!filters.role.length && !filters.status.length) {
+  const handleRemoveAccountType = useCallback(() => {
+    onFilters('accountTypeName', '');
+  }, [onFilters]);
+
+  if (!filters.role.length && !filters.status.length && !filters.accountTypeName.length) {
     return null;
   }
 
@@ -71,6 +76,17 @@ export default function UserTableFiltersResult({
               label={USER_STATUS[filters.status]}
               size="small"
               onDelete={handleRemoveStatus}
+            />
+          </Block>
+        )}
+
+        {!!filters.accountTypeName.length && (
+          <Block label="Тип Аккаунта:">
+            <Chip
+              key={filters.accountTypeName}
+              label={accountType.find((type) => type.name === filters.accountTypeName)?.label}
+              size="small"
+              onDelete={handleRemoveAccountType}
             />
           </Block>
         )}

@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-import {nameObj} from "./data";
+import { nameObj } from './data';
 import { IOrderTableFilters } from '../../types/order';
 
 // ----------------------------------------------------------------------
@@ -17,7 +17,6 @@ type Props = {
   filters: IOrderTableFilters;
   onFilters: (name: string, value: string) => void;
 };
-
 
 export default function OrderTableToolbar({ filters, onFilters }: Props) {
   const handleFilterModule = useCallback(
@@ -29,7 +28,7 @@ export default function OrderTableToolbar({ filters, onFilters }: Props) {
 
   // @ts-ignore
   // @ts-ignore
-    return (
+  return (
     <Stack
       spacing={2}
       alignItems={{ xs: 'flex-end', md: 'center' }}
@@ -55,7 +54,7 @@ export default function OrderTableToolbar({ filters, onFilters }: Props) {
           value={filters.module}
           onChange={handleFilterModule}
           input={<OutlinedInput label="Модуль" />}
-            // @ts-ignore
+          // @ts-ignore
           renderValue={(selected: string) => nameObj[selected]}
           MenuProps={{
             PaperProps: {

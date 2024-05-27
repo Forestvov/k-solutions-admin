@@ -1,20 +1,20 @@
 export interface IResponseOrder {
-  content: IOrder[]
-  pageable: Pageable
-  last: boolean
-  totalPages: number
-  totalElements: number
-  size: number
-  number: number
-  first: boolean
-  numberOfElements: number
-  empty: boolean
+  content: IOrder[];
+  pageable: Pageable;
+  last: boolean;
+  totalPages: number;
+  totalElements: number;
+  size: number;
+  number: number;
+  first: boolean;
+  numberOfElements: number;
+  empty: boolean;
 }
 
 export interface IOrder {
-  id: number
-  phoneNumber: string
-  module: string
+  id: number;
+  phoneNumber: string;
+  module: string;
 }
 
 export interface Pageable {
@@ -26,5 +26,5 @@ export interface Pageable {
 }
 
 export interface IOrderTableFilters {
-  module: string
+  module: string;
 }

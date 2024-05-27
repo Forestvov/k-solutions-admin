@@ -74,7 +74,7 @@ const BodyApi = () => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       await saveTokens(data.data);
-      await mutate()
+      await mutate();
     } catch (error) {
       console.error(error);
     }
@@ -119,7 +119,7 @@ const BodyApi = () => {
         {fields.map((item, idx) => (
           <Card key={item.currencyTypeId} sx={{ maxWidth: '855px' }}>
             <Stack spacing={3} sx={{ p: 3 }}>
-              <RHFTextField name={`data[${idx}].currencyTypeId`}  sx={{display: 'none'}} />
+              <RHFTextField name={`data[${idx}].currencyTypeId`} sx={{ display: 'none' }} />
               <RHFTextField name={`data[${idx}].currentName`} label="Платежная система " />
               <RHFTextField name={`data[${idx}].value`} label="Адрес кошелька " />
               <RHFSelect name={`data[${idx}].transactionLinkType`} label="Выбирети тип ">

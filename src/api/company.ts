@@ -307,7 +307,7 @@ export function useGetFiles(id: string) {
       filesLoading: isLoading,
       filesError: error,
       filesValidating: isValidating,
-      mutate
+      mutate,
     }),
     [data, error, isLoading, isValidating, mutate]
   );

@@ -10,7 +10,7 @@ import { INewPost, LangType, IResponseNews } from '../types/news';
 
 interface PropList extends IPagination {
   lang: LangType;
-  type: string
+  type: string;
 }
 
 export function useGetNews({ lang = 'ru', page, pageSize, type }: PropList) {
@@ -26,7 +26,7 @@ export function useGetNews({ lang = 'ru', page, pageSize, type }: PropList) {
         sortField: 'createdDate',
         criteria: [
           { key: 'lang', value: lang },
-          { key: 'type', value: type }
+          { key: 'type', value: type },
         ],
       },
       'post',

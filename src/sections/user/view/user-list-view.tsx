@@ -52,6 +52,7 @@ const defaultFilters: IUserTableFilters = {
   status: '',
   fam: '',
   name: '',
+  accountTypeName: '',
 };
 
 // ----------------------------------------------------------------------
@@ -77,6 +78,7 @@ export default function UserListView() {
     role: filters.role as UserRoleType,
     email: filters.email as string,
     status: filters.status as string,
+    accountTypeName: filters.accountTypeName as string,
     fio: `${filters.fam} ${filters.name}`,
   });
 

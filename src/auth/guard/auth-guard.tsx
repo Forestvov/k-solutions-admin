@@ -40,7 +40,7 @@ function Container({ children }: Props) {
         returnTo: window.location.pathname,
       }).toString();
 
-      console.log(loginPaths)
+      console.log(loginPaths);
 
       const loginPath = loginPaths[method];
 

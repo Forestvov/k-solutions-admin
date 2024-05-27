@@ -162,7 +162,7 @@ const NewsEditForm = ({ currentPost }: Props) => {
 
             <RHFTextField name="descriptions" label="Описание события" multiline rows={3} />
 
-            <RHFTextField name="url" label="Ссылка на новость"  rows={3} />
+            <RHFTextField name="url" label="Ссылка на новость" rows={3} />
           </Stack>
         </Card>
       </Grid>

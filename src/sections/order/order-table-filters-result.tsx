@@ -9,8 +9,8 @@ import Stack, { StackProps } from '@mui/material/Stack';
 
 import Iconify from 'src/components/iconify';
 
-import {nameObj} from "./data";
-import {IOrderTableFilters} from "../../types/order";
+import { nameObj } from './data';
+import { IOrderTableFilters } from '../../types/order';
 
 // ----------------------------------------------------------------------
 
@@ -20,7 +20,6 @@ type Props = StackProps & {
   onResetFilters: VoidFunction;
   results: number;
 };
-
 
 export default function OrderTableFiltersResult({
   filters,
@@ -33,14 +32,12 @@ export default function OrderTableFiltersResult({
     onFilters('module', '');
   }, [onFilters]);
 
-  if (
-    !filters.module.length
-  ) {
+  if (!filters.module.length) {
     return null;
   }
 
   // @ts-ignore
-    return (
+  return (
     <Stack spacing={1.5} {...other}>
       <Box sx={{ typography: 'body2' }}>
         <strong>{results}</strong>

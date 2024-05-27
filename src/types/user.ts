@@ -60,4 +60,5 @@ export interface IUserTableFilters {
   status: string;
   fam: string;
   name: string;
+  accountTypeName: string;
 }

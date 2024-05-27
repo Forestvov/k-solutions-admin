@@ -35,7 +35,7 @@ export const CompaniesNewEditFormDetail = () => {
     <>
       {fields.map((value, index) => (
         <div key={value.id}>
-          <Stack spacing={3} sx={{ p: 3 }} >
+          <Stack spacing={3} sx={{ p: 3 }}>
             <RHFAutocomplete
               freeSolo
               name={`companyInvestDetailInputs[${index}].companyInvestDetailTypeDescriptions`}

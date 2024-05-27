@@ -4,9 +4,18 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 
+import Checkbox from '@mui/material/Checkbox';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Select from '@mui/material/Select';
+import SelectChangeEvent from '@mui/material/SelectChangeEvent';
+
 import Iconify from 'src/components/iconify';
 
 import { IUserTableFilters, IUserTableFilterValue } from 'src/types/user';
+import { accountType } from './account-type';
 
 // ----------------------------------------------------------------------
 
@@ -37,6 +46,13 @@ export default function UserVerificationTableToolbar({ filters, onFilters }: Pro
     [onFilters]
   );
 
+  const handleFilterAccountType = useCallback(
+    (event: SelectChangeEvent<string>) => {
+      onFilters('accountTypeName', event.target.value);
+    },
+    [onFilters]
+  );
+
   // @ts-ignore
   return (
     <Stack
@@ -52,6 +68,39 @@ export default function UserVerificationTableToolbar({ filters, onFilters }: Pro
       }}
     >
       <Stack direction="row" alignItems="center" spacing={2} flexGrow={1} sx={{ width: 1 }}>
+        <FormControl
+          sx={{
+            flexShrink: 0,
+            width: { xs: 1, md: 200 },
+          }}
+        >
+          <InputLabel>Тип Аккаунта</InputLabel>
+
+          <Select
+            // @ts-ignore
+            value={filters.accountTypeName}
+            onChange={handleFilterAccountType}
+            input={<OutlinedInput label="Тип Аккаунта" />}
+            renderValue={(selected) => accountType.find((type) => type.name === selected)?.label}
+            MenuProps={{
+              PaperProps: {
+                sx: { maxHeight: 240 },
+              },
+            }}
+          >
+            {accountType.map((option) => (
+              <MenuItem key={option.name} value={option.name}>
+                <Checkbox
+                  disableRipple
+                  size="small"
+                  checked={filters.accountTypeName.includes(option.name)}
+                />
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
         <TextField
           fullWidth
           value={filters.fam}

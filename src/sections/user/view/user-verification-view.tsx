@@ -52,6 +52,7 @@ const defaultFilters: IUserTableFilters = {
   status: '',
   fam: '',
   name: '',
+  accountTypeName: '',
 };
 
 // ----------------------------------------------------------------------
@@ -75,6 +76,7 @@ export default function UserVerificationView() {
     page: table.page,
     pageSize: table.rowsPerPage,
     email: filters.email,
+    accountTypeName: filters.accountTypeName,
     fio: `${filters.fam} ${filters.name}`,
   });
 
