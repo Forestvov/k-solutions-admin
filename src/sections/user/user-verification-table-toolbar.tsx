@@ -1,20 +1,19 @@
 import { useCallback } from 'react';
 
 import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
-
 import Checkbox from '@mui/material/Checkbox';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import Select from '@mui/material/Select';
-import SelectChangeEvent from '@mui/material/SelectChangeEvent';
+import InputAdornment from '@mui/material/InputAdornment';
 
 import Iconify from 'src/components/iconify';
 
 import { IUserTableFilters, IUserTableFilterValue } from 'src/types/user';
+
 import { accountType } from './account-type';
 
 // ----------------------------------------------------------------------
