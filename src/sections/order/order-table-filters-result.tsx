@@ -10,6 +10,7 @@ import Stack, { StackProps } from '@mui/material/Stack';
 import Iconify from 'src/components/iconify';
 
 import { nameObj } from './data';
+import { orderStatus } from './order-status';
 import { IOrderTableFilters } from '../../types/order';
 
 // ----------------------------------------------------------------------
@@ -32,7 +33,11 @@ export default function OrderTableFiltersResult({
     onFilters('module', '');
   }, [onFilters]);
 
-  if (!filters.module.length) {
+  const handleRemoveStatus = useCallback(() => {
+    onFilters('status', '');
+  }, [onFilters]);
+
+  if (!filters.module.length && !filters.status.length) {
     return null;
   }
 
@@ -54,6 +59,17 @@ export default function OrderTableFiltersResult({
               label={nameObj[filters.module]}
               size="small"
               onDelete={handleRemoveModule}
+            />
+          </Block>
+        )}
+
+        {!!filters.status.length && (
+          <Block label="Статус:">
+            <Chip
+              key={filters.status}
+              label={orderStatus[filters.status]}
+              size="small"
+              onDelete={handleRemoveStatus}
             />
           </Block>
         )}

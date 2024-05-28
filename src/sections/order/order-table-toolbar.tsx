@@ -9,6 +9,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import { nameObj } from './data';
+import { orderStatus } from './order-status';
 import { IOrderTableFilters } from '../../types/order';
 
 // ----------------------------------------------------------------------
@@ -26,7 +27,13 @@ export default function OrderTableToolbar({ filters, onFilters }: Props) {
     [onFilters]
   );
 
-  // @ts-ignore
+  const handleFilterStatus = useCallback(
+    (event: SelectChangeEvent<string>) => {
+      onFilters('status', event.target.value);
+    },
+    [onFilters]
+  );
+
   // @ts-ignore
   return (
     <Stack
@@ -81,6 +88,38 @@ export default function OrderTableToolbar({ filters, onFilters }: Props) {
               checked={filters.module.includes('personal-page')}
             />
             Личный кабинет
+          </MenuItem>
+        </Select>
+      </FormControl>
+
+      <FormControl
+        sx={{
+          flexShrink: 0,
+          width: { xs: 1, md: 200 },
+        }}
+      >
+        <InputLabel>Статус</InputLabel>
+
+        <Select
+          // @ts-ignore
+          value={filters.status}
+          onChange={handleFilterStatus}
+          input={<OutlinedInput label="Статус" />}
+          // @ts-ignore
+          renderValue={(selected: string) => orderStatus[selected]}
+          MenuProps={{
+            PaperProps: {
+              sx: { maxHeight: 240 },
+            },
+          }}
+        >
+          <MenuItem key="New" value="New">
+            <Checkbox disableRipple size="small" checked={filters.status === 'New'} />
+            Новая
+          </MenuItem>
+          <MenuItem key="Responded" value="Responded">
+            <Checkbox disableRipple size="small" checked={filters.status === 'Responded'} />
+            Отвечена
           </MenuItem>
         </Select>
       </FormControl>

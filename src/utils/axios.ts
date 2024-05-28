@@ -125,6 +125,7 @@ export const endpoints = {
   },
   order: {
     list: '/order-contact/page',
+    update: '/order-contact/responded',
   },
   settings: {
     wait_requisites: '/setting/code/p2p.time.wait_requisites',

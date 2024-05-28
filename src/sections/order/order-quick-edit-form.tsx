@@ -9,14 +9,14 @@ import Dialog from '@mui/material/Dialog';
 import MenuItem from '@mui/material/MenuItem';
 import LoadingButton from '@mui/lab/LoadingButton';
 import DialogTitle from '@mui/material/DialogTitle';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 
-import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, { RHFSelect, RHFTextField } from 'src/components/hook-form';
+import { IOrder } from 'src/types/order';
 
-import { ITransaction } from '../../types/transaction';
-import { updateTransaction } from '../../api/transaction';
+import { orderStatus } from './order-status';
+import { updateOrder } from '../../api/order';
+import FormProvider, { RHFSelect } from '../../components/hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -24,43 +24,22 @@ type Props = {
   open: boolean;
   onClose: VoidFunction;
   updateTable: VoidFunction;
-  currentTransaction?: ITransaction;
+  currentOrder?: IOrder;
 };
 
-const STATUS = [
-  { value: 'Canceled', label: 'Отклонена' },
-  { value: 'Success', label: 'Одобренна' },
-  { value: 'Process', label: 'В обработке' },
-];
-
-export default function OrderQuickEditForm({
-  currentTransaction,
-  open,
-  onClose,
-  updateTable,
-}: Props) {
-  const { enqueueSnackbar } = useSnackbar();
-
-  const NewTransactionSchema = Yup.object().shape({
-    transactionId: Yup.number(),
-    transactionType: Yup.string(),
-    oldAmount: Yup.number(),
-    transactionStatus: Yup.string().required('Заполните поле'),
-    amount: Yup.number().required('Заполните поле'),
+export const OrderQuickEditForm = ({ updateTable, open, onClose, currentOrder }: Props) => {
+  const NewUserSchema = Yup.object().shape({
+    status: Yup.string().required('Заполните поле'),
   });
 
   const methods = useForm({
     // @ts-ignore
-    resolver: yupResolver(NewTransactionSchema),
+    resolver: yupResolver(NewUserSchema),
   });
 
   useEffect(() => {
-    methods.setValue('transactionId', currentTransaction?.transactionId || 99999999);
-    methods.setValue('transactionType', currentTransaction?.transactionType || '');
-    methods.setValue('transactionStatus', currentTransaction?.transactionStatus || '');
-    methods.setValue('oldAmount', currentTransaction?.amount || 0);
-    methods.setValue('amount', currentTransaction?.amount || 0);
-  }, [currentTransaction, methods]);
+    methods.setValue('status', currentOrder?.status || '');
+  }, [currentOrder, methods]);
 
   const {
     reset,
@@ -70,12 +49,11 @@ export default function OrderQuickEditForm({
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      if (currentTransaction?.transactionId) {
-        await updateTransaction(data);
+      if (currentOrder?.id) {
+        await updateOrder(currentOrder.id);
         updateTable();
         reset();
         onClose();
-        enqueueSnackbar('Update success!');
       }
     } catch (error) {
       console.error(error);
@@ -110,15 +88,17 @@ export default function OrderQuickEditForm({
               sm: 'repeat(2, 1fr)',
             }}
           >
-            <RHFSelect name="transactionStatus" label="Статус">
-              {STATUS.map((status) => (
-                <MenuItem key={status.value} value={status.value}>
-                  {status.label}
+            <RHFSelect name="status" label="Статус">
+              {Object.keys(orderStatus).map((key) => (
+                <MenuItem key={key} value={key}>
+                  {
+                    // @ts-ignore
+                    orderStatus[key]
+                  }
                 </MenuItem>
               ))}
             </RHFSelect>
-
-            <RHFTextField name="amount" label="Сумма" />
+            <Box sx={{ display: { xs: 'none', sm: 'block' } }} />
           </Box>
         </DialogContent>
 
@@ -140,4 +120,4 @@ export default function OrderQuickEditForm({
       </FormProvider>
     </Dialog>
   );
-}
+};

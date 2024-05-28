@@ -37,10 +37,13 @@ const TABLE_HEAD = [
   { id: 'module', label: 'Модуль' },
   { id: 'phoneNumber', label: 'Номер телефона' },
   { id: 'createdDate', label: 'Дата заявки' },
+  { id: 'status', label: 'Статус' },
+  { id: 'edit', label: '' },
 ];
 
 const defaultFilters: IOrderTableFilters = {
   module: '',
+  status: '',
 };
 
 // ----------------------------------------------------------------------
@@ -58,11 +61,14 @@ export default function OrderListView() {
 
   const {
     orderData,
+    orderDataLoading,
     pageInfo: { totalPages, currentPage, totalElements },
+    mutate,
   } = useGetOrder({
     page: table.page,
     pageSize: table.rowsPerPage,
     module: filters.module,
+    status: filters.status,
   });
 
   useEffect(() => {
@@ -71,7 +77,7 @@ export default function OrderListView() {
 
   const canReset = !isEqual(defaultFilters, filters);
 
-  const notFound = !orderData.length;
+  const notFound = !orderData.length && !orderDataLoading;
 
   const handleFilters = useCallback(
     (name: string, value: string) => {
@@ -155,6 +161,7 @@ export default function OrderListView() {
                   <OrderTableRow
                     key={row.id}
                     row={row}
+                    updateOrder={mutate}
                     selected={table.selected.includes(row.id.toString())}
                     onSelectRow={() => table.onSelectRow(row.id.toString())}
                   />

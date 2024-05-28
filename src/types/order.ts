@@ -11,9 +11,12 @@ export interface IResponseOrder {
   empty: boolean;
 }
 
+export type OrderTypeStatus = 'New' | 'Responded';
+
 export interface IOrder {
   id: number;
   phoneNumber: string;
+  status: OrderTypeStatus;
   createdDate: string;
   module: string;
 }
@@ -28,4 +31,5 @@ export interface Pageable {
 
 export interface IOrderTableFilters {
   module: string;
+  status: string;
 }

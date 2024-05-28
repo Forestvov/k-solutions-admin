@@ -3,16 +3,17 @@ import { useMemo } from 'react';
 
 import { IResponseOrder } from '../types/order';
 import { IPagination } from '../types/pagination';
-import { fetcher, endpoints } from '../utils/axios';
+import axios, { fetcher, endpoints } from '../utils/axios';
 
 interface Request extends IPagination {
   module: string;
+  status: string;
 }
 
-export function useGetOrder({ module, page, pageSize }: Request) {
+export function useGetOrder({ module, status, page, pageSize }: Request) {
   const URL = endpoints.order.list;
 
-  const { data, isLoading, error, isValidating } = useSWR<IResponseOrder>(
+  const { data, isLoading, error, isValidating, mutate } = useSWR<IResponseOrder>(
     [
       URL,
       {
@@ -20,7 +21,10 @@ export function useGetOrder({ module, page, pageSize }: Request) {
         size: pageSize,
         sortDir: 'DESC',
         sortField: 'id',
-        criteria: [{ key: 'module', value: module }],
+        criteria: [
+          { key: 'module', value: module },
+          { key: 'status', value: status }
+        ],
       },
       'post',
       {},
@@ -39,12 +43,25 @@ export function useGetOrder({ module, page, pageSize }: Request) {
         totalPages: data?.totalPages || 0,
         totalElements: data?.totalElements || 0,
       },
+      mutate,
       orderDataLoading: isLoading,
       orderDataError: error,
       orderDataValidating: isValidating,
     }),
-    [data, error, isLoading, isValidating]
+    [data, error, isLoading, isValidating, mutate]
   );
 
   return memoizedValue;
 }
+
+// ----------------------------------------------------------------------
+
+export const updateOrder = async (id: number) => {
+  await axios.put(`${endpoints.order.update}/${id}`, '', {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+};
+
+// ----------------------------------------------------------------------
