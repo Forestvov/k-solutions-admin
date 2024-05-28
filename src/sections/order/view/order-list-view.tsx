@@ -36,6 +36,7 @@ import OrderTableFiltersResult from '../order-table-filters-result';
 const TABLE_HEAD = [
   { id: 'module', label: 'Модуль' },
   { id: 'phoneNumber', label: 'Номер телефона' },
+  { id: 'createdDate', label: 'Дата заявки' },
 ];
 
 const defaultFilters: IOrderTableFilters = {

@@ -3,8 +3,12 @@ import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
 
+import {fDate} from "src/utils/format-time";
+
+import { IOrder } from 'src/types/order';
+
 import { nameObj } from './data';
-import { IOrder } from '../../types/order';
+
 
 // ----------------------------------------------------------------------
 
@@ -15,7 +19,7 @@ type Props = {
 };
 
 export default function OrderTableRow({ row, selected, onSelectRow }: Props) {
-  const { module, phoneNumber } = row;
+  const { module, phoneNumber, createdDate } = row;
 
   return (
     <TableRow hover selected={selected}>
@@ -24,6 +28,7 @@ export default function OrderTableRow({ row, selected, onSelectRow }: Props) {
       </TableCell>
       <TableCell sx={{ whiteSpace: 'nowrap' }}>{nameObj[module]}</TableCell>
       <TableCell sx={{ whiteSpace: 'nowrap' }}>{phoneNumber}</TableCell>
+      <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(createdDate)}</TableCell>
     </TableRow>
   );
 }

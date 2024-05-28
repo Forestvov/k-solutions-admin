@@ -14,6 +14,7 @@ export interface IResponseOrder {
 export interface IOrder {
   id: number;
   phoneNumber: string;
+  createdDate: string;
   module: string;
 }
 
