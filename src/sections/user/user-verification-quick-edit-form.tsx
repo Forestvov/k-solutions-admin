@@ -29,12 +29,9 @@ type Props = {
 };
 
 const USER_STATUS = [
-  { value: 'Not verified YC', label: 'Нет запроса на верификацию' },
-  { value: 'Not verified email', label: 'Почта не подтверждена' },
   { value: 'Process', label: 'В обработке' },
   { value: 'Verified', label: 'Верефицирован' },
   { value: 'Canceled', label: 'Отменен' },
-  { value: 'Enable', label: 'Доступен' },
   { value: 'Disable', label: 'Заблокирован' },
 ];
 
