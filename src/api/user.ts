@@ -80,6 +80,7 @@ interface VerificationPropList extends IPagination {
   accountTypeName: string;
   email: string;
   fio: string;
+  status: string;
 }
 
 export function useGetVerificationUserList({
@@ -88,6 +89,7 @@ export function useGetVerificationUserList({
   accountTypeName = '',
   email = '',
   fio = '',
+  status = '',
 }: VerificationPropList) {
   const URL = endpoints.user.list;
 
@@ -103,7 +105,7 @@ export function useGetVerificationUserList({
           { key: 'email', value: email },
           { key: 'fio', value: fio },
           { key: 'accountTypeName', value: accountTypeName },
-          { key: 'status', value: 'Process' },
+          { key: 'status', operation: status ? '==' : '!=', value: status || 'Not verified YC' },
         ],
       },
       'put',

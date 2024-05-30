@@ -78,6 +78,7 @@ export default function UserVerificationView() {
     email: filters.email,
     accountTypeName: filters.accountTypeName,
     fio: `${filters.fam} ${filters.name}`,
+    status: filters.status
   });
 
   const updateTable = () => {
