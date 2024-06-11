@@ -26,7 +26,6 @@ type Props = {
   selected: boolean;
   row: ITransaction;
   onSelectRow: VoidFunction;
-  updateTable: VoidFunction;
   type: 'In' | 'Out';
 };
 
@@ -35,10 +34,11 @@ const USER_STATUS: Record<string, string> = {
   Canceled: 'Отклоненно',
   Success: 'Выполненно',
   Process: 'В процессе оплаты',
+  Support: 'Поддержка',
   'Marked as paid': 'Отмеченно как оплаченно',
 };
 
-export default function P2pTableRow({ row, selected, onSelectRow, updateTable, type }: Props) {
+export default function P2pTableRow({ row, selected, onSelectRow, type }: Props) {
   const {
     fio,
     transactionDate,
@@ -182,6 +182,7 @@ export default function P2pTableRow({ row, selected, onSelectRow, updateTable, t
             (transactionStatus === 'Process' && 'warning') ||
             (transactionStatus === 'Canceled' && 'error') ||
             (transactionStatus === 'Marked as paid' && 'info') ||
+            (transactionStatus === 'Support' && 'info') ||
             (transactionStatus === 'Wait requisites' && 'secondary') ||
             'primary'
           }

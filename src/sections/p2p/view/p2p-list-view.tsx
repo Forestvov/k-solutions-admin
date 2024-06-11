@@ -41,6 +41,7 @@ const STATUS_OPTIONS = [
   { value: 'Wait requisites', label: 'Ожидание реквизитов' },
   { value: 'Process', label: 'В процессе оплаты' },
   { value: 'Marked as paid', label: 'Отмеченно как оплаченно' },
+  { value: 'Support', label: 'Поддержка' },
   { value: 'Canceled', label: 'Отклоненные' },
   { value: 'Success', label: 'Выполненные' },
 ];
@@ -207,7 +208,6 @@ export default function TransactionListView() {
                     row={row}
                     selected={table.selected.includes(row.accountId.toString())}
                     onSelectRow={() => table.onSelectRow(row.accountId.toString())}
-                    updateTable={updateTable}
                   />
                 ))}
                 <TableNoData notFound={notFound} />
@@ -232,31 +232,10 @@ export default function TransactionListView() {
 
 function applyFilter({
   inputData,
-  comparator,
-  filters,
 }: {
   inputData: ITransaction[];
   comparator: (a: any, b: any) => number;
   filters: IP2PTableFilters;
 }) {
-  // const { email = '' } = filters;
-  //
-  // const stabilizedThis = inputData.map((el, index) => [el, index] as const);
-  //
-  // stabilizedThis.sort((a, b) => {
-  //   const order = comparator(a[0], b[0]);
-  //   if (order !== 0) return order;
-  //   return a[1] - b[1];
-  // });
-  //
-  // inputData = stabilizedThis.map((el) => el[0]);
-  //
-  // if (email) {
-  //   inputData = inputData.filter(
-  //     // @ts-ignore
-  //     (transaction) => transaction.email.toLowerCase().indexOf(email.toLowerCase()) !== -1
-  //   );
-  // }
-
   return inputData;
 }

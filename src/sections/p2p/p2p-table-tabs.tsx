@@ -18,8 +18,14 @@ interface Prop {
 }
 
 const P2PTableTabs = ({ options, onFilters, filters }: Prop) => {
-  const { cancelledCount, successCount, waitRequisitesCount, processCount, markAsPaidCount } =
-    useContext(CounterContext);
+  const {
+    cancelledCount,
+    successCount,
+    waitRequisitesCount,
+    processCount,
+    markAsPaidCount,
+    supportCount,
+  } = useContext(CounterContext);
 
   const handleFilterStatus = useCallback(
     (event: SyntheticEvent, newValue: string) => {
@@ -32,11 +38,20 @@ const P2PTableTabs = ({ options, onFilters, filters }: Prop) => {
   const renderCount = (value: string) => {
     switch (value) {
       case 'all':
-        return cancelledCount + successCount + waitRequisitesCount + processCount + markAsPaidCount;
+        return (
+          cancelledCount +
+          successCount +
+          waitRequisitesCount +
+          processCount +
+          markAsPaidCount +
+          supportCount
+        );
       case 'Wait requisites':
         return +waitRequisitesCount;
       case 'Process':
         return +processCount;
+      case 'Support':
+        return +supportCount;
       case 'Marked as paid':
         return +markAsPaidCount;
       case 'Canceled':
@@ -71,6 +86,7 @@ const P2PTableTabs = ({ options, onFilters, filters }: Prop) => {
                 (tab.value === 'Process' && 'warning') ||
                 (tab.value === 'Marked as paid' && 'info') ||
                 (tab.value === 'Canceled' && 'error') ||
+                (tab.value === 'Support' && 'info') ||
                 (tab.value === 'Success' && 'success') ||
                 'default'
               }

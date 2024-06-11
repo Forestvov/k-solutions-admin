@@ -288,6 +288,9 @@ const P2PEditForm = ({ current, update }: Props) => {
               <MenuItem key="Marked as paid" value="Marked as paid">
                 Отмеченно как оплаченно
               </MenuItem>
+              <MenuItem key="Support" value="Support">
+                Обратитесь в поддержку по вашей заявке с контакт менеджером
+              </MenuItem>
               <MenuItem key="Canceled" value="Canceled">
                 Отклоненно
               </MenuItem>

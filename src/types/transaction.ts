@@ -70,6 +70,7 @@ export interface ITransactionTableFilters {
 export interface CounterResponse {
   waitRequisitesCount: number;
   processCount: number;
+  supportCount: number;
   markAsPaidCount: number;
   cancelledCount: number;
   successCount: number;
