@@ -15,11 +15,19 @@ export interface IUserResponse {
 export type UserRoleType = 'User' | 'Admin' | '';
 export type AccountTypeName = 'Investor' | 'Company';
 
+export interface IBusinessFile {
+  id: number;
+  realName: string;
+  type: string;
+  createdDate: string;
+}
+
 export interface IUser {
   accountId: number;
   userName: string;
   email: string;
   fio: string;
+  businessFileList: IBusinessFile[];
   companyName: any;
   famCeo: any;
   accountTypeName: AccountTypeName;

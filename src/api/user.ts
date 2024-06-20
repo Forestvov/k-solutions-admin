@@ -1,6 +1,7 @@
 import useSWR from 'swr';
 import { useMemo } from 'react';
 
+import { fileExtensions } from './data';
 import { IPagination } from '../types/pagination';
 import axios, { fetcher, endpoints } from '../utils/axios';
 import { UserRoleType, IUserResponse } from '../types/user';
@@ -154,6 +155,27 @@ export const updateUser = async (data: { [p: string]: any; accountId: number }) 
       'Content-Type': 'application/json',
     },
   });
+};
+
+export const getBusinessFile = async (idFile: number, fileName: string) => {
+  const URL = `${endpoints.user.businessFile}/${idFile}`;
+  axios
+    .get(URL, {
+      responseType: 'blob',
+    })
+    .then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      // @ts-ignore
+      link.setAttribute('download', `${fileName}.${fileExtensions()[response.data.type]}`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    })
+    .catch((error) => {
+      console.error('File download failed:', error);
+    });
 };
 
 // ----------------------------------------------------------------------

@@ -13,6 +13,8 @@ import { paths } from 'src/routes/paths';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
+import { useGetUserList } from 'src/api/user';
+
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import { useSettingsContext } from 'src/components/settings';
@@ -29,7 +31,6 @@ import {
 import { IUser, UserRoleType, IUserTableFilters, IUserTableFilterValue } from 'src/types/user';
 
 import UserTableRow from '../user-table-row';
-import { useGetUserList } from '../../../api/user';
 import UserTableToolbar from '../user-table-toolbar';
 import UserTableFiltersResult from '../user-table-filters-result';
 
@@ -42,6 +43,7 @@ const TABLE_HEAD = [
   { id: 'numberPhone', label: 'Номер телефона', width: 220 },
   { id: 'date', label: 'Дата регистрации', width: 180 },
   { id: 'balance', label: 'Общий баланс', width: 100 },
+  { id: 'businessFileList', label: 'Выписки', minWidth: 160 },
   { id: 'status', label: 'Статус', width: 100 },
   { id: '', width: 88 },
 ];

@@ -108,6 +108,7 @@ export const endpoints = {
     list: '/account/page',
     update: '/account/update',
     file: '/account/verification/file',
+    businessFile: '/account/bussines-file',
   },
   transaction: {
     list: '/transaction/history',

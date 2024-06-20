@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
+import Link from '@mui/material/Link';
 import Tooltip from '@mui/material/Tooltip';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
@@ -13,11 +14,14 @@ import { useBoolean } from 'src/hooks/use-boolean';
 import { fDate } from 'src/utils/format-time';
 import { fNumber } from 'src/utils/format-number';
 
+import { getBusinessFile } from 'src/api/user';
+
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
 import { IUser } from 'src/types/user';
 
+import { fileTypeDto } from './view/file-type-dto';
 import UserQuickEditForm from './user-quick-edit-form';
 
 // ----------------------------------------------------------------------
@@ -53,6 +57,7 @@ export default function UserTableRow({ row, selected, onSelectRow, updateTable }
     role,
     accountId,
     famCeo,
+    businessFileList,
   } = row;
 
   const quickEdit = useBoolean();
@@ -66,8 +71,6 @@ export default function UserTableRow({ row, selected, onSelectRow, updateTable }
 
         <TableCell
           sx={{
-            display: 'flex',
-            alignItems: 'center',
             '> a': {
               textDecoration: 'none',
               color: theme.palette.text.primary,
@@ -94,6 +97,26 @@ export default function UserTableRow({ row, selected, onSelectRow, updateTable }
         <TableCell sx={{ whiteSpace: 'nowrap' }}>$ {balance ? fNumber(balance) : '0'}</TableCell>
 
         <TableCell>
+          {businessFileList.map((file, index) => (
+            <Link
+              onClick={() => {
+                // @ts-ignore
+                getBusinessFile(file.id, `${userName} - ${fileTypeDto[file.type]}`);
+              }}
+              target="_blank"
+              download
+              key={file.id}
+            >
+              {
+                // @ts-ignore
+                fileTypeDto[file.type]
+              }
+              {index < businessFileList.length - 1 ? ', ' : ''}
+            </Link>
+          ))}
+        </TableCell>
+
+        <TableCell>
           <Label
             variant="soft"
             color={
@@ -109,6 +132,7 @@ export default function UserTableRow({ row, selected, onSelectRow, updateTable }
             {USER_STATUS[status]}
           </Label>
         </TableCell>
+
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
           <Tooltip title="Quick Edit" placement="top" arrow>
             <IconButton color={quickEdit.value ? 'inherit' : 'default'} onClick={quickEdit.onTrue}>
