@@ -35,6 +35,7 @@ const USER_STATUS: Record<string, string> = {
   Success: 'Выполненно',
   Process: 'В процессе оплаты',
   Support: 'Поддержка',
+  Hidden: 'Скрытый',
   'Marked as paid': 'Отмеченно как оплаченно',
 };
 
@@ -184,7 +185,7 @@ export default function P2pTableRow({ row, selected, onSelectRow, type }: Props)
             (transactionStatus === 'Marked as paid' && 'info') ||
             (transactionStatus === 'Support' && 'info') ||
             (transactionStatus === 'Wait requisites' && 'secondary') ||
-            'primary'
+            'default'
           }
         >
           {USER_STATUS[transactionStatus]}

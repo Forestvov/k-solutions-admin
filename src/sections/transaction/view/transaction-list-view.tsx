@@ -175,7 +175,7 @@ export default function TransactionListView() {
               <TableBody>
                 {dataFiltered.map((row) => (
                   <TransactionTableRow
-                    key={row.accountId}
+                    key={row.transactionId}
                     row={row}
                     selected={table.selected.includes(row.accountId.toString())}
                     onSelectRow={() => table.onSelectRow(row.accountId.toString())}

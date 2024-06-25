@@ -19,6 +19,7 @@ export function CounterProvider({ children }: Props) {
     cancelledCount: 0,
     successCount: 0,
     supportCount: 0,
+    hiddenCount: 0,
   });
 
   const { user } = useContext(AuthContext);
@@ -44,6 +45,7 @@ export function CounterProvider({ children }: Props) {
       cancelledCount: state.cancelledCount,
       successCount: state.successCount,
       supportCount: state.supportCount,
+      hiddenCount: state.hiddenCount,
     }),
     [
       state.cancelledCount,
@@ -52,6 +54,7 @@ export function CounterProvider({ children }: Props) {
       state.successCount,
       state.waitRequisitesCount,
       state.supportCount,
+      state.hiddenCount,
     ]
   );
 

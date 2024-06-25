@@ -25,6 +25,7 @@ const P2PTableTabs = ({ options, onFilters, filters }: Prop) => {
     processCount,
     markAsPaidCount,
     supportCount,
+    hiddenCount,
   } = useContext(CounterContext);
 
   const handleFilterStatus = useCallback(
@@ -44,6 +45,7 @@ const P2PTableTabs = ({ options, onFilters, filters }: Prop) => {
           waitRequisitesCount +
           processCount +
           markAsPaidCount +
+          hiddenCount +
           supportCount
         );
       case 'Wait requisites':
@@ -56,6 +58,8 @@ const P2PTableTabs = ({ options, onFilters, filters }: Prop) => {
         return +markAsPaidCount;
       case 'Canceled':
         return +cancelledCount;
+      case 'Hidden':
+        return +hiddenCount;
       case 'Success':
         return +successCount;
       default:

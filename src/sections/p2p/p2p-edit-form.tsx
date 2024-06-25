@@ -294,6 +294,9 @@ const P2PEditForm = ({ current, update }: Props) => {
               <MenuItem key="Canceled" value="Canceled">
                 Отклоненно
               </MenuItem>
+              <MenuItem key="Hidden" value="Hidden">
+                Скрытый
+              </MenuItem>
               <MenuItem key="Success" value="Success">
                 Выполненно
               </MenuItem>

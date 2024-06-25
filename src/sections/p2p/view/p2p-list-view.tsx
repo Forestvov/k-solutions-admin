@@ -43,6 +43,7 @@ const STATUS_OPTIONS = [
   { value: 'Marked as paid', label: 'Отмеченно как оплаченно' },
   { value: 'Support', label: 'Поддержка' },
   { value: 'Canceled', label: 'Отклоненные' },
+  { value: 'Hidden', label: 'Скрытые' },
   { value: 'Success', label: 'Выполненные' },
 ];
 

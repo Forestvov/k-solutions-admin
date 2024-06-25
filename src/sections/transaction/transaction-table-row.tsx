@@ -28,6 +28,7 @@ const TRANSACTION_STATUS: Record<string, string> = {
   Canceled: 'Отклонена',
   Success: 'Одобренна',
   Process: 'В обработке',
+  Hidden: 'Скрытый',
   'Marked as paid': 'Отмеченно как оплаченно',
 };
 

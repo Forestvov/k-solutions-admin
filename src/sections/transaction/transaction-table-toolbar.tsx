@@ -26,7 +26,9 @@ const status: Record<string, string> = {
   Canceled: 'Отклонена',
   Success: 'Одобренна',
   Process: 'В обработке',
+  Hidden: 'Скрытый',
 };
+
 const methodPay: Record<string, string> = {
   Visa: 'Visa',
   Token: 'Token',

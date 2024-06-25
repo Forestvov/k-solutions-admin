@@ -74,6 +74,7 @@ export interface CounterResponse {
   markAsPaidCount: number;
   cancelledCount: number;
   successCount: number;
+  hiddenCount: number;
 }
 
 export interface IP2PTableFilters {

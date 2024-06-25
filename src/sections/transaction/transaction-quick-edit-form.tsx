@@ -31,6 +31,7 @@ const STATUS = [
   { value: 'Canceled', label: 'Отклонена' },
   { value: 'Success', label: 'Одобренна' },
   { value: 'Process', label: 'В обработке' },
+  { value: 'Hidden', label: 'Скрытый' },
 ];
 
 export default function TransactionQuickEditForm({
