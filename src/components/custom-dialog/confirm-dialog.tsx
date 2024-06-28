@@ -1,4 +1,3 @@
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
@@ -22,13 +21,7 @@ export default function ConfirmDialog({
 
       {content && <DialogContent sx={{ typography: 'body2' }}> {content} </DialogContent>}
 
-      <DialogActions>
-        {action}
-
-        <Button variant="outlined" color="inherit" onClick={onClose}>
-          Cancel
-        </Button>
-      </DialogActions>
+      <DialogActions>{action}</DialogActions>
     </Dialog>
   );
 }

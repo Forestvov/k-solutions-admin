@@ -5,6 +5,7 @@ import { useMemo, useEffect, useCallback } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -30,6 +31,8 @@ import { useRouter } from '../../routes/hooks';
 import { toBase64 } from '../../utils/toBase64';
 import getLabelStatus from './get-label-status';
 import { ExtendCompany } from '../../types/company';
+import { useBoolean } from '../../hooks/use-boolean';
+import { ConfirmDialog } from '../../components/custom-dialog';
 import { CompaniesNewEditFormDate } from './companies-new-edit-form-date';
 import { CompaniesNewEditFormDetail } from './companies-new-edit-form-detail';
 
@@ -57,6 +60,8 @@ export default function CompaniesNewEditForm({
   const mdUp = useResponsive('up', 'md');
 
   const { enqueueSnackbar } = useSnackbar();
+
+  const confirm = useBoolean();
 
   const compnayShema = Yup.object().shape({
     briefcaseName: Yup.string().required('Введите имя компании'),
@@ -172,6 +177,17 @@ export default function CompaniesNewEditForm({
 
     try {
       if (currentCompany) {
+        const needChangeStatus =
+          Number(currentCompany.amount) -
+            Number(currentCompany.pampAmount) +
+            Number(data.pampAmount) >=
+          Number(data.amountFinish);
+
+        if (needChangeStatus) {
+          confirm.onTrue();
+          return;
+        }
+
         await updateCompany(data, currentCompany.briefcaseId, currentCompany.companyInvestId);
         router.push(paths.dashboard.companies.root);
       } else {
@@ -249,6 +265,30 @@ export default function CompaniesNewEditForm({
       );
     },
     [reset, router]
+  );
+
+  // @ts-ignore
+  const sendFormWithDialog = useCallback(
+    async (changeStatus = false) => {
+      const data = values;
+
+      if (changeStatus) {
+        data.briefcaseStatus = 'Collection completed';
+      }
+
+      if (currentCompany) {
+        try {
+          await updateCompany(data, currentCompany.briefcaseId, currentCompany.companyInvestId);
+          confirm.onFalse();
+          reset();
+          enqueueSnackbar('Оновленно');
+          router.push(paths.dashboard.companies.root);
+        } catch (e) {
+          console.log('Error', e);
+        }
+      }
+    },
+    [confirm, currentCompany, enqueueSnackbar, reset, router, values]
   );
 
   const renderTabs = (
@@ -583,6 +623,23 @@ export default function CompaniesNewEditForm({
           {currentCompany ? 'Обновить' : 'Опубликовать'}
         </LoadingButton>
       </Grid>
+
+      <ConfirmDialog
+        open={confirm.value}
+        onClose={confirm.onFalse}
+        title={`Изменить статус на "Сбор завершен" ?`}
+        content="Памп превышает Цель сбора"
+        action={
+          <>
+            <Button variant="contained" color="error" onClick={() => sendFormWithDialog(false)}>
+              Нет
+            </Button>
+            <Button variant="contained" color="success" onClick={() => sendFormWithDialog(true)}>
+              Да
+            </Button>
+          </>
+        }
+      />
     </>
   );
 

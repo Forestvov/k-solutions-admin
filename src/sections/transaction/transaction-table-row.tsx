@@ -90,16 +90,11 @@ export default function TransactionTableRow({ row, selected, onSelectRow, update
           </Label>
         </TableCell>
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
-          {transactionStatus === 'Process' && (
-            <Tooltip title="Quick Edit" placement="top" arrow>
-              <IconButton
-                color={quickEdit.value ? 'inherit' : 'default'}
-                onClick={quickEdit.onTrue}
-              >
-                <Iconify icon="solar:pen-bold" />
-              </IconButton>
-            </Tooltip>
-          )}
+          <Tooltip title="Quick Edit" placement="top" arrow>
+            <IconButton color={quickEdit.value ? 'inherit' : 'default'} onClick={quickEdit.onTrue}>
+              <Iconify icon="solar:pen-bold" />
+            </IconButton>
+          </Tooltip>
         </TableCell>
       </TableRow>
 
