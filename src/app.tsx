@@ -17,6 +17,7 @@ import { SettingsDrawer, SettingsProvider } from 'src/components/settings';
 
 import { AuthProvider } from 'src/auth/context/jwt';
 import { CounterProvider } from 'src/counter/context';
+import SnackbarProvider from 'src/components/snackbar/snackbar-provider';
 import { TimerProvider } from './timer/context';
 
 // ----------------------------------------------------------------------
@@ -49,13 +50,15 @@ export default function App() {
         >
           <ThemeProvider>
             <MotionLazy>
-              <TimerProvider>
-                <CounterProvider>
-                  <SettingsDrawer />
-                  <ProgressBar />
-                  <Router />
-                </CounterProvider>
-              </TimerProvider>
+              <SnackbarProvider>
+                <TimerProvider>
+                  <CounterProvider>
+                    <SettingsDrawer />
+                    <ProgressBar />
+                    <Router />
+                  </CounterProvider>
+                </TimerProvider>
+              </SnackbarProvider>
             </MotionLazy>
           </ThemeProvider>
         </SettingsProvider>

@@ -41,6 +41,7 @@ const TABLE_HEAD = [
   { id: 'mail', label: 'Mail', width: 190 },
   { id: 'numberPhone', label: 'Тип транзакции', width: 220 },
   { id: 'transactionLinkType', label: 'Платежная система', width: 180 },
+  { id: 'contact', label: 'Кашелек', width: 180 },
   { id: 'date', label: 'Дата транзакции', width: 180 },
   { id: 'balance', label: 'Сумма', width: 100 },
   { id: 'transactionStatus', label: 'Статус', width: 100 },

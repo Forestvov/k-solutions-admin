@@ -1,3 +1,4 @@
+import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
@@ -9,12 +10,13 @@ import { useBoolean } from 'src/hooks/use-boolean';
 
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
+import { useSnackbar } from 'src/components/snackbar';
 
 import { fDate } from '../../utils/format-time';
 import { fNumber } from '../../utils/format-number';
 import { ITransaction } from '../../types/transaction';
 import TransactionQuickEditForm from './transaction-quick-edit-form';
-
+import { useCopyToClipboard } from '../../hooks/use-copy-to-clipboard';
 // ----------------------------------------------------------------------
 
 type Props = {
@@ -43,9 +45,21 @@ export default function TransactionTableRow({ row, selected, onSelectRow, update
     transactionDate,
     username,
     transactionType,
+    contact,
   } = row;
 
   const quickEdit = useBoolean();
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const { copy } = useCopyToClipboard();
+
+  const onCopy = (text: string) => {
+    if (text) {
+      enqueueSnackbar('Кашелек добавлен в буфер обмена');
+      copy(text);
+    }
+  };
 
   return (
     <>
@@ -70,7 +84,12 @@ export default function TransactionTableRow({ row, selected, onSelectRow, update
           {transactionType === 'In' ? 'Пополнение' : 'Вывод'}
         </TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{transactionLinkType}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}> {transactionLinkType}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>
+          <Button onClick={() => onCopy(contact)} type="button">
+            {contact || 'Не указан'}
+          </Button>
+        </TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(new Date(transactionDate))}</TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>$ {amount ? fNumber(amount) : '0'}</TableCell>
