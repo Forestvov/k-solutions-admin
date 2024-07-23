@@ -40,6 +40,7 @@ export default function TransactionTableRow({ row, selected, onSelectRow, update
     transactionLinkType,
     accountTypeName,
     amount,
+    amountOut,
     transactionStatus,
     email,
     transactionDate,
@@ -92,7 +93,13 @@ export default function TransactionTableRow({ row, selected, onSelectRow, update
         </TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(new Date(transactionDate))}</TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>$ {amount ? fNumber(amount) : '0'}</TableCell>
+        {transactionLinkType === 'Token' ? (
+          <TableCell sx={{ whiteSpace: 'nowrap' }}>
+            $ {amountOut ? fNumber(amountOut) : '0'}
+          </TableCell>
+        ) : (
+          <TableCell sx={{ whiteSpace: 'nowrap' }}>$ {amount ? fNumber(amount) : '0'}</TableCell>
+        )}
 
         <TableCell>
           <Label

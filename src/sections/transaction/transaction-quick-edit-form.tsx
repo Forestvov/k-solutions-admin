@@ -59,8 +59,17 @@ export default function TransactionQuickEditForm({
     methods.setValue('transactionId', currentTransaction?.transactionId || 99999999);
     methods.setValue('transactionType', currentTransaction?.transactionType || '');
     methods.setValue('transactionStatus', currentTransaction?.transactionStatus || '');
-    methods.setValue('oldAmount', currentTransaction?.amount || 0);
-    methods.setValue('amount', currentTransaction?.amount || 0);
+
+    if (
+      currentTransaction?.transactionType === 'Out' &&
+      currentTransaction?.transactionLinkType === 'Token'
+    ) {
+      methods.setValue('amount', currentTransaction?.amountOut || 0);
+      methods.setValue('oldAmount', currentTransaction?.amountOut || 0);
+    } else {
+      methods.setValue('amount', currentTransaction?.amount || 0);
+      methods.setValue('oldAmount', currentTransaction?.amount || 0);
+    }
   }, [currentTransaction, methods]);
 
   const {
