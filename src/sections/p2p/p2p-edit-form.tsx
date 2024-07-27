@@ -18,6 +18,7 @@ import FormProvider, { RHFSelect, RHFTextField } from 'src/components/hook-form'
 
 import CountdownTimer from './p2p-timer';
 import { paths } from '../../routes/paths';
+import { fixTime } from '../../utils/fix-time';
 import { useRouter } from '../../routes/hooks';
 import { TimerContext } from '../../timer/context';
 import { fDateTime } from '../../utils/format-time';
@@ -51,7 +52,9 @@ const P2PEditForm = ({ current, update }: Props) => {
       cartNumber: current?.cartNumber,
       cartCVV: current?.cartCVV,
       cartDate: current?.cartDate,
-      transactionDate: current?.transactionDate ? `${fDateTime(current?.transactionDate)}` : '',
+      transactionDate: current?.transactionDate
+        ? `${fDateTime(fixTime(current?.transactionDate))}`
+        : '',
       transactionDateOld: current?.transactionDate || '',
       cardNumber: current?.contactNumber || '',
       cardName: current?.contactName || '',

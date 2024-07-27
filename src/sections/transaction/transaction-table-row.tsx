@@ -12,6 +12,7 @@ import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 import { useSnackbar } from 'src/components/snackbar';
 
+import { fixTime } from '../../utils/fix-time';
 import { fDate } from '../../utils/format-time';
 import { fNumber } from '../../utils/format-number';
 import { ITransaction } from '../../types/transaction';
@@ -91,7 +92,7 @@ export default function TransactionTableRow({ row, selected, onSelectRow, update
             {contact || 'Не указан'}
           </Button>
         </TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(new Date(transactionDate))}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(fixTime(transactionDate))}</TableCell>
 
         {transactionLinkType === 'Token' ? (
           <TableCell sx={{ whiteSpace: 'nowrap' }}>
