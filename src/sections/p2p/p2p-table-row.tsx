@@ -16,6 +16,7 @@ import { ITransaction } from 'src/types/transaction';
 
 import CountdownTimer from './p2p-timer';
 import { paths } from '../../routes/paths';
+import { fixTime } from '../../utils/fix-time';
 import { useRouter } from '../../routes/hooks';
 import Iconify from '../../components/iconify';
 import { TimerContext } from '../../timer/context';
@@ -139,7 +140,7 @@ export default function P2pTableRow({ row, selected, onSelectRow, type }: Props)
       </TableCell>
       <TableCell sx={{ whiteSpace: 'nowrap' }}>{username}</TableCell>
       <TableCell sx={{ whiteSpace: 'nowrap' }}>{email}</TableCell>
-      <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(new Date(transactionDate))}</TableCell>
+      <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(fixTime(transactionDate))}</TableCell>
       <TableCell sx={{ whiteSpace: 'nowrap' }}>{currentName}</TableCell>
 
       {transactionType === 'In' ? (
