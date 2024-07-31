@@ -274,6 +274,8 @@ export default function CompaniesNewEditForm({
 
       if (changeStatus) {
         data.briefcaseStatus = 'Collection completed';
+        // @ts-ignore
+        data.finishDay = new Date();
       }
 
       if (currentCompany) {
