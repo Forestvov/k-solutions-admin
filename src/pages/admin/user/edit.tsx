@@ -17,7 +17,7 @@ export default function UserEditPage() {
       <iframe
         frameBorder={0}
         title="Пользователь"
-        src={`https://k-solutions.ltd/#/${id}/personal`}
+        src={`https://k-solutions.world/#/${id}/personal`}
         height="100%"
         width="100%"
       />
