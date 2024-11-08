@@ -1,6 +1,8 @@
 import { useParams } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 
+import { VITE_CLIENT_DOMEN } from 'src/config-global';
+
 // ----------------------------------------------------------------------
 
 export default function UserEditPage() {
@@ -17,7 +19,7 @@ export default function UserEditPage() {
       <iframe
         frameBorder={0}
         title="Пользователь"
-        src={`https://k-solutions.world/#/${id}/personal`}
+        src={`${VITE_CLIENT_DOMEN}/#/${id}/personal`}
         height="100%"
         width="100%"
       />
